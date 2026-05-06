@@ -1,8 +1,0 @@
-Title: LPHON_DISPERSION
-URL: https://vasp.at/wiki/LPHON_DISPERSION
-============================================================
-LPHON_DISPERSION = .TRUE. | .FALSE. Default:
-LPHON_DISPERSION = .FALSE. Description: LPHON_DISPERSION requests the calculation of the phonon dispersion along the q-point path supplied in file QPOINTS (same format as KPOINTS ). After the computation of the force constants using finite differences (
-IBRION =5,6) or density-functional perturbation theory (
-IBRION =7,8) on a supercell it is possible to compute the phonon dispersion for the equivalent primitive cell determined by VASP by setting
-LPHON_DISPERSION =.TRUE. Mind: Only available as of VASP 6.3.2. Related tags and articles QPOINTS , PHON_NWRITE , LPHON_POLAR , PHON_DIELECTRIC , PHON_BORN_CHARGES , PHON_G_CUTOFF

@@ -1,5 +1,0 @@
-Title: Calculating the hyperfine coupling constant
-URL: https://vasp.at/wiki/Hyperfine_coupling_calculations
-============================================================
-Redirect to:
-Calculating the hyperfine-coupling constant

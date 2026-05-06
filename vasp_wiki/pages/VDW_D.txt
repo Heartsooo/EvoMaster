@@ -1,5 +1,0 @@
-Title: VDW_D
-URL: https://vasp.at/wiki/VDW_D
-============================================================
-VDW_D = [real] Default:
-VDW_D = 20 for DFT-D2 and Tkatchenko-Scheffler = 0.6966 for DFT-ulg = 6 for Many-body dispersion energy Description: VDW_D defines the damping parameter d . VDW_D sets the damping parameter d for the DFT-D2 , DFT-ulg , Tkatchenko-Scheffler , and Many-body dispersion energy methods. Related tags and articles DFT-D2 , DFT-ulg , Tkatchenko-Scheffler method , Many-body dispersion energy

@@ -1,7 +1,0 @@
-# 按以下顺序拼接 POTCAR (与 POSCAR 元素顺序一致):
-#   cat $VASP_PP_PATH/PBE/Mo_pv/POTCAR >> POTCAR
-#   cat $VASP_PP_PATH/PBE/S/POTCAR >> POTCAR
-
-# 一行命令:
-cat $VASP_PP_PATH/PBE/Mo_pv/POTCAR \
-    $VASP_PP_PATH/PBE/S/POTCAR > POTCAR

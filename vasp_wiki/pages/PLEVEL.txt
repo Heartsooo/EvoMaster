@@ -1,5 +1,0 @@
-Title: PLEVEL
-URL: https://vasp.at/wiki/PLEVEL
-============================================================
-PLEVEL = [integer] Description: Control tag for the output of the profiling routines. If specified all routines with a level higher than
-PLEVEL = level are not printed out in the OUTCAR .

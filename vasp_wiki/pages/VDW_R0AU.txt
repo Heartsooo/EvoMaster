@@ -1,4 +1,0 @@
-Title: VDW_R0AU
-URL: https://vasp.at/wiki/VDW_R0AU
-============================================================
-VDW_R0AU = [real (array)] Description: VDW_R0AU defines the R_0 parameters (bohr) for each species defined in the POSCAR file. VDW_R0AU sets the R_0 parameters (bohr) for each species defined in the POSCAR file for the Tkatchenko-Scheffler and Many-body dispersion energy methods. Related tags and articles VDW_R0 , Tkatchenko-Scheffler method , Many-body dispersion energy

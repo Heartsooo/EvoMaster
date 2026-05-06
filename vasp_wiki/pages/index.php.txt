@@ -1,5 +1,0 @@
-Title: ML FF MCONF
-URL: https://vasp.at/wiki/index.php?title=ML_FF_MCONF&redirect=no
-============================================================
-Redirect to:
-ML MCONF

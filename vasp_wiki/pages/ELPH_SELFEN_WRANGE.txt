@@ -1,5 +1,0 @@
-Title: ELPH_SELFEN_WRANGE
-URL: https://vasp.at/wiki/ELPH_SELFEN_WRANGE
-============================================================
-ELPH_SELFEN_WRANGE = [real] Default:
-ELPH_SELFEN_WRANGE = 0 Description: Together with ELPH_SELFEN_NW specifies the energy window in which to evaluate the phonon-induced electron self-energy. Mind: Available as of VASP 6.5.0 The electron self-energy, _{n {k}}(ω) , depends on the frequency ω (or energy ω ). The tag ELPH_SELFEN_WRANGE determines the width of the energy window in which to evaluate the self-energy. However, the location and width of the energy window is also influenced by the sign of ELPH_SELFEN_NW . For more information, we refer to the documentation of ELPH_SELFEN_NW . Related tags and articles ELPH_RUN

@@ -1,8 +1,0 @@
-Title: LELF
-URL: https://vasp.at/wiki/LELF
-============================================================
-LELF = .TRUE. | .FALSE. Default:
-LELF = .FALSE. Description: LELF determines whether to create an ELFCAR file or not. This file contains the so-called ELF (electron localization function)
-
-LELF is set,
-NPAR =1 has to be set explicitely in the INCAR file in addition Related tags and articles NPAR Examples that use this tag References ↑ B. Silvi and A. Savin, Nature 371, 683-686 (1994).

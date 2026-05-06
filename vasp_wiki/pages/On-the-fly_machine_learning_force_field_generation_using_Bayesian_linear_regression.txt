@@ -1,5 +1,0 @@
-Title: Machine learning force fields: Theory
-URL: https://vasp.at/wiki/On-the-fly_machine_learning_force_field_generation_using_Bayesian_linear_regression
-============================================================
-Redirect to:
-Machine learning force field: Theory

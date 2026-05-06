@@ -1,5 +1,0 @@
-Title: Extract zpr cd carbon
-URL: https://vasp.at/wiki/Extract_zpr_cd_carbon
-============================================================
-Redirect to:
-Extract zpr

@@ -1,5 +1,0 @@
-Title: Monopole Dipole and Quadrupole Corrections
-URL: https://vasp.at/wiki/Monopole_Dipole_and_Quadrupole_corrections
-============================================================
-Redirect to:
-Electrostatic corrections

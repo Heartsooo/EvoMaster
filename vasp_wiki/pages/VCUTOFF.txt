@@ -1,5 +1,0 @@
-Title: VCUTOFF
-URL: https://vasp.at/wiki/VCUTOFF
-============================================================
-VCUTOFF = [real] Default:
-VCUTOFF = 1.1 ENCUTGW Description: The parameter VCUTOFF sets the energy cutoff for bare Coulomb matrix elements and controls the basis set for the bare Coulomb interaction. Related tags and articles ENCUTGW , Constrained–random-phase–approximation_formalism

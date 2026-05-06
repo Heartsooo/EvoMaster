@@ -1,5 +1,0 @@
-Title: NBSEEIG
-URL: https://vasp.at/wiki/NBSEEIG
-============================================================
-NBSEEIG = [integer] Default:
-NBSEEIG = 0 Description: NBSEEIG sets the number of BSE eigenvectors written to the BSEFATBAND file. If BSEHOLE or BSEELECTRON is set, NBSEEIG exciton wavefunctions are written to the CHG .XX files. Related tags and sections BSE , BSEFATBAND , BSE calculations

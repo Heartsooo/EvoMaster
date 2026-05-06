@@ -1,7 +1,0 @@
-Title: VDW_CNRADIUS
-URL: https://vasp.at/wiki/VDW_CNRADIUS
-============================================================
-VDW_CNRADIUS = [real] Default:
-VDW_CNRADIUS = 21.17 if
-IVDW =11, 12 or 15 = 15.88 if
-IVDW =13 Description: VDW_CNRADIUS (in Å) sets the coordination number cutoff of the DFT-D3 and DFT-D4 methods. VDW_CNRADIUS (in Å) allows to set the coordination number cutoff for the DFT-D3 ( DFT-D3 and simple-DFT-D3 implementations) and DFT-D4 methods. Mind: Available for the DFT-D4 and simple-DFT-D3 packages since VASP.6.6.0. Related tags and articles IVDW , VDW_RADIUS , DFT-D3 , simple-DFT-D3 , DFT-D4

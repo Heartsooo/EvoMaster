@@ -1,5 +1,0 @@
-Title: LWRITE_WANPROJ
-URL: https://vasp.at/wiki/LWRITE_WANPROJ
-============================================================
-LWRITE_WANPROJ = [logical] Default:
-LWRITE_WANPROJ = .FALSE. Description: LWRITE_WANPROJ determines whether the Wannier projection file WANPROJ is written. If WANPROJ is present, VASP skips the Wannier projection and reads the effective projectors U nk from the WANPROJ file for each k point. Related tags and articles LWANNIER90 , LWANNIER90_RUN , LDOWNSAMPLE

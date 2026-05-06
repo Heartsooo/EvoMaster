@@ -1,7 +1,0 @@
-Title: VDW_S8
-URL: https://vasp.at/wiki/VDW_S8
-============================================================
-VDW_S8 = [real] Description: VDW_S8 sets the scaling s_{8} of the dipole-quadrupole dispersion of the DFT-D3 and DFT-D4 methods. VDW_S8 allows to set the scaling s_{8} of the dipole-quadrupole dispersion of the DFT-D3 and DFT-D4 (
-IVDW =13) methods. VDW_S8 can be used for both implementations of DFT-D3: DFT-D3 (
-IVDW =11 or 12) and simple-DFT-D3 (
-IVDW =15). Related tags and articles IVDW , VDW_S6 , DFT-D3 , simple-DFT-D3 , DFT-D4

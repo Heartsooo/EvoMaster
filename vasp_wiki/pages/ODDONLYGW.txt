@@ -1,5 +1,0 @@
-Title: ODDONLYGW
-URL: https://vasp.at/wiki/ODDONLYGW
-============================================================
-ODDONLYGW = [logical] Default:
-ODDONLYGW = .FALSE. Description: ODDONLYGW allows to avoid the inclusion of the Γ point in the evaluation of response functions (in GW calculations ). The independent particle polarizability χ_{{{q}}}^0 ({{G}}, {{G}}', ω) is given by: χ_{{{q}}}^0 ({{G}}, {{G}}', ω) = {1}{} Σ_{n,n',{{k}}}2 w_{{{k}}} (f_{n'{{k}}+{{q}}} - f_{n{{k}}}) × { _{n{{k}}}| e^{-i ({{q}}+{{G}}){{r}}} | _{n'{{k}}+{{q}}} _{n'{{k}}+{{q}}}| e^{i ({{q}}+{{G}}'){{r'}}} | _{n{{k}}}} { ε_{n'{{k}}+{{q}}}-ε_{n{{k}}} - ω - i η } If the Γ point is included in the summation over {k} , convergence is very slow for some materials (e.g. GaAs). To deal with this problem the flag ODDONLYGW has been included. In the automatic mode, the {k} -grid is given by (see Sec. sec:autok): k = b_{1} {n_{1}}{N_{1}} + b_{2} {n_{2}}{N_{2}} + b_{3} {n_{3}}{N_{3}} , n_1=0...,N_1-1 n_2=0...,N_2-1 n_3=0...,N_3-1. Related tags and articles EVENONLYGW , GW calculations

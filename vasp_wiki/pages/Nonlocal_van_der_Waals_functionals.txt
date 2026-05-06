@@ -1,5 +1,0 @@
-Title: Nonlocal van der Waals density functionals
-URL: https://vasp.at/wiki/Nonlocal_van_der_Waals_functionals
-============================================================
-Redirect to:
-Nonlocal vdW-DF functionals

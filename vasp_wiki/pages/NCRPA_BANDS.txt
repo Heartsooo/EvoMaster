@@ -1,5 +1,0 @@
-Title: NCRPA_BANDS
-URL: https://vasp.at/wiki/NCRPA_BANDS
-============================================================
-NCRPA_BANDS = [integer array] Description: Controls which bands are excluded in the constrained random-phase approximation. Check also NTARGET_STATES . This tag is effective for
-ALGO = CRPA and ignored otherwise. For instance NCRPA_BANDS = 21 22 23 removes all screening effects between bands 21, 22 and 23 from the constrained random-phase approximation of the screened Coulomb interaction. Related tags and articles ALGO , NTARGET_STATES Workflows that use this tag

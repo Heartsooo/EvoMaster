@@ -1,5 +1,0 @@
-Title: GW0 caveat
-URL: https://vasp.at/wiki/GW0_caveat
-============================================================
-Redirect to:
-ScGW0 caveat

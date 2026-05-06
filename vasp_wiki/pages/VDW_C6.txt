@@ -1,4 +1,0 @@
-Title: VDW_C6
-URL: https://vasp.at/wiki/VDW_C6
-============================================================
-VDW_C6 = [real (array)] Description: VDW_C6 defines the C_6 parameters ( {Jnm}^{6}{mol}^{-1} ) for each species defined in the POSCAR file. VDW_C6 sets the C_6 parameters ( {Jnm}^{6}{mol}^{-1} ) for each species defined in the POSCAR file for the DFT-D2 , DFT-ulg , Tkatchenko-Scheffler , and Many-body dispersion energy methods. Related tags and articles VDW_C6AU , DFT-D2 , DFT-ulg , Tkatchenko-Scheffler method , Many-body dispersion energy

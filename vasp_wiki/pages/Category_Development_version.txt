@@ -1,5 +1,0 @@
-Title: Category:Development version
-URL: https://vasp.at/wiki/Category:Development_version
-============================================================
-This category only contains tags and features that are only available in the development version of VASP. These tags and features may undergo significant changes or even vanish before they will be available in an official release version.
-This category currently contains no pages or media.

@@ -1,7 +1,0 @@
-Title: Category:Programming
-URL: https://vasp.at/wiki/Category:Programming
-============================================================
-General guidelines and programming advices for VASP developers and hackers are given here:
-Programming in VASP
-.
-This category currently contains no pages or media.

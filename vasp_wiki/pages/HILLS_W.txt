@@ -1,6 +1,0 @@
-Title: HILLS_W
-URL: https://vasp.at/wiki/HILLS_W
-============================================================
-HILLS_W = [Real] Default:
-HILLS_W = 10^{-3} Description: HILLS_W specifies the width of the Gaussian hill (in units of the corresponding collective variable) used in metadynamics (in case VASP was compiled with -Dtbdyn ). In metadynamics (
-MDALGO =11 | 21), the bias potential is given as V(t,) = h Σ_{i=1}^{ t/t_G } \{ -{|^{(t)-^{(i · t_G)}|^2}{2 w^2} \}}. Thre parameters ( HILLS_H , HILLS_W , and HILLS_BIN ) must be provided by the user. The width of the Gaussian hills w (in units of the corresponding collective variable) is set by HILLS_W . Related tags and articles Metadynamics , HILLS_H , HILLS_BIN , HILLSPOT , MDALGO

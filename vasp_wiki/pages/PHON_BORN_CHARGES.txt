@@ -1,7 +1,0 @@
-Title: PHON_BORN_CHARGES
-URL: https://vasp.at/wiki/PHON_BORN_CHARGES
-============================================================
-PHON_BORN_CHARGES = [3x3xNIONS real] Default:
-PHON_BORN_CHARGES = None Description: PHON_BORN_CHARGES sets the Born effective charges to be used for the dipole-dipole corrections in the computation of the phonon dispersion. This is only used when
-LPHON_POLAR =.TRUE. If the material is non-metallic and polar (i.e. two or more atoms in the unit cell carry nonzero Born effective charge tensors), a special treatment of the long-range dipole-dipole interaction is required to obtain a smooth phonon dispersion. This is activated by setting
-LPHON_POLAR =.TRUE. and supplying the static dielectric tensor ( PHON_DIELECTRIC ) and the Born-effective charges ( PHON_BORN_CHARGES ) which can be obtained in a separate VASP calculation using the LEPSILON or LCALCEPS tag. The dipole-dipole part of the interatomic force-constants is evaluated using an Ewald summation with the number of {G} vectors determined by the cutoff length ( PHON_G_CUTOFF ). Mind: Only available as of VASP 6.3.2. Related tags and articles QPOINTS , LPHON_DISPERSION , PHON_NWRITE , LPHON_POLAR , PHON_DIELECTRIC , PHON_G_CUTOFF

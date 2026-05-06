@@ -1,5 +1,0 @@
-Title: ELPH_SELFEN_BAND_START
-URL: https://vasp.at/wiki/ELPH_SELFEN_BAND_START
-============================================================
-ELPH_SELFEN_BAND_START = [real] Default:
-ELPH_SELFEN_BAND_START = 1 Description: Compute the electron self-energy due to electron-phonon coupling only for bands with indices starting from ELPH_SELFEN_BAND_START . Mind: Available as of VASP 6.5.0 This tag can be used in combination with ELPH_SELFEN_KPTS , ELPH_SELFEN_IKPT or ELPH_SELFEN_BAND_STOP to limit the calculation of the electron-phonon self-energy to a particular set of k -points and bands. Related tags and articles Bandstructure renormalization Transport calculations ELPH_RUN

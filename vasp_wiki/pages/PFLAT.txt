@@ -1,5 +1,0 @@
-Title: PFLAT
-URL: https://vasp.at/wiki/PFLAT
-============================================================
-PMASS = [logical] Description: Control flag for the output of the profiling routines. If specified as
-PMASS = .TRUE. , only the flat profile is printed out in the OUTCAR .

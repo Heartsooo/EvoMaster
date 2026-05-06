@@ -1,5 +1,0 @@
-Title: LVDWSCS
-URL: https://vasp.at/wiki/LVDWSCS
-============================================================
-LVDWSCS = .TRUE. | .FALSE. Default:
-LVDWSCS = .FALSE. Description: LVDWSCS activates the self-consistent screening in Tkatchenko-Scheffler method . Related tags and articles IVDW , Tkatchenko-Scheffler method , Self-consistent screening in Tkatchenko-Scheffler method

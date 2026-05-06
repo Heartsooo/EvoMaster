@@ -1,4 +1,0 @@
-Title: VDW_C6AU
-URL: https://vasp.at/wiki/VDW_C6AU
-============================================================
-VDW_C6AU = [real (array)] Description: VDW_C6AU defines the C_6 parameters ( {Hartree} {bohr}^{6} ) for each species defined in the POSCAR file. VDW_C6AU sets the C_6 parameters ( {Hartree} {bohr}^{6} ) for each species defined in the POSCAR file for the Tkatchenko-Scheffler and Many-body dispersion energy methods. Related tags and articles VDW_C6 , Tkatchenko-Scheffler method , Many-body dispersion energy

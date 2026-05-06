@@ -1,9 +1,0 @@
-Title: Login required
-URL: https://vasp.at/wiki/Construction:WPLASMAI
-============================================================
-Please
-log in
-to view other pages.
-Return to
-Main page
-.

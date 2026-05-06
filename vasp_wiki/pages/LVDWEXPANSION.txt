@@ -1,5 +1,0 @@
-Title: LVDWEXPANSION
-URL: https://vasp.at/wiki/LVDWEXPANSION
-============================================================
-LVDWEXPANSION = .TRUE. | .FALSE. Default:
-LVDWEXPANSION = .FALSE. Description: LVDWEXPANSION decides whether to write the two- to six- body contributions to MBD dispersion energy in the OUTCAR file. Related tags and articles IVDW , Many-body dispersion energy , LSCSGRAD

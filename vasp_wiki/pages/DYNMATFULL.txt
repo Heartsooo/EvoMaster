@@ -1,6 +1,0 @@
-Title: DYNMATFULL
-URL: https://vasp.at/wiki/DYNMATFULL
-============================================================
-This file contains the eigenvalues, eigenvectors from the diagonalization of the dynamic matrix. Initial positions and atomic information of the system are also stored in this file.
-This file is only set if
-PHON_NSTRUCT <0 is set.

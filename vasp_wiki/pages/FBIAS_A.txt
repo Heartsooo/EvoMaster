@@ -1,4 +1,0 @@
-Title: FBIAS_A
-URL: https://vasp.at/wiki/FBIAS_A
-============================================================
-FBIAS_A = [real (array)] Description: Defines the step height for the bias potential in eV . FBIAS_A defines the height of the step ( A_{μ} ) in the Fermi-like step-shaped bias potential of the following form: V(_1,,_{M_4}) = Σ_{μ=1}^{M_4}{A_{μ}}{1+{exp} [-D_{μ}({(q)}{_{0μ}} -1) ]}, \; where the sum runs over all ( M_4 ) coordinates the potential acts upon, which are defined in the ICONST file by setting the status to 4. The units of A_{μ} are eV . The number of items defined via FBIAS_A must be equal to M_4 , otherwise the calculation terminates with an error message. Related tags and articles FBIAS_R0 , FBIAS_D , ICONST , Biased molecular dynamics

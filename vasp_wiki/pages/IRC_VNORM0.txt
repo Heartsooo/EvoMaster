@@ -1,5 +1,0 @@
-Title: IRC_VNORM0
-URL: https://vasp.at/wiki/IRC_VNORM0
-============================================================
-IRC_VNORM0 = real Default:
-IRC_VNORM0 = 0.002 Description: The constant velocity vector (in Å/fs) in an IRC calculation . In the damped-velocity-Verlet algorithm for IRC calculations , the damping is realized via rescaling the velocity vector to a constant value (in Å/fs) defined via the parameter IRC_VNORM0 . Related tags and articles IRC calculations , IRC_DIRECTION , IRC_STOP , IRC_DELTA0 , IRC_MINSTEP , IRC_MAXSTEP

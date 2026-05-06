@@ -1,8 +1,0 @@
-Title: LANCZOSTHR
-URL: https://vasp.at/wiki/LANCZOSTHR
-============================================================
-Deprecated:
-This feature is deprecated and will be removed in a future release. Please use
-BSEPREC instead.
-LANCZOSTHR = [real] Default:
-LANCZOSTHR = 10^{-3} Description: LANCZOSTHR is used by the BSE Lanczos algorithm to stop the iterative procedure, once the dielectric function has reached numerical convergence. The difference between the dielectric function at two consecutive iterations, i and i+1 , is computed as root-mean-square over the frequency grid {RMS}[ε] = Σ_{j=1^N{1}{N}[ε_{i}(ω_j)-ε_{i+1}(ω_j)]^2} and once {RMS}[ε] = LANCZOSTHR the iterative algorithm stops. Related tag and articles BSE , BSE calculations , Bethe-Salpeter equations

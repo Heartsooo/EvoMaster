@@ -1,4 +1,0 @@
-Title: FBIAS_D
-URL: https://vasp.at/wiki/FBIAS_D
-============================================================
-FBIAS_D = [real (array)] Description: Sets the slope of the bias potential. FBIAS_D defines the parameter D_{μ} , which controls the slope of the central part of the Fermi-like step-shaped bias potential of the following form: V(_1,,_{M_4}) = Σ_{μ=1}^{M_4}{A_{μ}}{1+{exp} [-D_{μ}({(q)}{_{0μ}} -1) ]}, \; where the sum runs over all ( M_4 ) coordinates the potential acts upon, which are defined in the ICONST -file by setting the status to 4. The parameters D_{μ} are dimensionless. The number of items defined via FBIAS_D must equal to M_4 , otherwise the calculation terminates with an error message. Related tags and articles FBIAS_R0 , FBIAS_A , ICONST , Biased molecular dynamics

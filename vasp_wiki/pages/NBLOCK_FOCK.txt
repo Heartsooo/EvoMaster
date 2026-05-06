@@ -1,7 +1,0 @@
-Title: NBLOCK FOCK
-URL: https://vasp.at/wiki/NBLOCK_FOCK
-============================================================
-NBLOCK_FOCK = [integer] Default:
-NBLOCK_FOCK = 64 Description: NBLOCK_FOCK sets the number of orbitals that are processed simultaneously when computing the action of the Fock potential. Tuning this parameter can significantly affect both the performance and memory consumption of hybrid functional calculations. Especially on GPUs, NBLOCK_FOCK should be tuned carefully to achieve optimal performance. Instead of computing the action of the Fock potential on one orbital at a time, up to NBLOCK_FOCK orbitals are gathered and processed at once. This enables the use of matrix-matrix operations rather than matrix-vector operations, which is beneficial for performance on modern hardware. The default values depend on the build type: CPU build :
-NBLOCK_FOCK = 64. When VASP is compiled with OpenMP support and threading is active ( OMP_NUM_THREADS > 1), the default is automatically set to 2× OMP_NUM_THREADS . GPU build (OpenACC/OpenMP offload):
-NBLOCK_FOCK = 32. Tip: On GPU architectures, the optimal value of NBLOCK_FOCK depends strongly on the specific hardware and the number of bands. It is recommended to experiment with values in the range 16-64. Related tags and articles NSIM , LHFCALC , AEXX , HFSCREEN , NCORE , NPAR , KPAR , PRECFOCK

@@ -1,7 +1,0 @@
-Title: KGAMMA
-URL: https://vasp.at/wiki/KGAMMA
-============================================================
-KGAMMA = [logical] Default:
-KGAMMA = .TRUE. Description: Whether the automatically generated k -point mesh is centered at the Γ point. If
-KGAMMA = .TRUE. (default), the k -point mesh is centered at the Γ point, i.e., it always includes the Γ point. If
-KGAMMA = .FALSE. , the mesh is shifted away from the Γ point as in a Monkhorst-Pack grid. The number of k points on the mesh is controlled by KSPACING and KSPACING_OPT . Important: If a KPOINTS file is present, VASP ignores the KGAMMA and KSPACING tags. Likewise, if a KPOINTS_OPT file is present, VASP ignores KGAMMA and KSPACING_OPT . Related tags and articles KSPACING , KSPACING_OPT Workflows that use this tag

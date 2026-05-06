@@ -1,6 +1,0 @@
-Title: DFTD4_MODEL
-URL: https://vasp.at/wiki/DFTD4_MODEL
-============================================================
-DFTD4_MODEL = [string] Default:
-DFTD4_MODEL = D4 Description: DFTD4_MODEL defines the model in the DFT-D4 method. Mind: Available as of VASP 6.6.0 DFTD4_MODEL defines the model (
-DFTD4_MODEL =D4 or D4S) in the DFT-D4 method. Related tags and articles IVDW , DFT-D4

@@ -1,5 +1,0 @@
-Title: INMRPRINT
-URL: https://vasp.at/wiki/INMRPRINT
-============================================================
-INMRPRINT = -1 | 0 | 1 Default:
-INMRPRINT = 0 Description: Determines the verbosity of the NMR output. Mind: Available as of VASP.6.6.0. The NMR output is written to the OUTCAR . Setting INMRPRINT 0 is the default, while 1 prints more, and -1 prints less. Related tags and articles LCHIMAG , LNMRLEG

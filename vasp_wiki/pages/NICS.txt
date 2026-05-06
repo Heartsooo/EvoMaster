@@ -1,6 +1,0 @@
-Title: NICS
-URL: https://vasp.at/wiki/NICS
-============================================================
-The
-NICS file contains the NMR nucleus-independent chemical shielding (NICS) in ppm. It is written if
-NUCIND = .TRUE. is set and no POSNICS is present. The format is the same as CHGCAR with a header to define the grid and then 9 blocks that correspond to the indices of the chemical shielding tensor σ_{ij} : σ_{xx} , σ_{xy} , σ_{xz} , σ_{yx} , σ_{yy} , σ_{yz} , σ_{zx} , σ_{zy} , and σ_{zz} . Related tags and articles LCHIMAG , NUCIND , LNICSALL

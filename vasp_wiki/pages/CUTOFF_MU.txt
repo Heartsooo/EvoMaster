@@ -1,6 +1,0 @@
-Title: CUTOFF_MU
-URL: https://vasp.at/wiki/CUTOFF_MU
-============================================================
-CUTOFF_MU = [real] ( [real] ) Default:
-CUTOFF_MU = 0.8 * Fermi level of a system with NUM_WANN orbitals occupied Description: CUTOFF_MU specifies the energy cutoff μ in eV for the function specified by CUTOFF_MU . The value μ of CUTOFF_MU corresponds to the energy cutoff of the cutoff function used to obtain Wannier functions with the one-shot method . The meaning of μ depends on the CUTOFF_TYPE tag. For spin-polarized calculations (
-ISPIN = 2 ), two values can be specified for CUTOFF_MU , one for each spin channel. If only a single value is specified, it will be used for both spin channels. The default value is computed by first determining the Fermi level of the system if it had NUM_WANN orbitals occupied and multiplying by 0.8. This gives reasonable freedom to determine the unitary transformation U_{mn{k}} from Bloch states to Wannier functions. Tip: Careful tuning of this parameter is required to obtain a good Wannierization. Related tags and articles CUTOFF_TYPE , CUTOFF_SIGMA , LSCDM , LOCPROJ

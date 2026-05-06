@@ -1,5 +1,0 @@
-Title: LVDW_EWALD
-URL: https://vasp.at/wiki/LVDW_EWALD
-============================================================
-LVDW_EWALD = logical Default:
-LVDW_EWALD = .FALSE. Description: LVDW_EWALD decides whether the lattice summation in E_{disp} expression by means of Ewald's summation is computed. LVDW_EWALD decides whether the lattice summation in E_{disp} expression by means of Ewald's summation is computed in the pairwise van der Waals corrections schemes DFT-D2 , DFT-ulg and Tkatchenko-Scheffler method . Related tags and articles DFT-D2 , DFT-ulg , Tkatchenko-Scheffler method

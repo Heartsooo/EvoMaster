@@ -1,7 +1,0 @@
-Title: LNMRSHIELD
-URL: https://vasp.at/wiki/LNMRSHIELD
-============================================================
-LNMRSHIELD = .TRUE.| .FALSE. Default:
-LNMRSHIELD = .TRUE. Description: LNMRSHIELD controls whether the shielding or shift is printed. Mind: Available as of VASP 6.6.0 The chemical shielding σ_{ij} is printed by default (i.e.
-LNMRSHIELD = .TRUE.) in the OUTCAR file. When
-LNMRSHIELD = .FALSE. is set, the chemical shift δ_{ij} is printed instead ( δ_{i,j} = -σ_{ij} ), as was the default prior to VASP.6.6.0. Mind: The NICS is always shielding and is unaffected by LNMRSHIELD . Related tags and articles LCHIMAG

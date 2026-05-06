@@ -1,6 +1,0 @@
-Title: ML_SRPOT_N0
-URL: https://vasp.at/wiki/ML_SRPOT_N0
-============================================================
-ML_SRPOT_N0 = [integer] Default:
-ML_SRPOT_N0 = 10 Description: Specifies the exponent of a soft repulsive exponential potential used as an auxiliary potential in thermodynamic integration ( VCAIMAGES ). We advise to use an exponent that resembles a Gaussian function (
-ML_SRPOT_N0 =2). Related tags and articles ML_LMLFF , ML_LCOUPLE , ML_ICOUPLE , ML_RCOUPLE , ML_NATOM_COUPLED , ML_LEMPPOT , ML_EMPPOT_RCUT , ML_SRPOT_B0 , ML_SRPOT_S0 , ML_MOPOT_NM , ML_MOPOT_DM , ML_MOPOT_RM , ML_MOPOT_RKM , ML_MOPOT_IJM

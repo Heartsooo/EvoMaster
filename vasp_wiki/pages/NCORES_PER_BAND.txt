@@ -1,5 +1,0 @@
-Title: NCORES PER BAND
-URL: https://vasp.at/wiki/NCORES_PER_BAND
-============================================================
-NCORES_PER_BAND = [integer] Default:
-NCORES_PER_BAND = 1 Description: NCORES_PER_BAND determines the number of compute cores that work on an individual orbital. Deprecated: Use the equivalent and more compact NCORE instead.

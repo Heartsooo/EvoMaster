@@ -1,8 +1,0 @@
-Title: VDW_A2
-URL: https://vasp.at/wiki/VDW_A2
-============================================================
-VDW_A2 = [real] Description: VDW_A2 sets the offset a_{2} of the critical radii in the rational Becke-Johnson damping function of the DFT-D3 and DFT-D4 methods. VDW_A2 allows to set the offset a_{2} of the critical radii in the rational Becke-Johnson damping function: DFT-D3 (
-IVDW =12). simple-DFT-D3 (
-IVDW =15 with
-SDFTD3_DAMPING =rational, mrational, or optimizedpower). DFT-D4 (
-IVDW =13). Related tags and articles IVDW , VDW_A1 , DFT-D3 , simple-DFT-D3 , DFT-D4

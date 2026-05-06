@@ -1,5 +1,0 @@
-Title: Template:VIDEO
-URL: https://vasp.at/wiki/Tempalte:VIDEO
-============================================================
-Redirect to:
-Template:Video

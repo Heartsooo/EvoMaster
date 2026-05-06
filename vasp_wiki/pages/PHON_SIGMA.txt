@@ -1,5 +1,0 @@
-Title: PHON_SIGMA
-URL: https://vasp.at/wiki/PHON_SIGMA
-============================================================
-PHON_SIGMA = [real] Default:
-PHON_SIGMA = 0.0005 eV Description: Set the width of the Gaussian function in eV to compute the phonon density of states. The density of states is computed between [ω_{{min}}-5σ,ω_{{max}}+5σ] with ω_{{min}} and ω_{{max}} the lowest and highest phonon frequency and σ the broadening PHON_SIGMA . The number of energy points in this interval is set by PHON_NEDOS . Mind: Only available as of VASP 6.4.0. Related tags and articles QPOINTS , PHON_NWRITE , LPHON_POLAR , PHON_DIELECTRIC , PHON_BORN_CHARGES , PHON_G_CUTOFF

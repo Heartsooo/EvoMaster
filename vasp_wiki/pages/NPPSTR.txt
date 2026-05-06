@@ -1,4 +1,0 @@
-Title: NPPSTR
-URL: https://vasp.at/wiki/NPPSTR
-============================================================
-IGPAR = [integer] Description: NPPSTR specifies the number of k-points on the strings in the IGPAR direction. NPPSTR specifies the number of k-points on the strings {k}_{j} = {k}_{} + j{G}_{}/{NPPSTR} (with j=0,..,{NPPSTR}-1 ). See also LBERRY . Related tags and articles IGPAR , LBERRY

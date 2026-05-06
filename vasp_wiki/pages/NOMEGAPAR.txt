@@ -1,5 +1,0 @@
-Title: NOMEGAPAR
-URL: https://vasp.at/wiki/NOMEGAPAR
-============================================================
-NOMEGAPAR = [integer] Default:
-NOMEGAPAR = NOMEGA used in low scaling GW and RPA/ACFDT calculations. Description: NOMEGAPAR available as of VASP.6, specifies the number of processor groups sharing the same imaginary frequency grid points. Related tags and articles NTAUPAR , NOMEGA

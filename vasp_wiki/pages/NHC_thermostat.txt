@@ -1,5 +1,0 @@
-Title: Nose-Hoover-chain thermostat
-URL: https://vasp.at/wiki/NHC_thermostat
-============================================================
-Redirect to:
-Nosé-Hoover chain thermostat

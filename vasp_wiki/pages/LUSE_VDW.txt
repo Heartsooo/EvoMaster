@@ -1,6 +1,0 @@
-Title: LUSE_VDW
-URL: https://vasp.at/wiki/LUSE_VDW
-============================================================
-LUSE_VDW = [logical] Default:
-LUSE_VDW = .FALSE. Description:
-LUSE_VDW =.TRUE. switches on the use of a nonlocal vdW-DF functional. These functionals depend on the electron density at two points in space and model long-range van der Waals (dispersion) correlation effects. Mind: In versions of VASP prior to 6.4.0, a meta-GGA functional (e.g., SCAN) could be combined only with the rVV10 nonlocal functional. Conversely, a GGA functional could be combined only with the original nonlocal functional of Dion et al. . This restriction is lifted since VASP.6.4.0 thanks to the introduction of the IVDW_NL tag. Related tags and articles GGA , METAGGA , IVDW_NL , LSPIN_VDW , Nonlocal vdW-DF functionals

@@ -1,5 +1,0 @@
-Title: ESF_CONV
-URL: https://vasp.at/wiki/ESF_CONV
-============================================================
-ESF_CONV = [real] Default:
-ESF_CONV = 0.01 Description: Sets the convergence criterion for ESF_SPLINES , i.e., the threshold for the energy difference between two interpolations (in eV). If the energy between two interpolated k-point grids is less than ESF_CONV the calculation is considered to be converged. If the threshold has not been reached within ESF_NINTER iterations VASP will print a warning about insufficient convergence. Related tags and articles ESF_SPLINES , ESF_NINTER , LOPTICS
