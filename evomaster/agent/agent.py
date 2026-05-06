@@ -16,7 +16,7 @@ from typing import TYPE_CHECKING, Any
 from pydantic import BaseModel, Field
 
 from .context import ContextConfig, ContextManager
-from evomaster.utils.llm import ContextOverflowError, LLMResponse
+from evomaster.utils.llm import ContextOverflowError
 from evomaster.utils.types import (
     AssistantMessage,
     Dialog,
@@ -27,7 +27,6 @@ from evomaster.utils.types import (
     UserMessage,
 )
 from evomaster.utils.llm import build_multimodal_content
-from .finish_diagnostics import build_finish_detail, is_valid_natural_finish
 
 if TYPE_CHECKING:
     from evomaster.utils import BaseLLM
@@ -203,7 +202,7 @@ class BaseAgent(ABC):
 
         return self.trajectory
 
-    def continue_run(self, user_message: str | list[dict[str, Any]], on_step=None):
+    def continue_run(self, user_message: str, on_step=None):
         """Append a user message to the existing dialog and continue the step loop.
 
         Unlike run(), this does not call _initialize() and preserves the existing dialog context.
@@ -211,7 +210,7 @@ class BaseAgent(ABC):
         continues the conversation after the previous round finishes.
 
         Args:
-            user_message: New user message (text or multimodal content blocks)
+            user_message: New user message
             on_step: Per-step callback with signature (StepRecord, step_number, max_steps) -> None
 
         Returns:
@@ -394,26 +393,19 @@ class BaseAgent(ABC):
 
         # If there are no tool calls
         if not assistant_message.tool_calls:
-            response = LLMResponse(
-                content=assistant_message.content if isinstance(assistant_message.content, str) else '',
-                reasoning_content=getattr(assistant_message, 'reasoning_content', None),
-                tool_calls=assistant_message.tool_calls,
-                finish_reason=(assistant_message.meta or {}).get('finish_reason'),
-                usage=(assistant_message.meta or {}).get('usage', {}),
-                meta=assistant_message.meta or {},
-            )
-
             # Check whether the Agent has tool calling enabled
-            if (hasattr(self, 'enable_tools') and not self.enable_tools) or self.config.finish_on_text_response:
+            # If tools are not enabled (enable_tools=False), finish directly
+            # because this type of Agent only needs to provide an answer without tool calls
+            # Similarly, when finish_on_text_response=True, also finish directly (conversational scenario)
+            if (hasattr(self, 'enable_tools') and not self.enable_tools) or \
+               self.config.finish_on_text_response:
                 self.trajectory.add_step(step_record)
+                # Append and save this step to the trajectory file (including tool_responses)
                 self._append_trajectory_entry(dialog_for_query, step_record)
-                return True
+                return True  # Finish directly
 
-            if is_valid_natural_finish(response):
-                self._handle_no_tool_call(valid_finish=True)
-            else:
-                finish_detail = build_finish_detail(response)
-                self._handle_no_tool_call(valid_finish=False, finish_detail=finish_detail)
+            # If tools are enabled but no tool calls were made, prompt to continue
+            self._handle_no_tool_call()
             self.trajectory.add_step(step_record)
             # Append and save this step to the trajectory file (including tool_responses)
             self._append_trajectory_entry(dialog_for_query, step_record)
@@ -585,25 +577,14 @@ class BaseAgent(ABC):
             print(obs_display)
             print("-" * 60)
 
-    def _handle_no_tool_call(self, valid_finish: bool = False, finish_detail: dict[str, Any] | None = None) -> None:
-        """Handle the case when there are no tool calls."""
-        if valid_finish:
-            prompt = (
-                "You returned plain text without tool calls. If the task is truly complete, call the finish tool explicitly.\n"
-                "Do not stop with plain text alone."
-            )
-        else:
-            detail_text = ''
-            if finish_detail:
-                detail_text = f" Invalid natural finish: {finish_detail.get('kind')}: {finish_detail.get('message')}\n"
-            prompt = (
-                "Please continue working on the task.\n"
-                + detail_text +
-                "For workflow tasks, do not stop after only inspecting the workspace or giving a feasibility-only text answer.\n"
-                "You must first attempt the most relevant tools or skills available for this task.\n"
-                "When the task is actually complete, use the finish tool.\n"
-                "IMPORTANT: You should not ask for human help."
-            )
+    def _handle_no_tool_call(self) -> None:
+        """Handle the case when there are no tool calls"""
+        # Add a user message prompting to continue
+        prompt = (
+            "Please continue working on the task.\n"
+            "When you have completed the task, use the finish tool.\n"
+            "IMPORTANT: You should not ask for human help."
+        )
         self.current_dialog.add_message(UserMessage(content=prompt))
 
 
@@ -714,11 +695,11 @@ class BaseAgent(ABC):
 
         self.logger.info("Context reset to initial state")
 
-    def add_user_message(self, content: str | list[dict[str, Any]]) -> None:
+    def add_user_message(self, content: str) -> None:
         """Add a user message to the current dialog
 
         Args:
-            content: User message content (text or multimodal content blocks)
+            content: User message content
         """
         if self.current_dialog is None:
             raise ValueError(
@@ -727,15 +708,7 @@ class BaseAgent(ABC):
 
         user_message = UserMessage(content=content)
         self.current_dialog.add_message(user_message)
-        if isinstance(content, str):
-            preview = content[:50]
-        elif isinstance(content, list):
-            image_count = sum(1 for x in content if isinstance(x, dict) and x.get('type') == 'image_url')
-            text_count = sum(1 for x in content if isinstance(x, dict) and x.get('type') == 'text')
-            preview = f"[multimodal text_blocks={text_count} image_blocks={image_count}]"
-        else:
-            preview = str(content)[:50]
-        self.logger.debug(f"Added user message: {preview}...")
+        self.logger.debug(f"Added user message: {content[:50]}...")
 
     def add_assistant_message(self, content: str, tool_calls: list | None = None) -> None:
         """Add an assistant message to the current dialog
