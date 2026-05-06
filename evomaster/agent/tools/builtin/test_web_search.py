@@ -6,10 +6,7 @@ from evomaster.agent.tools import create_registry
 
 
 def _tool():
-    from evomaster.agent.tools.mcp import WebSearchTool
-    registry = create_registry(builtin_names=[])
-    registry.register(WebSearchTool())
-    return registry.get_tool('web_search')
+    return create_registry(builtin_names=['web_search']).get_tool('web_search')
 
 
 def test_web_search_requires_api_key():
@@ -32,7 +29,7 @@ def test_web_search_returns_compact_results():
     }
 
     with patch.dict(os.environ, {'SEARCHAPI_API_KEY': 'dummy'}, clear=False):
-        with patch('evomaster.agent.tools.mcp.web_search.httpx.Client') as client_cls:
+        with patch('evomaster.agent.tools.builtin.web_search.httpx.Client') as client_cls:
             client = client_cls.return_value.__enter__.return_value
             client.get.return_value = mock_response
             obs, info = tool.execute(

@@ -7,18 +7,16 @@ The Tools module provides the tool system for Agent, including builtin tools and
 ```
 evomaster/agent/tools/
 ├── base.py           # BaseTool, ToolRegistry
-├── builtin/          # Pure builtin tools
+├── builtin/          # Builtin tools
 │   ├── bash.py       # BashTool
 │   ├── editor.py     # EditorTool
 │   ├── think.py      # ThinkTool
 │   └── finish.py     # FinishTool
 ├── skill.py          # SkillTool
-└── mcp/              # MCP integration and MCP-backed tool wrappers
+└── mcp/              # MCP integration
     ├── mcp.py            # MCPTool
     ├── mcp_connection.py # Connection handling
-    ├── mcp_manager.py    # MCPToolManager
-    ├── web_search.py     # WebSearchTool
-    └── paper_search.py   # PaperSearchTool
+    └── mcp_manager.py    # MCPToolManager
 ```
 
 ## BaseTool
