@@ -1,0 +1,25 @@
+Title: VDW_BETA
+URL: https://vasp.at/wiki/VDW_BETA
+============================================================
+VDW_BETA = [real] Description: VDW_BETA sets the offset for the damping radius or the power for the zero-damping component in the DFT-D3 methods implemented in the simple-DFT-D3 package. Mind: Available as of VASP 6.6.0 VDW_BETA allows to set the value of a parameter in the following versions of DFT-D3 (only available in the simple-DFT-D3 package): Offset β for the damping radius in the modified zero-damping function (
+IVDW =15 with
+SDFTD3_DAMPING =mzero). Power β for the zero-damping component in the optimized-power damping function (
+IVDW =15 with
+SDFTD3_DAMPING =optimizedpower). Note that β-6 corresponds to the values of β reported in Ref.
+
+.
+
+Related tags and articles
+IVDW
+,
+SDFTD3_DAMPING
+,
+simple-DFT-D3
+Examples that use this tag
+References
+↑
+J. Witte, N. Mardirossian, J. B. Neaton, and M. Head-Gordon,
+Assessing DFT-D3 Damping Functions Across Widely Used Density Functionals: Can We Do Better?
+, J. Chem. Theory Comput.
+13
+, 2043 (2017).

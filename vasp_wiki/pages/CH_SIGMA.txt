@@ -1,0 +1,5 @@
+Title: CH_SIGMA
+URL: https://vasp.at/wiki/CH_SIGMA
+============================================================
+CH_SIGMA = [real] Default:
+CH_SIGMA = 0.3 Description: This tag specifies the width of the Gaussian broadening in eV of the imaginary dielectric function within the supercell core-hole method. At the moment only Gaussian broadening of the dielectric function is implemented within the supercell core-hole method. Related tags and articles CH_LSPEC , CH_NEDOS , CH_AMPLIFICATION , ICORELEVEL , CLNT , CLN , CLL , CLZ

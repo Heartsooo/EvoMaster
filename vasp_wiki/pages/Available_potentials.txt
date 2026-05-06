@@ -1,0 +1,5 @@
+Title: Available PAW potentials
+URL: https://vasp.at/wiki/Available_potentials
+============================================================
+Redirect to:
+Available pseudopotentials

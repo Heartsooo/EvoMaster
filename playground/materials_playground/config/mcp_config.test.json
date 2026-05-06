@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "mat_struct_db": {
+      "headers": {},
+      "transport": "http",
+      "url": "http://chvz1424099.bohrium.tech:50001/mcp"
+    },
+    "mat_sn": {
+      "transport": "sse",
+      "url": "http://bohrium-mcp-internal.dp.tech:11003/sse",
+      "headers": {}
+    }
+  }
+}

@@ -1,0 +1,56 @@
+Title: LIBXC2
+URL: https://vasp.at/wiki/LIBXC2
+============================================================
+LIBXC2 = [string] or [integer] Description: LIBXC2 specifies the correlation functional from the library of exchange-correlation functionals Libxc
+
+.
+LIBXC2 can be used only if the functional specified with
+LIBXC1 corresponds to only exchange and not to exchange and correlation.
+A detailed explanation of how to use
+LIBXC1 and
+LIBXC2 and examples can be found on the
+LIBXC1 page.
+Related Tags and Sections
+LIBXC1
+,
+LIBXC1_Pn
+,
+LIBXC2_Pn
+,
+LTBOUNDLIBXC
+,
+GGA
+,
+METAGGA
+,
+LHFCALC
+,
+AEXX
+,
+ALDAX
+,
+ALDAC
+,
+AGGAX
+,
+AGGAC
+,
+List of hybrid functionals
+Examples that use this tag
+References
+↑
+M. A. L. Marques, M. J. T. Oliveira, and T. Burnus, Comput. Phys. Commun.,
+183
+, 2272 (2012).
+↑
+S. Lehtola, C. Steigemann, M. J. T. Oliveira, and M. A. L. Marques, SoftwareX,
+7
+, 1 (2018).
+↑
+F. Tran, S. Lehtola, S. Pittalis, and M. A. L. Marques,
+Semi-Local Exchange-Correlation Approximations in Density Functional Theory
+, arXiv
+2602.17333
+(2026).
+↑
+https://libxc.gitlab.io

@@ -1,0 +1,78 @@
+Title: Partial DOS of CO on Ni 111 surface
+URL: https://vasp.at/wiki/Partial_DOS_of_CO_on_Ni_111_surface
+============================================================
+Overview
+>
+Ni 100 surface relaxation
+>
+Ni 100 surface DOS
+>
+Ni 100 surface bandstructure
+>
+Ni 111 surface relaxation
+>
+CO on Ni 111 surface
+>
+Ni 111 surface high precision
+>
+partial DOS of CO on Ni 111 surface
+>
+vibrational frequencies of CO on Ni 111 surface
+>
+STM of graphite
+>
+STM of graphene
+>
+collective jumps of a Pt adatom on fcc-Pt (001): Nudged Elastic Band Calculation
+>
+List of tutorials
+Task
+Calculation of the work function and partial DOS of a CO@Ni (111) surface, adsorbed on top.
+Input
+POSCAR
+Ni - (111) + CO ontop
+3.53000000000000
+0.7071067800000000 0.0000000000000000 0.0000000000000000
+-0.3535533900000000 0.6123724000000000 0.0000000000000000
+0.0000000000000000 0.0000000000000000 5.1961523999999998
+5 1 1
+Selective dynamics
+Direct
+0.0000000000000000 0.0000000000000000 0.0000000000000000 F F F
+0.3333333300000021 0.6666666699999979 0.1111111100000031 F F F
+0.6666666699999979 0.3333333300000021 0.2222222199999990 F F F
+0.0000000000000000 0.0000000000000000 0.3330391292438326 T T T
+0.3333333300000021 0.6666666699999979 0.4445422014835692 T T T
+0.3333333300000021 0.6666666699999979 0.5402025044116211 T T T
+0.3333333300000021 0.6666666699999979 0.6031536532245922 T T T
+
+0.00000000E+00 0.00000000E+00 0.00000000E+00
+0.00000000E+00 0.00000000E+00 0.00000000E+00
+0.00000000E+00 0.00000000E+00 0.00000000E+00
+0.00000000E+00 0.00000000E+00 0.00000000E+00
+0.00000000E+00 0.00000000E+00 0.00000000E+00
+0.00000000E+00 0.00000000E+00 0.00000000E+00
+0.00000000E+00 0.00000000E+00 0.00000000E+00
+N.B.: this
+POSCAR is essentially the result (
+CONTCAR file) of the relaxation performed in the
+CO on Ni 111 surface
+example.
+INCAR general:
+ENMAX = 400
+SYSTEM = CO adsorption on Ni(111)
+ISMEAR = -5
+ALGO = Fast
+
+LDOS:
+LORBIT = 11
+
+workfunction:
+IDIPOL = 3
+LDIPOL = .TRUE.
+LVHAR = .TRUE. #
+LVTOT = .TRUE. For the calculation of the DOS we use a tetrahedron method with Blöchl corrections (
+ISMEAR =-5). By setting
+LVHAR = .TRUE. the Hartree part of the local potential is written to the file LOCPOT . By setting
+LVTOT = .TRUE. the total local potential is written tot the file LOCPOT . By setting
+IDIPOL =3 dipole corrections in the direction of the third lattice vector are enabled. We have active dipole corrections to potential (=dipole layer). KPOINTS k-points 0 Monkhorst-Pack 9 9 1 0 0 0 Calculation DOS The lm-decomposed DOS helps to analyze the bonding: CO 5σ, 1π, 2π^{*} bonds. From comparison with substrate LDOS: Hybridization with Ni- d_{3z^{2}-r^{2}} . No interaction with d_{xy} due to symmetry. Work function The planar average of the potential for this example should look like the following: ε_{{F}} = 1.65 eV (from OUTCAR file. Vacuum-potential at 8.24/6.77 eV: Φ_{{CO}}=6.58,Φ_{{clean}}=5.11 eV. Too small result for clean surface due to too small vacuum ... Download COonNi111_LDOS.tgz Overview > Ni 100 surface relaxation > Ni 100 surface DOS > Ni 100 surface bandstructure > Ni 111 surface relaxation > CO on Ni 111 surface > Ni 111 surface high precision > partial DOS of CO on Ni 111 surface > vibrational frequencies of CO on Ni 111 surface > STM of graphite > STM of graphene > collective jumps of a Pt adatom on fcc-Pt (001): Nudged Elastic Band Calculation > List of tutorials

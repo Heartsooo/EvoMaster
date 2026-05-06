@@ -1,0 +1,5 @@
+Title: Band-decomposed charge densities
+URL: https://vasp.at/wiki/Band_decomposed_charge_densities
+============================================================
+Redirect to:
+Partial charge densities and STM simulations

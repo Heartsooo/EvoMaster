@@ -1,0 +1,5 @@
+Title: FMP_SNUMBER
+URL: https://vasp.at/wiki/FMP_SNUMBER
+============================================================
+FMP_SNUMBER = integer Default:
+FMP_SNUMBER = 10 Description: Number of slabs perpendicular to the temperature gradient in the Müller-Plathe method . FMP_SNUMBER defines the number of slabs perpendicular to the lattice vector {a}_i along which the gradient T/ {a}_i is created during the reverse nonequilibrium molecular dynamics run using the Müller-Plathe method . Mind: This tag will only be available from VASP 6.4.4 Related tags and articles Müller-Plathe method , FMP_ACTIVE , FMP_DIRECTION , FMP_SWAPNUM , FMP_PERIOD

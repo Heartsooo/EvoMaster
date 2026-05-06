@@ -1503,6 +1503,8 @@ class BasePlayground:
 
         # 9. Register MCP tools to the main tool registry
         manager.register_tools(self.tools)
+        if self.session is not None:
+            setattr(self.session, "_mcp_manager", manager)
 
         tool_count = len(manager.get_tool_names())
         server_count = len(manager.get_server_names())

@@ -1,0 +1,37 @@
+Title: LPEAD
+URL: https://vasp.at/wiki/LPEAD
+============================================================
+LPEAD = .TRUE. | .FALSE Default:
+LPEAD = .FALSE. Description: for
+LPEAD =.TRUE., the derivative of the cell-periodic part of the orbitals w.r.t. k , |∇ k u n k ⟩, is calculated using finite differences ("perturbation expansion after discretization" (PEAD)
+
+).
+The derivative of the cell-periodic part of the orbitals w.r.t. k
+, k
+, |∇ k u n k
+⟩, may be written as:
+|{_{k}} u_{n{k}} =
+Σ_{n≠ n'}
+{| u_{n'{k}} u_{n'{k}} |
+{[H({k})-ε_{n{k}}S({k})]}{ {k}}
+| u_{n{k}} }{ε_{n{k}}-ε_{n'{k}}}
+where H( k
+) and S( k
+) are the Hamiltonian and overlap operator for the cell-periodic part of the orbitals, and the sum over n
+´ must include a sufficiently large number of unoccupied states.
+It may also be found as the solution to the following linear Sternheimer equation (see
+LEPSILON
+):
+[H({k})-ε_{n{k}}S({k})]
+|{_{k}} u_{n{k}}
+=-{[H({k})-ε_{n{k}}S({k})]}
+{ {k}}|u_{n{k}}
+Alternatively one may compute
+_{{k}} u_{n{k}}
+from finite differences (
+LPEAD =.TRUE.): { | u_{n{k}_j} }{ k}= {ie}{2Δ k} Σ^N_{m=1} [ | u_{m{k}_{j+1}} S^{-1}_{mn}({k}_j,{k}_{j+1}) - | u_{m{k}_{j-1}} S^{-1}_{mn}({k}_j,{k}_{j-1})] where m runs over the N occupied bands of the system, Δ k = k j+1 - k j , and S_{nm}({k}_j,{k}_{j+1})= u_{n{k}_{j}}| u_{m{k}_{j+1}} . As mentioned in the context of the self-consistent response to finite electric fields one may derive analoguous expressions for |∇ k u n k ⟩ using higher-order finite difference approximations. When
+LPEAD =.TRUE., VASP will compute |∇ k u n k ⟩ using the aforementioned finite difference scheme. The order of the finite difference approximation can be specified by means of the IPEAD -tag (default:
+IPEAD =4). These tags may be used in combination with
+LOPTICS =.TRUE. and
+LEPSILON =.TRUE.. N.B. Please note that
+LPEAD = .TRUE. is not supported for metallic systems . Related tags and articles IPEAD , LEPSILON , LOPTICS , LCALCEPS , EFIELD_PEAD , Berry phases and finite electric fields Examples that use this tag References ↑ R. W. Nunes and X. Gonze, Phys. Rev. B 63, 155107 (2001). ↑ I. Souza, J. Íñiguez, and D. Vanderbilt, Phys. Rev. Lett. 89, 117602 (2002).

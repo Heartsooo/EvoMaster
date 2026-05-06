@@ -1,0 +1,589 @@
+Title: Machine learning force field: Theory
+URL: https://vasp.at/wiki/Machine_learning_force_field:_Theory
+============================================================
+Here we present the theory for on-the-fly machine learning force fields. The theory will be presented in a very condensed manner and for a more detailed description of the methods, we refer the readers to Refs.
+
+,
+
+and
+
+.
+Introduction
+Molecular dynamics is one of the most important methods for the determination of dynamic properties. The quality of the molecular dynamics simulation depends very strongly on the accuracy of the calculational method, but higher accuracy usually comes at the cost of increased computational demand. A very accurate method is ab initio molecular dynamics, where the interactions of atoms and electrons are calculated fully quantum mechanically from ab initio calculations (such as e.g. DFT). Unfortunately, this method is very often limited to small simulation cells and simulation times. One way to hugely speed up these calculations is by using force fields, which are parametrizations of the potential energy. These parametrizations can range from very simple functions with only empirical parameters, to very complex functions parametrized using thousands of ab initio calculations. Usually making accurate force fields manually is a very time-consuming task that needs tremendous expertise and know-how.
+Another way to greatly reduce computational cost and required human intervention is by machine learning. Here, in the prediction of the target property, the method automatically interpolates between known training systems that were previously calculated ab initio. This way the generation of force fields is already significantly simplified compared to a classical force field which needs manual (or even empirical) adjustment of the parameters. Nevertheless, there is still the problem of how to choose the proper (minimal) training data. One very efficient and automatic way to solve that is to adapt on-the-fly learning. Here an MD calculation is used for the learning. During the run of the MD calculation, ab initio data is picked out and added to the training data. From the existing data, a force field is continuously built up. At each step, it is judged whether to make an ab initio calculation and possibly add the data to the force field or to use the force field for that step and actually skip learning for that step. Hence the name "on the fly" learning. The crucial point here is the probability model for the estimation of uncertainties. This model is built up from newly sampled data. Hence, the more accurate the force field gets the less sampling is needed and the more expensive ab initio steps are skipped. This way not only the convergence of the force field can be controlled but also a very widespread scan through phase space for the training structures can be performed. The crucial point for on-the-fly machine learning which will be explained with the rest of the methodology in the following subsections is to be able to predict uncertainties of the force field on a newly sampled structure without the necessity to perform an ab initio calculation on that structure.
+Algorithms
+On-the-fly machine-learning algorithm
+Fig. 1: On-the-fly machine learning force field generation scheme.
+To obtain the machine-learning force field several
+structure datasets
+are required. A structure dataset defines the Bravais lattice and the atomic positions of the system and contains the total energy, the forces, and the stress tensor calculated by first principles. Given these structure datasets, the machine identifies
+local configurations
+around an atom to learn what force field is appropriate. The local configuration measures the radial and angular distribution of neighboring atoms around this given site and is captured in the so-called
+descriptors
+.
+The on-the-fly force field generation scheme is given by the following steps (a flowchart of the algorithm is shown in Fig. 1):
+The machine predicts the energy, the forces, and the stress tensor and their uncertainties for a given structure using the existing force field.
+The machine decides whether to perform a first-principles calculation (proceed with step 3); otherwise we skip to step 5.
+Performing the first principles calculation, we obtain a new structure dataset that may improve the force field.
+If the number of newly collected structures reaches a certain threshold or if the predicted uncertainty becomes too large, the machine learns an improved force field by including the new structure datasets and local configurations.
+Atomic positions and velocities are updated by using the force field (if accurate enough) or the first principles calculation.
+If the desired total number of ionic steps (
+NSW
+) is reached we are done; otherwise proceed with step 1.
+Sampling of training data and local reference configurations
+We employ a learning scheme where structures are only added to the list of training structures when local reference configurations are picked for atoms that have an uncertainty in the force higher than a given threshold. So in the following, it is implied that whenever a new training structure is obtained, also local reference configurations from this structure are obtained.
+Usually one can employ that the force field doesn't necessarily need to be retrained immediately at every step when a training structure with corresponding local configurations is added. Instead, one can also collect candidates and do the learning in a later step for all structures simultaneously (blocking). This way saving significant computational costs. Of course learning after every new configuration or after every block can have different results, but with not too large block sizes the difference should be small. The tag
+ML_MCONF_NEW sets the block size for learning.
+The force field is usually not updated at every molecular-dynamics step. The update happens under the following conditions:
+If there is no force field present, all atoms of a structure are sampled as local reference configurations and a force field is constructed.
+If the Bayesian uncertainty of the force for any atom is above the strict threshold set by
+ML_CDOUB
+×
+ML_CTIFOR
+, the local reference configurations are sampled and a new force field is constructed.
+If the Bayesian uncertainty of the force for any atom is above the threshold
+ML_CTIFOR but below
+ML_CDOUB
+×
+ML_CTIFOR
+, the structure is added to the list of new training structure candidates. Whenever the number of candidates is equal to
+ML_MCONF_NEW they are added to the entire set of training structures and the force field is updated. To avoid sampling too similar structures, the next step, from which training structures are allowed to be taken as candidates, is set by
+ML_NMDINT
+. All ab initio calculations within this distance are skipped if the Bayesian uncertainty for the force on all atoms is below
+ML_CDOUB
+×
+ML_CTIFOR
+.
+Threshold for uncertainty of forces
+Training structures and their corresponding local configurations are only chosen if the uncertainty in the forces of any atom exceeds a chosen threshold. The initial threshold is set to the value provided by
+ML_CTIFOR
+(the unit is eV/Angstrom).
+The behavior of how the threshold is further controlled is given by
+ML_ICRITERIA
+. The following options are available:
+ML_ICRITERIA = 0: No update of initial value of ML_CTIFOR is done.
+ML_ICRITERIA = 1: Update of criteria using an average of the Bayesian uncertainties of the forces from history (see description of the method below).
+ML_ICRITERIA = 2: Update of criteria using gliding average of Bayesian uncertainties (probably more robust but not well tested ). Generally, it is recommended to automatically update the threshold ML_CTIFOR during machine learning. Details on how and when the update is performed are controlled by ML_CSLOPE , ML_CSIG and ML_MHIS . Description of
+ML_ICRITERIA =1: ML_CTIFOR is updated using the average Bayesian uncertainty in the previous steps. Specifically, it is set to
+ML_CTIFOR = (average of the stored Bayesian uncertainties) *(1.0 + ML_CX ). The number of entries in the history of the Bayesian uncertainties is controlled by ML_MHIS . To avoid noisy data or an abrupt jump of the Bayesian uncertainty causing issues, the standard error of the history must be below the threshold ML_CSIG , for the update to take place. Furthermore, the slope of the stored data must be below the threshold ML_CSLOPE . In practice, the slope and the standard errors are at least to some extent correlated: often the standard error is proportional to ML_MHIS /3 times the slope or somewhat larger. We recommend to vary only ML_CSIG and keep ML_CSLOPE fixed to its default value. Local energies The potential energy U of a structure with N_{a} atoms is approximated as U = Σ_{i=1}^{N_{{a}}} U_{i}. The local energies U_{i} are functionals U_{i}=F[_{i}({r})] of the probability density _{i} to find another atom j at the position {r} around the atom i within a cut-off radius R_{{cut}} defined as _{i}({r}) = Σ_{j=1}^{N_{{a}}} f_{{cut}}(r_{ij}) g({r}-{r}_{ij}), r_{ij}=|{r}_{ij}|=|{r}_{j}-{r}_{i}|. Here f_{{cut}} is a cut-off function that goes to zero for r_{ij} R_{{cut}} and g({r}-{r}_{ij}) is a delta function. The atom distribution can also be written as a sum of individual distributions: _{i}({r}) = Σ_{j i}^{N_{{a}}} _{ij}({r}). Here _{ij}({r}) describes the probability of find an atom j at a position {r} with respect to atom i . Descriptors Similar to the Smooth Overlap of Atomic Positions
+
+(SOAP) method the delta function
+g({r})
+is approximated as
+g({r})={1}{σ_{{atom}}2π}{exp}(-{|{r}|^{2}}{2σ_{{atom}}^{2}}).
+Fig. 2: Radial and angular descriptors.
+Unfortunately
+_{i}({r})
+is not rotationally invariant. To deal with this problem intermediate functions or
+descriptors
+depending on
+_{i}({r})
+possessing rotational invariance are introduced:
+Radial descriptor
+This is the simplest descriptor which relies on the radial distribution function
+_{i}^{(2)}(r) = {1}{4π} ∫ _{i}(r{r}) d{r},
+where
+{r}
+denotes the unit vector of the vector
+{r}
+between atoms i
+and j
+[see Fig. 2 (a)].
+The Radial descriptor can also be regarded as a two-body descriptor.
+Angular descriptor
+In most cases the radial descriptor is not enough to distinguish different probability densities
+_{i}
+, since two different
+_{i}
+can yield the same
+_{i}^{(2)}
+. To improve on this angular information between two radial descriptors is also incorporated within an angular descriptor
+_{i}^{(3)}(r,s,) = d{r} d{s} δ({r}·{s} - {cos}) Σ_{j=1}^{N_{a}} Σ_{k j}^{N_{a}} _{ik} (r{r}) _{ij} (s{s})
+where
+
+denotes the angle between two vectors
+{r}_{ij}
+and
+{r}_{ik}
+[see Fig. 2 (b)]. The important difference of the function
+_{i}^{(3)}
+compared to the angular distribution function (also called power spectrum within the Gaussian Approximation Potential) used in reference
+
+is that no self interaction is included, where j
+and k
+have the same distance from i
+and the angle between the two is zero. It can be shown
+
+that the self-interaction component is equivalent to the two body descriptors. This means that our angular descriptor is a pure angular descriptor, containing no two-body components and it cannot be expressed as linear combinations of the power spectrum. The advantage of this descriptor is that it enables us to separately control the effects of two- and three-body descriptors.
+Basis set expansion and descriptors
+The atomic probability density can be also expanded in terms of basis functions
+_{i} ( {r} ) = Σ_{l=1}^{L_{{max}}} Σ_{m=-l}^{l} Σ_{n=1}^{N^{l}_{ {R}}} c_{nlm}^{i}χ_{nl} ( r ) Y_{lm} ( {r} ),
+where
+c_{nlm}^{i}
+,
+χ_{nl}
+and
+Y_{lm}
+denote expansion coefficients, radial basis functions and spherical harmonics, respectively. The indices n
+, l
+and m
+denote radial numbers, angular and magnetic quantum numbers, respectively.
+By using the above equation the radial descriptor and angular descriptor can be written as
+_{i}^{(2)}(r) = {1}{4π} Σ_{n=1}^{N^{0}_{{R}}} c_{n00}^{i} χ_{n0}(r),
+and
+_{i}^{(3)}(r,s,) = Σ_{l=1}^{L_{{max}}} Σ_{n=1}^{N^{l}_{{R}}}Σ_{ν=1}^{N^{l}_{{R}}} {2l+1{2}} p_{nν l}^{i}χ_{nl}(r)χ_{ν l}(s)P_{l}({cos}),
+where
+χ_{ν l}
+and
+P_{l}
+represent normalized spherical Bessel functions and Legendre polynomials of order l
+, respectively.
+The expansion coefficients for the angular descriptor can be converted to
+p_{nν l}^{i}={8π^{2}{2l+1}} Σ_{m=-l}^{l} [ c_{nlm}^{i} c_{ν lm}^{i*} - Σ_{j}^{N_{a}} c_{nlm}^{ij} c_{ν lm}^{ij*}] ,
+where
+c_{nlm}^{ij}
+denotes expansion coefficients of the distribution
+_{ij}({r})
+with respect to
+χ_{ν l}
+and
+P_{l}
+_{ij}({r}) = Σ_{l=1}^{L_{{max}}} Σ_{m=-l}^{l} Σ_{n=1}^{N^{l}_{ {R}}} c_{nlm}^{ij}χ_{nl} ( r ) Y_{lm} ( {r} )
+and
+c_{nlm}^{i} = Σ_{j}^{N_{a}} c_{nlm}^{ij}.
+Angular filtering
+In many cases
+χ_{nl}
+is multiplied with an angular filtering function
+
+(
+ML_IAFILT2
+), which can noticably reduce the necessary basis set size without losing accuracy in the calculations
+η_{l,a_{{FILT}}}={1}{1+a_{{FILT}} [l (l+1)]^{2}}
+where
+a_{{FILT}}
+(
+ML_AFILT2
+) is a parameter controlling the extent of the filtering. A larger value for the parameter should provide more filtering.
+Reduced descriptors
+A descriptor that reduces the number of descriptors with respect to the number of elements
+
+is written as
+p_{nν l}^{iJ}={8π^{2}{2l+1}} Σ_{m=-l}^{l} c_{nlm}^{iJ} Σ_{J'}c_{ν lm}^{iJ'}.
+For more details on the effects of this descriptor please see following site:
+ML_DESC_TYPE
+.
+Potential energy fitting
+It is convenient to express the local potential energy of atom i
+in structure α
+in terms of linear coefficients
+w_{i_{B}}
+and a kernel
+K ({X}_{i},{X}_{i_{B}} )
+as follows
+U_{i}^{α} = Σ_{i_{B}=1}^{N_{B}} w_{i_{B}} K ( {X}_{i}^{α},{X}_{i_{B}} )
+where
+N_{B}
+is the basis set size. The kernel
+K ( {X}_{i},{X}_{i_{B}})
+measures the similarity between a
+local
+configuration from the training set
+_{i}({r})
+and basis set
+_{i_{B}}({r})
+. Using the radial and angular descriptors it is written as
+K ({X}_{i},{X}_{i_{B}}) = [ β {X}_{i}^{(2)} · {X}_{i_{{B}}}^{(2)} + (1-β) {X}_{i}^{(3)} · {X}_{i_{{B}}}^{(3)} ]^{}.
+Here the vectors
+{X}_{i}^{(2)}
+and
+{X}_{i}^{(3)}
+contain all coefficients
+c_{n00}^{i}
+and
+p_{nν l}^{i}
+, respectively. The notation
+{X}
+indicates that it is a normalized vector. The parameter β
+(
+ML_W1
+) controls the weighting of the radial and angular terms, respectively. The parameter
+
+(
+ML_NHYP
+) controls the sharpness of the kernel and the order of the many-body interactions.
+Normalization
+The two and three body descriptors are combined to form a feature concatenated vector
+{X}_{{c}} = bmatrix
+β {X}^{(2)} \\
+(1-β) {X}^{(3)} bmatrix.
+||{X}_{{c}}||
+is used in the normalization of
+{X}^{(2)}
+and
+{X}^{(3)}
+.
+Matrix vector form of linear equations
+Similarly to the energy
+U_{i}^{α}
+the forces and the stress tensor are also described as linear functions of the coefficients
+w_{i_{B}}
+. All three are fitted simultaneously which leads to the following matrix-vector form
+{Y} = {Φ} {w}
+where
+{Y}
+is a super vector consisting of the sub vectors
+\{{y}^{α}|α=1,...,N_{{st}}\}
+. Here each
+{y}^{α}
+contains the first principle energies per atom, forces and stress tensors for each structure α
+.
+N_{st}
+denotes the total number of structures. The size of
+{Y} is
+N_{{st}} × (1+3N^{α}_{a}+6)
+.
+The matrix
+{Φ}
+is also called as
+design
+matrix
+
+. The rows of this matrix are blocked for each structure α
+, where the first line of each block consists of the kernel used to calculate the energy. The subsequent
+3 N^{α}_{a}
+lines consist of the derivatives of the kernel with respect to the atomic coordinates used to calculate the forces. The final 6 lines within each structure consist of the derivatives of the kernel with respect to the unit cell coordinates used to calculate the stress tensor components. The overall size of
+{Y} is
+N_{{st}} × (1+3 N^{α}_{a}+6)× N_{B}
+looking like as follows
+{Φ} = bmatrix
+Σ_{i} {1}{N^{α=1}_{{a}}}K({X}^{α=1}_{i},{X}_{i_{{B}}=1}) &Σ_{i} {1}{N^{α=1}_{{a}}} K({X}^{α=1}_{i},{X}_{i_{{B}}=2}) & & & \\
+Σ_{i} _{x_{1}} K({X}^{α=1}_{i},{X}_{i_{{B}}=1}) &Σ_{i} _{x_{1}} K({X}^{α=1}_{i},{X}_{i_{{B}}=2}) & & &\\
+Σ_{i} _{y_{1}} K({X}^{α=1}_{i},{X}_{i_{{B}}=1}) &Σ_{i} _{y_{1}} K({X}^{α=1}_{i},{X}_{i_{{B}}=2}) & & &\\
+Σ_{i} _{z_{1}} K({X}^{α=1}_{i},{X}_{i_{{B}}=1}) &Σ_{i} _{z_{1}} K({X}^{α=1}_{i},{X}_{i_{{B}}=2}) & & &\\
+Σ_{i} _{x_{2}} K({X}^{α=1}_{i},{X}_{i_{{B}}=1}) &Σ_{i} _{x_{2}} K({X}^{α=1}_{i},{X}_{i_{{B}}=2}) & & &\\
+Σ_{i} _{y_{2}} K({X}^{α=1}_{i},{X}_{i_{{B}}=1}) &Σ_{i} _{y_{2}} K({X}^{α=1}_{i},{X}_{i_{{B}}=2}) & & &\\
+Σ_{i} _{z_{2}} K({X}^{α=1}_{i},{X}_{i_{{B}}=1}) &Σ_{i} _{z_{2}} K({X}^{α=1}_{i},{X}_{i_{{B}}=2}) & & &\\
+& & & &\\
+& & & &\\
+& & & &\\
+Σ_{i} {1}{N^{α=2}_{{a}}}K({X}^{α=2}_{i},{X}_{i_{{B}}=1}) &Σ_{i} {1}{N^{α=2}_{{a}}} K({X}^{α=2}_{i},{X}_{i_{{B}}=2}) & & & \\
+Σ_{i} _{x_{1}} K({X}^{α=2}_{i},{X}_{i_{{B}}=1}) &Σ_{i} _{x_{1}} K({X}^{α=2}_{i},{X}_{i_{{B}}=2}) & & &\\
+Σ_{i} _{y_{1}} K({X}^{α=2}_{i},{X}_{i_{{B}}=1}) &Σ_{i} _{y_{1}} K({X}^{α=2}_{i},{X}_{i_{{B}}=2}) & & &\\
+Σ_{i} _{z_{1}} K({X}^{α=2}_{i},{X}_{i_{{B}}=1}) &Σ_{i} _{z_{1}} K({X}^{α=2}_{i},{X}_{i_{{B}}=2}) & & &\\
+Σ_{i} _{x_{2}} K({X}^{α=2}_{i},{X}_{i_{{B}}=1}) &Σ_{i} _{x_{2}} K({X}^{α=2}_{i},{X}_{i_{{B}}=2}) & & &\\
+Σ_{i} _{y_{2}} K({X}^{α=2}_{i},{X}_{i_{{B}}=1}) &Σ_{i} _{y_{2}} K({X}^{α=2}_{i},{X}_{i_{{B}}=2}) & & &\\
+Σ_{i} _{z_{2}} K() &Σ_{i} _{z_{2}} K() & & &\\
+& & & &.
+Bayesian linear regression
+Ultimately for uncertainty prediction we want to get the maximized probability of observing a new structure
+{y}
+on basis of the training set
+{Y}
+, which is denoted as
+p ( {y} | {Y} )
+. For this we need to get from the error of the linear fitting coefficients
+{w}
+in the reproduction of the training data
+p( {w} | {Y} ) to
+p ( {y} | {Y} )
+which is explained in the following.
+First we obtain
+p( {w} | {Y} )
+from the Bayesian theorem
+p( {w} | {Y} ) = {p( {Y} | {w} ) p( {w} )}{p( {Y} )}
+,
+where we assume multivariate Gaussian distributions N
+for the likelihood function
+p( {Y} | {w} ) = N ({Y}| {Φ} {w}, σ_{{v}}^{2}{I} )
+and the (conjugate) prior
+p( {w} ) = N ({w}| {0},σ_{{w}}^{2}{I} ).
+The parameters
+σ_{{w}}^{2}
+and
+σ_{{v}}^{2}
+need to be optimized to balance the accuracy and robustness of the force field (see below). The normalization is obtained by
+p( {Y} ) = ∫ p( {Y} | {w} ) p( {w} ) d{w}.
+Using the equations from above and the completing square method
+
+p( {w} | {Y} )
+is obtained as follows
+p( {w} | {Y} ) = N ({w}| { w},{} ).
+Since the prior and the likelood function are described by multivariate Gaussian distributions the posterior
+N ({w}| { w},{} )
+describes a multivariate Gaussian written as
+N ({w}| { w},{} ) = {1}{ ( 2 π )^{N_{{B}} {det}{} }} {exp} [ -{ ( {w} - { w} )^{{T}} {}^{-1} ( {w} - { w} )}{2} ]
+where we use the following definitions for the center of the Guassian distribution
+{ w}
+and the covariance matrix
+{}
+{ w} = s_{{v}} {} {Φ}^{{T}} {Y},
+{}^{-1} =s_{{w}} {I} + s_{{v}} {Φ}^{{T}}{Φ}.
+Here we have used the following definitions
+s_{{v}} = {1}{σ_{{v}}^{2}}
+and
+s_{{w}} = {1}{σ_{{w}}^{2}}.
+Regression
+We want to obtain the weights
+{ w}
+for the linear equations
+{Y} = {Φ} { w}.
+Solution via Inversion
+By using directly the covariance matrix
+{}
+the equation from above
+{ w} = s_{{v}} {} {Φ}^{{T}} {Y},
+can be solved straightforwardly.
+However, only
+{}^{-1}
+is directly accesible and
+{}
+must be obtained from
+{}^{-1}
+via inversion. This inversion is numerically unstable and leads to lower accuracy.
+Hence we don't use this method.
+Solution via LU factorization
+Here we directly use the invers of the covariance matrix
+{}^{-1}
+by solving the following equation for the weights
+{ w}
+{}^{-1} { w} = s_{{v}} {Φ}^{{T}} {Y}.
+For that
+{}^{-1}
+is decomposed into it's LU factorized components
+{P} * {L} * {U}
+.
+After that the
+{L} * {U}
+factors are used to solve the previous linear equation for the weights
+{ w}
+.
+This method is noticeably more accurate than the method via inversion of
+{}^{-1}
+while being on the same order of magnitude in terms of computational cost.
+Hence it is the method used in on-the-fly learning.
+Solution via regularized SVD
+The regression problem can also be solved by using the singular value decomposition to factorize
+{Φ} as
+{Φ}={U}{}{V}^{T}.
+To add the regularization the diagonal matrix
+{}
+containing the singular values is rewritten as
+{}={}+{s_{{w}}}{s_{{v}}}{}^{-1}.
+By using the orthogonality of the left and right eigenvector matrices
+{U}^{T}{U}={I}_{n}
+and
+{V}{V}^{T}={I}_{n}
+the regression problem has the following solution
+{w} = {V}{}^{-1}{U}^{T}{Y}.
+Evidence approximation
+Finally to get the best results and to prevent overfitting the parameters
+σ_{{v}}^{2}
+and
+σ_{{w}}^{2}
+have to be optimized. To achieve this, we use the evidence approximation
+
+(also called as empirical bayes, 2 maximum likelihood or generalized maximum likelihood), which maximizes the evidence function (also called model evidence) defined as
+p({Y}|σ_{{v}}^{2},σ_{{w}}^{2}) =({1}{2πσ_{{v}^{2}}})^{M} ({1}{2πσ_{{w}^{2}}})^{N_{{B}}} ∫ {exp}[-E( {w} ) ] d{w},
+E( {w} ) = {s_{{v}}}{2} || {Φ}{w}-{Y}||^{2} + {s_{{w}}}{ 2}||{w}||^{2}.
+The function
+p({Y}|σ_{{v}}^{2},σ_{{w}}^{2})
+corresponds to the probability that the regression model with parameters
+σ_{{v}}^{2}
+and
+σ_{{w}}^{2}
+provides the reference data
+{Y}
+. Hence the best fit is optimized by maximizing this probability. The maximization is carried out by simultaneously solving the following equations
+s_{{w}}={γ}{|{w}|^{2}},
+s_{{v}}={M-γ}{|{T}-{φ}{w}|^{2}},
+γ=Σ_{k=1}^{N_{{B}}} {_{k}}{_{k}+s_{{w}}}
+where
+_{k}
+are the eigenvalues of the matrix
+s_{{v}}{Φ}^{{T}}{Φ}
+.
+The evidence approximation can be done for any of the above-described regression methods, but we combine it only with the solutions from LU factorization since solutions via SVD are calculationally too expensive to be carried out multiple times.
+Uncertainty estimation
+Uncertainty estimates from Bayesian linear regression
+By using the relation
+p ( {y} | {Y} ) = ∫ p ( {y} | {w} ) p ( {w} | {Y} ) d{w}
+and the completing square method
+
+the distribution of
+p ( {y} | {Y} )
+is written as
+p ( {y} | {Y} ) = N ( {φ}{ w}, {σ} ),
+{σ}={1}{s_{{v}}}{I}+{φ}^{{T}}{}{φ}.
+Here
+{φ}
+is similar to
+{Φ}
+but only for the new structure
+{y}
+.
+The mean vector
+{φ}{ w}
+contains the predicted results on the dimensionless total energy, forces, and stress tensor.
+The diagonal elements of
+{σ}
+correspond to the variances in the predicted results. These variances are a measure of the uncertainty of the predicted (dimensionless) total energies, forces, and stress tensors. VASP outputs the square root of these variances, i.e. the standard deviations of the predicted means, to the
+ML_LOGFILE
+("
+grep BEEF ML_LOGFILE
+"). The output is scaled to the appropriate units (eV/atom and eV/A). During on-the-fly training, a first-principles calculation is performed if the standard deviations are above a certain threshold.
+Please note that the uncertainty estimate can only account for epistemic uncertainty, which arises from a lack of knowledge or data. Systematic errors caused by the model's approximation can not be measured or determined from the Bayesian uncertainty. In kernel-based methods, model errors usually dominate the total error after few hundred training steps; thus the predicted uncertainty is usually significantly smaller than the true error. This does not indicate any deficiency in the Bayesian regression!
+Spilling factor
+The spilling factor
+
+s_{i}
+is a measure of the overlap (or similarity) of a given structural environment on an atom
+{X}_{i}
+with the local reference configurations
+{X}_{i_{{B}}}
+written as
+s_{i}= 1 - { Σ_{i_{{B}}=1}^{N_{{B}}} Σ_{i'_{{B}}=1}^{N_{{B}}} K({X}_{i},{X}_{i_{{B}}}) K^{-1}({X}_{i_{{B}}}, {X}_{i'_{{B}}}) K({X}_{i'_{{B}}},{X}_{i}) } { K({X}_{i},{X}_{i}) }. If
+{X}_{i}
+is fully overlapping with any of the local reference configurations then the second term on the right hand side of the above equation becomes 1 and
+s = 0
+. If
+{X}_{i}
+has no similarities with any of the local reference configurations the second term on the right hand side of the above equations becomes 0 and
+s = 1
+.
+Sparsification
+Within the machine learning force field methods the sparsification of local reference configurations and the angular descriptors is supported.
+The sparsification of local reference configurations is by default used and the extent is mainly controlled by
+ML_EPS_LOW
+. This is procedure is important to avoid overcompleteness and to dampen the acquisition of new configurations in special cases. The sparsification of angular descriptors is by default not used and should be used very cautiously and only if it's necessary. The description of the usage of this feature is given in
+ML_LSPARSDES
+.
+Sparsification of local reference configurations
+We start by defining the similarity kernel (or Gram matrix) for the local configurations with each other
+{K}_{i_{B},j_{B}}={K} ({X}_{i_B},{X}_{j_B}).
+The CUR algorithm starts out from the diagonalization of this matrix
+{U}^{T}{K} {U}= {L} = rm{diag}(l_{1},l_{2},...,l_{N_{B}}),
+where
+{U}
+is the matrix of the eigenvectors
+{u_j}
+{U} = ({u}_{1},{u}_{2},...,{u}_{N_{B}}),
+{u}_{j} = ( array{c} u_{1j} \\ u_{2j} \\... \\ u_{N_{B}j} array )
+In contrast to the original CUR algorithm
+
+that was developed to efficiently select a few significant columns of the matrix
+{K}
+,
+we search for (few) insignificant local configurations and remove them.
+We dispose of the columns of
+{K}
+that are correlated with the
+N_{{low}}
+eigenvectors
+u_{χ}
+with the smallest eigenvalues
+l_{χ}
+. The correlation is measured by the statistical leverage scoring measured for each column j of
+{K} as
+ω_{j}= {1}{N_{{low}}} Σ_{χ=1}^{N_{B}} γ_{χ,j},
+γ_{χ,j} = \{ array{cl} u_{jχ}^{2} &{if} \,\, l_{χ} ε_{{low}} \\
+0 &{otherwise} array . ,
+where
+ε_{{low}}
+(see also
+ML_EPS_LOW
+) is the threshold for the lowest eigenvalues. One can prove (using the orthogonality of the eigenvectors and their completeness relation) that this is equivalent to the usual CUR leverage scoring algorithm, i.e. removing the least significant columns will result in those columns that are most strongly "correlated" to the largest eigenvalues.
+Sparsification of angular descriptors
+The sparsification of the angular descriptors is done in a similar manner as for the local reference configurations.
+We start by defining the
+N_{D} × N_{D}
+square matrix
+{A}={X}{X}^{T}.
+Here
+N_{D}
+denotes the number of angular descriptors given by
+N_{D} = Σ_{l=1}^{L_{{max}}} {1}{2} N_{R}^{l} ( N_{R}^{l} + 1 ) ( L_{{max}} + 1 ).
+In this equation the symmetry of the descriptors
+_{n ν l}= _{ν n l}
+is already taken into account.
+The matrix
+{X}
+is constructed from the vectors of the angular descriptors
+({x}_{1}^{(3)},{x}_{2}^{(3)},...,{x}_{N_{B}}^{(3)} )
+. The matrix
+{X}
+has dimension
+N_{D} × N_{B}
+and the matrix product is done over the
+N_{B}
+elements of the local configurations.
+In analogy to the local configurations the j
+th element of the matrix
+{A}
+is written as
+{a}_{j} = Σ_{χ=1}^{N_{D}} (u_{jχ}l_{χ}){u_{χ}}.
+In contrast to the sparsification of the local configuration and more in line with the original CUR method, the columns of matrix
+{A}
+are kept when they are strongly correlated to the k
+(see also
+ML_NRANK_SPARSDES
+) eigenvectors
+u_{χ}
+which have the largest eigenvalues
+l_{χ}
+. The correlation of the eigenvalues is then measured via a leverage scoring
+ω_{j} = {1}{k} Σ_{χ=1}^{k} u_{jχ}^{2}.
+From the leverage scorings, the ones with the highest values are selected until the ratio of the selected descriptors to the total number of descriptors becomes a previously selected value
+x_{{spars}}
+(see also
+ML_RDES_SPARSDES
+).
+References
+↑
+R. Jinnouchi, J. Lahnsteiner, F. Karsai, G. Kresse, and M. Bokdam, Phys. Rev. Lett.
+122
+, 225701 (2019).
+↑ a b
+R. Jinnouchi, F. Karsai, and G. Kresse, Phys. Rev. B
+100
+, 014105 (2019).
+↑ a b
+R. Jinnouchi, F. Karsai, C. Verdi, R. Asahi, and G. Kresse, J. Chem. Phys.
+152
+, 234102 (2020).
+↑
+A. P. Bartók, R. Kondor, and G. Csányi, Phys. Rev. B
+87
+, 184115 (2013).
+↑
+A. P. Bartók, M.C. Payne, R. Kondor, and G. Csányi, Phys. Rev. Lett
+104
+, 136403 (2010).
+↑
+J. P. Boyd, Chebyshev and Fourier Spectral Methods (Dover Publications, New York, 2000).
+↑
+J. P. Darby, J. R. Kermode, and G. Csanyi,
+Compressing local atomic neighbourhood descriptors
+, New Phys. J.
+8
+, 166 (2022).
+↑ a b c
+C. M. Bishop, Pattern Recognition and Machine Learning, (New York: Springer), (2006).
+↑
+S.F. Gull and J. Skilling, Maximum Entropy Bayesian Methods, Fundam. Theor. Phys., 28th ed. (Springer, Dordrecht, 1989).
+↑
+D. J. C. Mackay, Neural Computation
+4
+, 415 (1992).
+↑
+R. Jinnouchi and R. Asahi, J. Phys. Chem. Lett.
+8
+, 4279 (2017).
+↑
+K. Miwa and H. Ohno, Phys. Rev. B
+94
+, 184109 (2016).
+↑
+M. W. Mahoney and P. Drineas, Proc. Natl. Acad. Sci. USA
+106
+, 697 (2009).

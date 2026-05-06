@@ -1,0 +1,6 @@
+Title: LSCALER0
+URL: https://vasp.at/wiki/LSCALER0
+============================================================
+LSCALER0 = .TRUE. | .FALSE. Default:
+LSCALER0 = .TRUE. Description: LSCALER0 decides whether to re-scale the van der Waals radii R_{0} (
+LSCALER0 = .TRUE. ) or not. Related tags and articles IVDW , Self-consistent screening in Tkatchenko-Scheffler method , LVDWEXPANSION

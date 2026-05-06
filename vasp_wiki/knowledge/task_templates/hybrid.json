@@ -1,0 +1,60 @@
+{
+  "task_type": "hybrid_functional",
+  "description": "Calculation using hybrid exchange-correlation functionals (HSE06, PBE0, etc.)",
+  "use_cases": ["accurate band gaps", "defect levels", "reaction barriers", "magnetic coupling"],
+
+  "incar": {
+    "required": {
+      "LHFCALC": ".TRUE.",
+      "ALGO": {"value": "All", "note": "MUST use All or Damped. Fast/VeryFast NOT supported."},
+      "EDIFF": {"value": 1e-6},
+      "ENCUT": {"rule": "from POTCAR, converge separately"},
+      "ISMEAR": {"rule": "0 for semiconductors, 1 for metals (be careful with metals + hybrids)"},
+      "SIGMA": {"rule": "0.05 for semiconductors, 0.1 for metals"}
+    },
+    "hse06": {
+      "AEXX": 0.25,
+      "HFSCREEN": 0.2,
+      "GGA": "PE",
+      "note": "Most popular hybrid for solids. Screened exchange makes it tractable."
+    },
+    "pbe0": {
+      "AEXX": 0.25,
+      "HFSCREEN": 0.0,
+      "GGA": "PE",
+      "note": "Unscreened, very expensive for large cells."
+    },
+    "recommended": {
+      "PRECFOCK": "Fast",
+      "LREAL": ".FALSE.",
+      "LASPH": ".TRUE.",
+      "TIME": {"value": 0.4, "note": "can help convergence"},
+      "LWAVE": true,
+      "LCHARG": true
+    },
+    "performance": {
+      "NKRED": {"rule": "downsampling k-mesh for HF, reduces cost significantly"},
+      "NCORE": {"rule": "sqrt(cores)"},
+      "KPAR": {"rule": "if many k-points"}
+    }
+  },
+
+  "kpoints": {
+    "rule": "Gamma-centered, coarser than PBE is OK due to cost. Typically 4x4x4 to 6x6x6 for bulk.",
+    "note": "NKRED can reduce HF k-mesh further"
+  },
+
+  "workflow_notes": [
+    "Start from PBE-relaxed structure (hybrid relaxation is expensive)",
+    "For band structure: use KPOINTS_OPT method (ICHARG=11 does NOT work for hybrids)",
+    "Typical cost: 10-100x PBE for same system"
+  ],
+
+  "band_structure_with_hybrid": {
+    "method": "KPOINTS_OPT (VASP 6.2+)",
+    "incar_additions": {
+      "LKPOINTS_OPT": ".TRUE."
+    },
+    "note": "KPOINTS = SCF mesh, KPOINTS_OPT = high-symmetry path"
+  }
+}

@@ -1,0 +1,38 @@
+Title: LSCK
+URL: https://vasp.at/wiki/LSCK
+============================================================
+LSCK = [logical] Default:
+LSCK = .FALSE. Important: Up to vasp.6.2, the default was
+LSCK = .TRUE. Description:
+LSCK =.True. switches on the squeezed Coulomb kernel. If LSCK is set to .TRUE., the squeezed Coulomb kernel is used instead of the cosine window
+
+:
+v_{G} = 4 π e^2 {
+(G_{max}-G_{min})(G_{max}-G)
+}{
+(G_{min}^2 - G(2G_{min}-G_{max}))^2
+}
+for {ENCUTGWSOFT}={^2G_{min}^2}{2m_e} {^2 G^2}{2m_e} {^2G_{max}^2}{2m_e}={ENCUTGW}
+This kernel 'squeezes' the contributions from large wave vectors
+G G_{max}
+into the window given by
+ENCUTGWSOFT
+. Effectively, this extrapolates the random-phase-approximation–correlation energy to the
+ENCUTGW
+∞
+limit, assuming that the basis-set-incompleteness error falls off as
+1/
+ENCUTGW
+^{3/2}
+.
+
+Related tags and articles
+ENCUTGW
+,
+GW calculations
+ACFDT/RPA calculations
+Examples that use this tag
+↑
+S. Riemelmoser, M. Kaltak, and G. Kresse, J. Chem. Phys.
+152(13)
+, 134103 (2020).

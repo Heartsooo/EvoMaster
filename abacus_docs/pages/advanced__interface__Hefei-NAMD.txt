@@ -1,0 +1,48 @@
+Title: Hefei-NAMD
+URL: http://abacus.deepmodeling.com/en/latest/advanced/interface/Hefei-NAMD.html
+============================================================
+
+- .md
+  - .pdf
+
+# Hefei-NAMD
+
+Hefei-NAMD Non-adiabatic molecular dynamics applies surface hopping to incorporate quantum mechanical effects into molecular dynamics simulations. Surface hopping partially incorporates the non-adiabatic effects by including excited adiabatic surfaces in the calculations, and allowing for ‘hops’ between these surfaces.
+
+Detailed instructions on installing and running Hefei-NAMD can be found on its official website .
+
+ABACUS provides results of molecular dynamics simulations for Hefei-NAMD to do non-adiabatic molecular dynamics simulations.
+
+The steps are as follows :
+
+  - Add output parameters in INPUT when running MD using ABACUS .
+Add output parameters in INPUT when running MD using ABACUS .
+
+```
+out_wfc_lcao    1
+out_mat_hs      1
+```
+
+Then we obtain output files of hamiltonian matrix, overlap matrix, and wavefunction to do NAMD simulation.
+
+  - Clone Hefei-NAMD codes optimized for ABACUS from website .
+Clone Hefei-NAMD codes optimized for ABACUS from website .
+
+  - Modify parameters in Args.py including directory of ABACUS output files and NAMD parameters. We can see detailed explanation for all parameters in Args.py .
+Modify parameters in Args.py including directory of ABACUS output files and NAMD parameters. We can see detailed explanation for all parameters in Args.py .
+
+  - Run NAC.py to prepare related files for NAMD simulations.
+Run NAC.py to prepare related files for NAMD simulations.
+
+```
+sbatch sub_nac
+```
+
+  - Run SurfHop.py to perform NAMD simulations.
+Run SurfHop.py to perform NAMD simulations.
+
+```
+sbatch sub_sh
+```
+
+And results are under directory namddir in Args.py .

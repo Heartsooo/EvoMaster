@@ -1,0 +1,54 @@
+Title: Constrained molecular dynamics
+URL: https://vasp.at/wiki/Constrained_molecular_dynamics
+============================================================
+Constrained molecular dynamics is performed using the SHAKE
+
+algorithm.
+In this algorithm, the Lagrangian for the system L
+is extended as follows:
+L^*({q,q}) = L({q,q}) +
+Σ_{i=1}^{r} _i σ_i(q),
+where the summation is over r
+geometric constraints,
+L^*
+is the Lagrangian for the extended system, and λ i
+is a Lagrange multiplier associated with a geometric constraint σ i
+:
+σ_i(q) = _i({q})-_i \;
+with ξ i
+( q
+) being a geometric parameter and ξ i
+is the value of ξ i
+( q
+) fixed during the simulation.
+In the SHAKE algorithm, the Lagrange multipliers λ i
+are determined in the iterative procedure:
+Perform a standard MD step (leap-frog algorithm):
+v^{t+{Δ}t/2}_i = v^{t-{Δ}t/2}_i + {a^{t}_i}{m_i} {Δ}t
+q^{t+{Δ}t}_i = q^{t}_i + v^{t+{Δ}t/2}_i{Δ}t
+Use the new positions q
+( t
++Δ t
+) to compute Lagrange multipliers for all constraints:
+{}_k= {1}{{Δ}t^2} {σ_k(q^{t+{Δ}t})}{Σ_{i=1}^N m_i^{-1} _i{σ}_k(q^{t}) _i{σ}_k(q^{t+{Δ}t})}
+Update the velocities and positions by adding a contribution due to restoring forces (proportional to λ k
+):
+v^{t+{Δ}t/2}_i = v^{t-{Δ}t/2}_i + ( a^{t}_i-Σ_k {{}_k}{m_i} _i{σ}_k(q^{t}) ) {Δ}t
+q^{t+{Δ}t}_i = q^{t}_i + v^{t+{Δ}t/2}_i{Δ}t
+repeat steps 2-4 until either |σ i
+( q
+)| are smaller than a predefined tolerance (determined by
+SHAKETOL
+), or the number of iterations exceeds
+SHAKEMAXITER
+.
+Constrained molecular dynamics
+For a description of constrained molecular dynamics see
+Constrained molecular dynamics
+.
+For a constrained molecular dynamics run with Andersen thermostat, one has to:
+Set the standard MD-related tags:
+IBRION =0, TEBEG , POTIM , and NSW Select the thermostat: Set
+MDALGO = 1 , and choose an appropriate setting for ANDERSEN_PROB . Set
+MDALGO = 2 , and choose an appropriate setting for SMASS . Define geometric constraints in the ICONST -file, and set the STATUS parameter for the constrained coordinates to 0 When the free-energy gradient is to be computed, set
+LBLUEOUT =.TRUE. References ↑ J. P. Ryckaert, G. Ciccotti, and H. J. C. Berendsen, J. Comp. Phys. 23 , 327 (1977).

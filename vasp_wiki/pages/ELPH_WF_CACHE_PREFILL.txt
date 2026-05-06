@@ -1,0 +1,5 @@
+Title: ELPH_WF_CACHE_PREFILL
+URL: https://vasp.at/wiki/ELPH_WF_CACHE_PREFILL
+============================================================
+ELPH_WF_CACHE_PREFILL = [logical] Default:
+ELPH_WF_CACHE_PREFILL = .TRUE. Description: Determines whether to pre-fill the wavefunction (WF) cache before starting the calculation. Mind: Available as of VASP 6.5.0 When enabled, the cache is populated in advance, avoiding one-sided MPI communication during the main computation loop. This can significantly improve performance and scalability, especially for large parallel runs. Related tags and articles ELPH_WF_REDISTRIBUTE

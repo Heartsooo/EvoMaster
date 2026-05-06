@@ -1,0 +1,67 @@
+Title: PARAM1
+URL: https://vasp.at/wiki/PARAM1
+============================================================
+PARAM1 = [real] Default:
+PARAM1 = 0.1234 Description: μ for
+GGA =MK, β for
+GGA =BO. The PARAM1 tag determines the value corresponding to different parameters depending on the GGA functional that is chosen: μ in the optB86b
+
+, B86R
+
+, and DF3-opt2
+
+exchange functionals, which have the same analytical form and correspond to
+GGA =MK. PARAM1 should in principle be set to 0.1234 for the optB86b-vdW nonlocal functional
+
+or to
+10/81≈0.1234568
+for the rev-vdW-DF2
+
+and vdW-DF3-opt2
+
+nonlocal functionals. β
+in the optB88
+
+exchange functional or
+μ/
+in the DF3-opt1
+
+exchange functional, which have the same analytical form and correspond to
+GGA =BO. PARAM1 should in principle be set to 0.22/1.2≈0.1833333333 for the optB88-vdW nonlocal functional
+
+or to
+(10/81)/1.1≈0.1122334456
+for the vdW-DF3-opt1
+
+nonlocal functional.
+The complete
+INCAR file for the nonlocal van der Waals functionals mentioned above can be found at
+Nonlocal vdW-DF functionals
+.
+
+Related tags and articles
+PARAM2
+,
+GGA
+,
+Nonlocal vdW-DF functionals
+Examples that use this tag
+References
+↑ a b
+J. Klimeš, D. R. Bowler, and A. Michaelides, Phys. Rev. B
+83
+, 195131 (2011).
+↑ a b
+I. Hamada, Phys. Rev. B
+89
+, 121103(R) (2014).
+↑ a b c d
+D. Chakraborty, K. Berland, and T. Thonhauser,
+Next-Generation Nonlocal van der Waals Density Functional
+, J. Chem. Theory Comput.
+16
+, 5893 (2020).
+↑ a b
+J. Klimeš, D. R. Bowler, and A. Michaelides, J. Phys.: Condens. Matter
+22
+, 022201 (2010).

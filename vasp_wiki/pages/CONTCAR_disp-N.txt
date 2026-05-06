@@ -1,0 +1,25 @@
+Title: CONTCAR_disp-N
+URL: https://vasp.at/wiki/CONTCAR_disp-N
+============================================================
+The
+CONTCAR_disp-N
+file is an output file of a
+split finite differences calculation
+that contains the structural information of the N
+th displacement. It has the same format as the
+CONTCAR or
+POSCAR file.
+
+Mind:
+Available as of VASP 6.6.0
+
+Related tags and articles
+CONTCAR
+,
+POSCAR
+,
+vaspcheckfd.h5
+,
+CHECKPOINT_FD
+Restarting finite differences calculations
+Workflows that use this file

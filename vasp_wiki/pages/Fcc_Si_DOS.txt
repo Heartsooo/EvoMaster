@@ -1,0 +1,90 @@
+Title: Fcc Si DOS
+URL: https://vasp.at/wiki/Fcc_Si_DOS
+============================================================
+Overview
+>
+fcc Si
+>
+fcc Si DOS
+>
+fcc Si bandstructure
+>
+cd Si
+>
+cd Si volume relaxation
+>
+cd Si relaxation
+>
+beta-tin Si
+>
+fcc Ni
+>
+graphite TS binding energy
+>
+graphite MBD binding energy
+>
+graphite interlayer distance
+>
+List of tutorials
+Task
+Calculation of the DOS in fcc Si.
+Input
+POSCAR fcc Si:
+3.9
+0.5 0.5 0.0
+0.0 0.5 0.5
+0.5 0.0 0.5
+1
+cartesian
+0 0 0
+INCAR
+System = fcc Si
+#
+ICHARG = 11 #charge read file
+ENCUT = 240
+ISMEAR = -5 #tetrahedron
+LORBIT = 11 KPOINTS k-points 0 Monkhorst Pack 21 21 21 0 0 0 Calculation Perform a static (
+NSW =0,
+IBRION =-1) self consistent calculation for the DOS (the DOS is found in the DOSCAR file. For large systems: Converge with a small number of k points. Increase the number of k points for the DOS and set
+ICHARG =11 (charge density from the last self-consistent run).
+ICHARG =11 treats each k point independently and keeps the charge density and the potential fixed. Read CHGCAR from previous run. To copy the self-consistent charge density of example fcc_Si to your current working directory (assumed to be fccSidos), type: $ cp ../fccSi/CHGCAR . You must do this otherwise VASP can not read the CHGCAR and will terminate. The smearing of the k points is set to the tetrahedron method with Blöchl corrections (
+ISMEAR =-5 to fi the problem To plot the DOS use p4vasp: Alternatively the bash-script plotdos.sh invokes awk and gnuplot to get the DOS from the vasprun.xml file and plot it. awk 'BEGIN{i=1} /dos>/,\ /\/dos>/ \ {a[i]=$2 ; b[i]=$3 ; i=i+1} \ END{for (j=12;j<i-5;j++) print a[j],b[j]}' vasprun.xml > dos.dat
+
+ef=`awk '/efermi/ {print $3}' vasprun.xml`
+
+cat >plotfile<<!
+# set term postscript enhanced eps colour lw 2 "Helvetica" 20
+# set output "optics.eps"
+plot "dos.dat" using (\$1-$ef):(\$2) w lp
+!
+
+gnuplot -persist plotfile
+
+rm dos.dat plotfile
+Download
+fccSidos.tgz
+Overview
+>
+fcc Si
+>
+fcc Si DOS
+>
+fcc Si bandstructure
+>
+cd Si
+>
+cd Si volume relaxation
+>
+cd Si relaxation
+>
+beta-tin Si
+>
+fcc Ni
+>
+graphite TS binding energy
+>
+graphite MBD binding energy
+>
+graphite interlayer distance
+>
+List of tutorials

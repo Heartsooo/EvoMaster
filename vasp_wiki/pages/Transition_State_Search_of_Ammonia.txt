@@ -1,0 +1,14 @@
+Title: Transition State Search of Ammonia
+URL: https://vasp.at/wiki/Transition_State_Search_of_Ammonia
+============================================================
+Task
+In this example you will determine the transition state in the flipping of NH
+3
+by means of the Nudged-Elastic-Band (NEB) Method and the Improved Dimer Method.
+Download
+Ammonia Flipping
+: A guide to this example.
+ammonia_flipping.tgz
+Back to the
+main page
+.

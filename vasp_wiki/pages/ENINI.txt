@@ -1,0 +1,6 @@
+Title: ENINI
+URL: https://vasp.at/wiki/ENINI
+============================================================
+ENINI = [real] Default:
+ENINI = ENCUT Description: ENINI controls the cutoff during the initial (steepest descent) phase for
+IALGO =48. Related tags and articles ENCUT , IALGO

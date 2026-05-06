@@ -1,0 +1,21 @@
+{
+  "task_type": "band",
+  "description": "Band structure calculation (two-step: SCF then NSCF on k-path)",
+  "workflow": "TWO-STEP: 1) SCF with uniform k-mesh → 2) NSCF with k-path",
+  "step1_scf": {
+    "calculation": "scf",
+    "note": "Standard SCF to get converged charge density"
+  },
+  "step2_nscf": {
+    "input": {
+      "calculation": "nscf",
+      "init_chg": "file",
+      "out_band": {"value": 1, "note": "output band structure"},
+      "nbands": {"rule": "increase 50-100% above default for sufficient empty bands"}
+    },
+    "kpt": {
+      "format": "Line mode with high-symmetry points",
+      "example": "K_POINTS\n0\nLine\n4\nG 0.0 0.0 0.0 20\nX 0.5 0.0 0.0 20\nM 0.5 0.5 0.0 20\nG 0.0 0.0 0.0 1"
+    }
+  }
+}

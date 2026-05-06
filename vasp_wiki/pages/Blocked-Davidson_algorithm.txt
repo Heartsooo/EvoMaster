@@ -1,0 +1,48 @@
+Title: Blocked-Davidson algorithm
+URL: https://vasp.at/wiki/Blocked-Davidson_algorithm
+============================================================
+The workflow of the blocked-Davidson iterative matrix diagonalization scheme implemented in VASP is as follows:
+
+Take a subset (block) of
+n_1
+orbitals out of the total set of
+NBANDS orbitals:
+\{ _n| n=1,..,N_{ bands}\} \{ ^1_k| k=1,..,n_1\}
+.
+Extend the subspace spanned by
+\{^1\}
+by adding the preconditioned residual vectors of
+\{^1\}
+:
+\{ ^1_k \, / \, g^1_k = (1- Σ_{n=1}^{N_{ bands}} | _n _n | { S} ) { K} ({ H} - ε_{ app} { S} ) ^1_k \, | \, k=1,..,n_1 \}.
+Rayleigh-Ritz optimization ("subspace rotation") within the
+2n_1
+-dimensional space spanned by
+\{^1/g^1\}
+, to determine the
+n_1
+lowest eigenvectors:
+{ diag}\{^1/g^1\} \{ ^2_k| k=1,..,n_1\}
+Extend the subspace with the residuals of
+\{^2\}
+:
+\{ ^2_k \,/ \, g^1_k \, / \, g^2_k = (1- Σ_{n=1}^{N_{ bands}} | _n _n | { S} ) { K} ({ H} - ε_{ app} { S} ) ^2_k \, | \, k=1,..,n_1 \}.
+Rayleigh-Ritz optimization ("subspace rotation") within the
+3n_1
+-dimensional space spanned by
+\{^1/g^1/g^2\}
+:
+{ diag}\{^1/g^1/g^2\} \{ ^3_k| k=1,..,n_1\}
+If need be the subspace may be extended by repetition of this cycle of adding residual vectors and Rayleigh-Ritz optimization of the resulting subspace:
+{ diag}\{^1/g^1/g^2/../g^{d-1}\} \{ ^d_k| k=1,..,n_1\}
+Per default VASP will not iterate deeper than
+d=4
+, though it may break off even sooner when certain criteria that measure the convergence of the orbitals have been met.
+When the iteration is finished, store the optimized block of orbitals back into the set:
+\{ ^d_k| k=1,..,n_1\} \{ _k| k=1,..,N_{ bands}\}
+.
+Move on to the next block
+\{ ^1_k| k=n_1+1,..,2 n_1\}
+.
+When
+LDIAG =.TRUE. (default), a Rayleigh-Ritz optimization in the complete subspace \{ _k| k=1,..,N_{ bands}\} is performed after all orbitals have been optimized. The blocksize n_1 used in the blocked-Davidson algorithm can be set by means of the NSIM tag. In principle n_1= 2× NSIM , but for technical reasons it needs to be dividable by an integer N : n_1 = { int}({2*{ NSIM} + N - 1}{N}) N where N is the "number of band groups per k-point group": N = {{ \#\; of\; MPI\; ranks}}{{ IMAGES}*{ KPAR}*{ NCORE}} (see the section on parallelization basics ). As mentioned before, the optimization of a block of orbitals is stopped when either the maximum iteration depth ( NRMM ), or a certain convergence threshold has been reached. The latter may be fine-tuned by means of the EBREAK , DEPER , and WEIMIN tags. Note: we do not recommend you to do so! Rather rely on the defaults instead. The blocked-Davidson algorithm is approximately a factor of 1.5-2 slower than the RMM-DIIS , but more robust. References ↑ G. Kresse and J. Furthmüller, Comp. Mater. Sci. 6 , 15 (1996) ↑ G. Kresse and J. Furthmüller, Phys. Rev. B 54 , 11169 (1996).

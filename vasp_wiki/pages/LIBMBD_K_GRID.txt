@@ -1,0 +1,42 @@
+Title: LIBMBD_K_GRID
+URL: https://vasp.at/wiki/LIBMBD_K_GRID
+============================================================
+LIBMBD_K_GRID = [array of three integers] Default:
+LIBMBD_K_GRID = determined in libMBD according to the cell shape Description: LIBMBD_K_GRID sets the k-mesh of the collective oscillations defined in the methods available in the library libMBD of many-body dispersion methods
+
+.
+LIBMBD_K_GRID allows to choose the k-mesh of the collective oscillations defined in the methods available in the library libMBD of many-body dispersion methods. The three integers correspond to the number of k-points along the axes of the cell in the reciprocal space. The values are internally passed to the libMBD input
+k_grid
+described at the page
+
+.
+Important:
+This feature is available from VASP.6.4.3 onwards that needs to be compiled with
+-DLIBMBD
+.
+libMBD is a separate library package that has to be downloaded
+
+and compiled before VASP is compiled with the corresponding
+precompiler options
+and
+links to the libraries
+.
+
+Related tags and articles
+LIBMBD_METHOD
+,
+LIBMBD_K_GRID_SHIFT
+Examples that use this tag
+References
+↑
+https://libmbd.github.io/
+↑ a b
+https://github.com/libmbd/
+↑
+J. Hermann, M. Stöhr, S. Góger, S. Chaudhuri, B. Aradi, R. J. Maurer, and A. Tkatchenko,
+libMBD: A general-purpose package for scalable quantum many-body dispersion calculations
+, J. Chem. Phys.
+159
+, 174802 (2023).
+↑
+https://libmbd.github.io/type/mbd_input_t.html

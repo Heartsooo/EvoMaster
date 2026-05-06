@@ -1,0 +1,5 @@
+Title: RSMBJ
+URL: https://vasp.at/wiki/RSMBJ
+============================================================
+RSMBJ = [real] Default:
+RSMBJ = 7 Description: sets the r_{s}^{{th}} parameter (in bohr) in the LMBJ potential. See the description of the METAGGA tag. Related tags and articles METAGGA , CMBJ , CMBJA , CMBJB , CMBJE , SMBJ , LASPH , LMAXTAU , LMIXTAU

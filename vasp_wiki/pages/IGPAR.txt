@@ -1,0 +1,4 @@
+Title: IGPAR
+URL: https://vasp.at/wiki/IGPAR
+============================================================
+IGPAR = 1 | 2 | 3 Description: This tag specifies the socalled parallel or {G}_{} direction in the integration over the reciprocal space unit cell needed for LCALCPOL . Related tags and articles LCALCPOL , LCALCEPS , EFIELD_PEAD , LPEAD , IPEAD , LBERRY , NPPSTR , DIPOL , Berry phases and finite electric fields

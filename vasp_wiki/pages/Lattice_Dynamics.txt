@@ -1,0 +1,11 @@
+Title: Lattice Dynamics - Tutorial
+URL: https://vasp.at/wiki/Lattice_Dynamics
+============================================================
+Overview
+>
+Band gap renormalization in diamond using one-shot method
+>
+List of tutorials
+This tutorial requires VASP 6.0 or higher.
+The tutorial is made of the following parts:
+Band gap renormalization in diamond using one-shot method

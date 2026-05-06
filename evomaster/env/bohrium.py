@@ -11,6 +11,33 @@ import copy
 import os
 from typing import Any, Dict
 
+from dotenv import load_dotenv
+
+
+def _load_project_env() -> None:
+    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+    env_path = os.path.join(project_root, '.env')
+    if os.path.exists(env_path):
+        load_dotenv(env_path, override=False)
+
+
+_load_project_env()
+
+
+def get_bohrium_service_env() -> str:
+    raw = (os.getenv("SERVICE_ENV", "test") or "").strip().lower()
+    return raw or "test"
+
+
+def get_bohrium_base_url() -> str:
+    override = (os.getenv("BOHRIUM_BASE_URL", "") or "").strip().rstrip("/")
+    if override:
+        return override
+    service_env = get_bohrium_service_env()
+    if service_env == "prod":
+        return "https://openapi.dp.tech"
+    return f"https://openapi.{service_env}.dp.tech"
+
 
 def get_bohrium_credentials() -> Dict[str, Any]:
     """Read Bohrium credentials from environment variables (.env or os.environ)."""
@@ -27,6 +54,7 @@ def get_bohrium_credentials() -> Dict[str, Any]:
         "access_key": access_key,
         "project_id": project_id,
         "user_id": user_id,
+        "base_url": get_bohrium_base_url(),
     }
 
 
@@ -56,4 +84,5 @@ def inject_bohrium_executor(executor_template: Dict[str, Any]) -> Dict[str, Any]
         resources = executor.setdefault("resources", {})
         envs = resources.setdefault("envs", {})
         envs["BOHRIUM_PROJECT_ID"] = cred["project_id"]
+        envs["BOHRIUM_BASE_URL"] = cred["base_url"]
     return executor

@@ -1,0 +1,9 @@
+Task ID: {task_id}
+Task Type: {task_type}
+Description:
+{description}
+
+Additional Input:
+{input_data}
+
+Please solve the task using the available tools and keep the workflow reproducible.

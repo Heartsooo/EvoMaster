@@ -1,0 +1,81 @@
+Title: DFT-D3
+URL: https://vasp.at/wiki/DFT-D3
+============================================================
+In the DFT-D3 method of Grimme et al.
+
+, the following expression for the vdW dispersion energy-correction term is used:
+E_{{disp}} = -{1}{2} Σ_{i=1}^{N_{at}} Σ_{j=1}^{N_{at}} Σ_{{L}}{}^ ( f_{d,6}(r_{ij,L})\,{C_{6ij}}{r_{ij,{L}}^6} +f_{d,8}(r_{ij,L})\,{C_{8ij}}{r_{ij,L}^8} ).
+Unlike in the older
+DFT-D2
+method, the dispersion coefficients
+C_{6ij}
+are geometry-dependent as they are calculated on the basis of the local geometry (coordination number) around atoms i
+and j
+. Two variants of DFT-D3, that differ in the mathematical form of the damping functions
+f_{d,n}
+, are available. More variants of the damping function are available via the
+simple-DFT-D3
+external package (
+IVDW =15). DFT-D3(zero) In the zero-damping variant of DFT-D3,
+
+invoked by setting
+IVDW =11, the damping function reads f_{d,n}(r_{ij}) = {s_n}{1+6(r_{ij}/(s_{R,n}R_{0ij}))^{-α_{n}}} where R_{0ij} = {C_{8ij}{C_{6ij}}} , α_6=14 and α_8=16 are fixed (there is no tag to change their values), and the others parameters, whose default values depend on the choice of the exchange-correlation functional, can be modified as follows:
+VDW_S6 =[real] : scaling s_6 of the dipole-dipole dispersion. Available since VASP.6.6.0 .
+VDW_S8 =[real] : scaling s_8 of the dipole-quadrupole dispersion
+VDW_SR =[real] : radii scaling s_{r,6} in the dipole-dipole damping function
+VDW_SR8 =[real] : radii scaling s_{r,8} in the dipole-quadrupole damping function. Available since VASP.6.6.0 .
+VDW_RADIUS =[real] : two-body interaction cutoff (in Å)
+VDW_CNRADIUS =[real] : coordination number cutoff (in Å) DFT-D3(BJ) In the rational Becke-Johnson (BJ) damping variant of DFT-D3,
+
+, invoked by setting
+IVDW =12, the damping function is given by f_{d,n}(r_{ij}) = {s_n\,r_{ij}^n}{r_{ij}^n + (a_1\,R_{0ij}+a_2)^n} where s_6 , s_8 , a_1 , and a_2 are parameters whose default values depend on the choice of the exchange-correlation functional, but can also be modified as follows:
+VDW_S6 =[real] : scaling s_6 of the dipole-dipole dispersion. Available since VASP.6.6.0 .
+VDW_S8 =[real] : scaling s_8 of the dipole-quadrupole dispersion
+VDW_A1 =[real] : scaling a_{1} of the critical radii
+VDW_A2 =[real] : offset a_{2} of the critical radii
+VDW_RADIUS =[real] : two-body interaction cutoff (in Å)
+VDW_CNRADIUS =[real] : coordination number cutoff (in Å) Mind: The default values for the damping function parameters are available for several GGA (PBE, RPBE, revPBE and PBEsol), METAGGA (TPSS, M06L and SCAN) and hybrid (B3LYP and PBEh/PBE0) functionals, as well as Hartree-Fock . If another functional is used, the user has to define these parameters via the corresponding tags in the INCAR file. The up-to-date list of parametrized DFT functionals with recommended values of damping function parameters can be found on the webpage https://www.chemie.uni-bonn.de/grimme/de/software/dft-d3/ and follow the link "List of parametrized functionals". The DFT-D3 method has been implemented in VASP by Jonas Moellmann based on the dftd3 program written by Stefan Grimme, Stephan Ehrlich and Helge Krieg. If you make use of the DFT-D3 method, please cite reference
+
+. When using DFT-D3(BJ) references
+
+and
+
+should also be cited. Also carefully check the more extensive list of references found on
+https://www.chemie.uni-bonn.de/grimme/de/software/dft-d3/
+.
+
+Related tags and articles
+IVDW
+,
+VDW_S6
+,
+VDW_S8
+,
+VDW_SR
+,
+VDW_SR8
+,
+VDW_A1
+,
+VDW_A2
+,
+VDW_RADIUS
+,
+VDW_CNRADIUS
+,
+DFT-D2
+,
+simple-DFT-D3
+,
+DFT-D4
+,
+DFT-ulg
+References
+↑ a b c d
+S. Grimme, J. Antony, S. Ehrlich, and S. Krieg, J. Chem. Phys.
+132
+, 154104 (2010).
+↑ a b
+S. Grimme, S. Ehrlich, and L. Goerigk, J. Comput. Chem.
+32
+, 1456 (2011).

@@ -1,0 +1,4 @@
+Title: VDW_ALPHA
+URL: https://vasp.at/wiki/VDW_ALPHA
+============================================================
+VDW_ALPHA = [real (array)] Description: VDW_ALPHA defines the polarizability α_{0} (bohr ^{3} ) for each species defined in the POSCAR file. VDW_ALPHA sets the polarizability α_{0} (bohr ^{3} ) for each species defined in the POSCAR file for the Tkatchenko-Scheffler and Many-body dispersion energy methods. Related tags and articles Tkatchenko-Scheffler method , Many-body dispersion energy

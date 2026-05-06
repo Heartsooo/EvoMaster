@@ -1,0 +1,46 @@
+Title: Category:Installation
+URL: https://vasp.at/wiki/Category:Installation
+============================================================
+Installing VASP.6.X.X
+Installing VASP.5.X.X
+Pages in category "Installation"
+The following 39 pages are in this category, out of 39 total. C
+Combining MPI and OpenMP
+Compiler options
+CUDA-C GPU port of VASP I
+Installing VASP.5.X.X
+Installing VASP.6.X.X L
+Linking to libraries M
+Makefile.include
+Makefile.include.aocc ompi aocl
+Makefile.include.aocc ompi aocl omp
+Makefile.include.cray
+Makefile.include.cray omp
+Makefile.include.cray omp off
+Makefile.include.fujitsu a64fx
+Makefile.include.fujitsu a64fx omp
+Makefile.include.gnu
+Makefile.include.gnu omp
+Makefile.include.gnu ompi aocl
+Makefile.include.gnu ompi aocl omp
+Makefile.include.gnu ompi mkl omp
+Makefile.include.intel
+Makefile.include.intel omp
+Makefile.include.intel ompi mkl omp
+Makefile.include.intel serial
+Makefile.include.nec aurora
+Makefile.include.nvhpc
+Makefile.include.nvhpc acc
+Makefile.include.nvhpc omp
+Makefile.include.nvhpc omp acc
+Makefile.include.nvhpc ompi mkl omp
+Makefile.include.nvhpc ompi mkl omp acc
+Makefile.include.oneapi
+Makefile.include.oneapi omp
+Makefile.include.oneapi omp off P
+Personal computer installation
+Precompiler options
+Profiling S
+Shared memory T
+Toolchains V
+Validation tests

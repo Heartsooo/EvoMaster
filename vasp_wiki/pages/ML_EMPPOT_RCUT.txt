@@ -1,0 +1,5 @@
+Title: ML_EMPPOT_RCUT
+URL: https://vasp.at/wiki/ML_EMPPOT_RCUT
+============================================================
+ML_EMPPOT_RCUT = [real] Default:
+ML_EMPPOT_RCUT = 0.0 Description: Sets the cutoff radius for the empirical potentials. The empirical potentials have a separate neighbor list. ML_EMPPOT_RCUT not only determines the cutoffs of the empirical potential functions but also the cutoff of the neighbor list. Related tags and articles ML_LMLFF , ML_LCOUPLE , ML_ICOUPLE , ML_RCOUPLE , ML_NATOM_COUPLED , ML_LEMPPOT , ML_SRPOT_B0 , ML_SRPOT_N0 , ML_SRPOT_S0 , ML_MOPOT_NM , ML_MOPOT_DM , ML_MOPOT_RM , ML_MOPOT_RKM , ML_MOPOT_IJM

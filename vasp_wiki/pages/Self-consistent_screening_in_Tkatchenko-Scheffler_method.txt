@@ -1,0 +1,51 @@
+Title: Self-consistent screening in Tkatchenko-Scheffler method
+URL: https://vasp.at/wiki/Self-consistent_screening_in_Tkatchenko-Scheffler_method
+============================================================
+A computationally efficient way to account for electrodynamic response effects, in particular the interaction of atoms with the dynamic electric field due to the surrounding polarizable atoms, was proposed by Tkatchenko et al
+
+. In this method, termed TS+SCS, the frequency-dependent screened polarizabilities
+α^{SCS}(ω)
+are obtained by solving the self-consistent screening equation:
+α_{i}^{SCS}(ω) = α_{i}(ω) - α_{i}(ω)
+Σ_{i ≠ j} _{ij} α_{j}^{SCS}(ω)
+where
+_{ij}
+is the dipole-dipole interaction tensor and
+α_{i}(ω)
+is the effective frequency-dependent polarizability, approximated by
+α_{i}(ω) = {α_{i}}{1+ (
+ω / ω_i )^2}
+with the characteristic mean excitation frequency
+ω_i = {4}{3} {C_{6ii}}{(α_{i})^2}
+. The dispersion coefficients are computed from the Casimir-Polder integral:
+C_{6ii} = {3}{π} ∫_0^{∞} α_{i}^{SCS}(ω)
+α_{i}^{SCS}(ω) \,dω.
+The van der Waals radii of atoms are obtained by rescaling the radii:
+R_{0i}^{SCS} = ( {α_{i}^{SCS}}{α_{i}} )^{1/3} R_{0i}.
+The dispersion energy is computed using the same equation as in the original
+Tkatchenko-Scheffler method
+but with corrected parameters
+C_{6ii}^{SCS}
+,
+α_{i}^{SCS}
+, and
+R_{0i}^{SCS}
+.
+Details of the implementation of the TS+SCS method in VASP and the performance tests made on various crystalline systems are presented in reference
+
+.
+Usage
+The TS+SCS method is invoked by setting
+IVDW =2|20 and
+LVDWSCS = .TRUE. . In addition to parameters controlling the Tkatchenko-Scheffler method , the following optional parameters can set by the user:
+VDW_SR =0.97 scaling factor s_{R}
+SCSRAD =120 cutoff radius (in
+
+) used in the calculation of
+_{ij}
+LSCSGRAD =.TRUE. decides whether to compute SCS contribution to gradients (
+LSCSGRAD = .TRUE. ) or not
+LSCALER0 =.TRUE. decides whether to use the equation above for R_{0i}^{SCS} to re-scale the parameter R_{0} (
+LSCALER0 = .TRUE. ) or not Mind: This method requires the use of POTCAR files from the PAW dataset version 52 or later. This method is incompatible with the setting
+ADDGRID = .TRUE. . This type of calculation may be time-consuming for large systems. Note that the SCS contribution to gradients and stress tensor is only modest (but non-negligible) in many cases. In the initial stages of relaxation of large systems, or if only energy is of interest, the calculation can be accelerated by setting
+LSCSGRAD = .FALSE. . The default value for the parameter VDW_SR (which is, in general, different from that used in the unscreened Tkatchenko-Scheffler method method) is available only for the PBE functional. If a functional other than PBE is used, the value for VDW_SR must be specified in the INCAR file. Related tags and articles LVDWSCS , VDW_SR , SCSRAD , LSCSGRAD , LSCALER0 , IVDW , Tkatchenko-Scheffler method , Tkatchenko-Scheffler method with iterative Hirshfeld partitioning , Many-body dispersion energy , Many-body dispersion energy with fractionally ionic model for polarizability References ↑ A. Tkatchenko, R. A. DiStasio, Jr., R. Car, and M. Scheffler, Phys. Rev. Lett. 108 , 236402 (2012). ↑ T. Bučko, S. Lebègue, J. Hafner, and J. G. Ángyán, Phys. Rev. B 87 , 064110 (2013).

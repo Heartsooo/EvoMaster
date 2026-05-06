@@ -1,0 +1,30 @@
+Title: TAUCAR
+URL: https://vasp.at/wiki/TAUCAR
+============================================================
+The
+TAUCAR file stores kinetic-energy density
+_{σσ'} = {^2}{2m} Σ_{n{k}} f_{n{k}} {} _{n{k}σ} · _{n{k}σ'}
+in VASP units (eV
+^{-3}
+), i.e. the valence contribution of the pseudo expectation value on the plane-wave grid. Here,
+{} _{n{k}σ}
+is the gradient of the pseudo Kohn-Sham orbitals within the
+PAW method
+. The
+TAUCAR file is written by default for a
+metaGGA
+calculation, but it can also be written for
+XC functionals
+that are independent of
+
+by setting
+LTAU = T . The kinetic energy density can also be redirected to vaspwave.h5 using LH5 . To avoid writing
+
+for a
+metaGGA
+calculation use
+LCHARG = F . This controls the writing of both the charge density and the kinetic energy density. The TAUCAR file (together with the CHGCAR file) can be read to restart a calculation ( ICHARG ). Tip: We recommend starting from the density files when repeatedly restarting with small changes in the input parameters, e.g., the k -point mesh ( KPOINTS ). Mind: Available as of VASP 6.6. Format The format is the same as the CHGCAR file except for the lack of augmentation occupancies. In other words the TAUCAR file consists of the following block: Structure in POSCAR format FFT-grid dimensions NGXF , NGYF , NGZF Kinetic energy density Magnetic calculations For magnetic calculations, the TAUCAR file contains additional data blocks for the magnetic part of
+
+. In particular, for spin-polarized calculations (
+ISPIN =2), the first set contains the total kinetic energy density (spin up + spin down) and the second one is the magnetization density (spin up - spin down). For noncollinear calculation (
+LNONCOLLINEAR =T), it contains the total charge density and the magnetic part _m in the spinor basis set by SAXIS . Related tags and articles CHGCAR , LTAU , ICHARG , FFT-grid dimensions: ENCUT , NGXF , NGYF , NGZF

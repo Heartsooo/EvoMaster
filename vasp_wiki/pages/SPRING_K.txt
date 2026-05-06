@@ -1,0 +1,4 @@
+Title: SPRING_K
+URL: https://vasp.at/wiki/SPRING_K
+============================================================
+SPRING_K = [real (array)] Description: Force constant for harmonic bias potential. The parameter SPRING_K defines force constants ( _{μ} ) for the harmonic bias of the following form: V(_1,,_{M_8}) = Σ_{μ=1}^{M}{1}{2}_{μ} (_{μ}(q)-_{0μ})^2 \; where the sum runs over all ( M_8 ) coordinates the potential acts upon ( _{μ}(q) ), which are defined in the ICONST file by setting the status to 8. The units of _{μ} are eV/uc where uc units of coordinate the potential acts upon (e.g., {} for coordinates with flag R, rad. for coordinates with flag A, dimensionless for coordinates with flag W, etc...) The number of items defined via SPRING_K must be equal to M_8 , otherwise the calculation terminates with an error message. Related tags and articles SPRING_R0 , SPRING_V0 , ICONST , Biased molecular dynamics

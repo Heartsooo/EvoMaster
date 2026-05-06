@@ -1,0 +1,22 @@
+Title: GW and ACFDT - Tutorial
+URL: https://vasp.at/wiki/GW_and_ACFDT
+============================================================
+Overview
+>
+bandgap of Si in GW
+>
+bandstructure of Si in GW (VASP2WANNIER90)
+>
+bandstructure of SrVO3 in GW
+>
+CRPA of SrVO3
+>
+Equilibrium volume of Si in the RPA
+>
+List of tutorials
+The tutorial is made of the following parts:
+bandgap of Si in GW
+bandstructure of Si in GW (VASP2WANNIER90)
+bandstructure of SrVO3 in GW
+cRPA of SrVO3
+Equilibrium volume of Si in the RPA

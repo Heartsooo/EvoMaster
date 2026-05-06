@@ -1,0 +1,59 @@
+{
+  "task_type": "relax",
+  "description": "Structure optimization (ionic positions and/or cell shape/volume)",
+  "use_cases": ["geometry optimization", "lattice relaxation", "surface relaxation"],
+
+  "incar": {
+    "required": {
+      "IBRION": {"value": 2, "note": "CG, robust default. Use 1 (RMM-DIIS) if close to minimum and >20 DOF"},
+      "NSW": {"value": 200, "note": "max ionic steps, increase if not converged"},
+      "ISIF": {"rule": "2 for fixed cell (atoms only), 3 for full cell relaxation, 4 for shape only"},
+      "EDIFFG": {"value": -0.01, "note": "force convergence in eV/Å (negative = force criterion)"},
+      "ENCUT": {"rule": "1.3 * max(ENMAX) for ISIF>=3 to avoid Pulay stress"},
+      "EDIFF": {"value": 1e-6},
+      "ISMEAR": {"rule": "1 for metals, 0 for semiconductors/insulators"},
+      "SIGMA": {"rule": "0.1-0.2 for metals, 0.01-0.05 for semiconductors"}
+    },
+    "recommended": {
+      "PREC": "Accurate",
+      "ALGO": "Fast",
+      "POTIM": {"value": 0.5, "note": "reduce to 0.1-0.2 if oscillating"},
+      "LREAL": {"rule": ".FALSE. for <20 atoms, Auto for >=20"},
+      "LWAVE": false,
+      "LCHARG": false
+    },
+    "conditional": {
+      "volume_relaxation_isif_3": {
+        "ENCUT": "must be >= 1.3 * ENMAX to avoid Pulay stress",
+        "PREC": "Accurate"
+      },
+      "surface_slab": {
+        "ISIF": 2,
+        "IDIPOL": 3,
+        "LDIPOL": ".TRUE.",
+        "note": "fix bottom layers via selective dynamics in POSCAR"
+      },
+      "magnetic_system": {
+        "ISPIN": 2,
+        "MAGMOM": "set per atom"
+      },
+      "difficult_convergence": {
+        "IBRION": 3,
+        "POTIM": 0.2,
+        "SMASS": 0.2,
+        "note": "damped MD for far-from-equilibrium systems, then switch to IBRION=1 or 2"
+      }
+    }
+  },
+
+  "kpoints": {
+    "rule": "Gamma-centered, same density as SCF",
+    "guideline": "k_i ~ 25/a_i for metals, 15/a_i for insulators"
+  },
+
+  "workflow_notes": [
+    "For volume relaxation (ISIF=3): may need 2-3 sequential runs until converged",
+    "Check that forces and stress are below threshold in OUTCAR",
+    "Use CONTCAR as POSCAR for continuation runs"
+  ]
+}

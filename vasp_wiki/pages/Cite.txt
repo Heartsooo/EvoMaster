@@ -1,0 +1,10 @@
+Title: Template:Cite
+URL: https://vasp.at/wiki/Cite
+============================================================
+This template is similar to how LaTeX manages citations, you have a key and then a text that is included.
+The template translates this to the mediawiki format. Usage {{cite|
+key
+}}.
+
+Mind:
+Add new citations to the end of this list. Be wary of the whitespace here as it will be introduced to the other document when you include it via the template. A good test is that the preview page should be completely empty and not show any empty lines.

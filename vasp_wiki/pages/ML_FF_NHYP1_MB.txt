@@ -1,0 +1,22 @@
+Title: ML_NHYP
+URL: https://vasp.at/wiki/ML_FF_NHYP1_MB
+============================================================
+ML_NHYP = [integer] Default:
+ML_NHYP = 4 Description: This tag specifies the polynomial power
+
+of the kernel within the machine learning force field method (see
+this section
+).
+The value of
+ML_NHYP must be an integer number
+≥
+1.
+
+Related tags and articles
+ML_RCUT1
+,
+ML_SION1
+,
+ML_RCUT2
+,
+ML_SION2

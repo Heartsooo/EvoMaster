@@ -1,0 +1,41 @@
+Title: Bulk Systems - Tutorial
+URL: https://vasp.at/wiki/Bulk_Systems
+============================================================
+Overview
+>
+fcc Si
+>
+fcc Si DOS
+>
+fcc Si bandstructure
+>
+cd Si
+>
+cd Si volume relaxation
+>
+cd Si relaxation
+>
+beta-tin Si
+>
+fcc Ni
+>
+graphite TS binding energy
+>
+graphite MBD binding energy
+>
+graphite interlayer distance
+>
+List of tutorials
+The tutorial is made of the following parts:
+fcc Si
+fcc Si DOS
+fcc Si bandstructure
+cd Si
+cd Si volume relaxation
+cd Si relaxation
+beta-tin Si
+fcc Ni
+liquid Si
+graphite TS binding energy
+graphite MBD binding energy
+graphite interlayer distance

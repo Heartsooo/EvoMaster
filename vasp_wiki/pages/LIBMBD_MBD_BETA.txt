@@ -1,0 +1,50 @@
+Title: LIBMBD_MBD_BETA
+URL: https://vasp.at/wiki/LIBMBD_MBD_BETA
+============================================================
+LIBMBD_MBD_BETA = [real] Default:
+LIBMBD_MBD_BETA = value that was determined for the exchange-correlation functional set with LIBMBD_XC Description: LIBMBD_MBD_BETA sets the value of the scaling factor β (usually denoted s_R ) in the many-body methods as implemented in the library libMBD of many-body dispersion methods
+
+.
+LIBMBD_MBD_BETA allows to choose the value of the damping parameter β
+in the many-body methods as implemented in the library libMBD of many-body dispersion methods
+
+. The value is internally passed to the libMBD input
+mbd_beta
+described at the page
+
+.
+LIBMBD_MBD_BETA is the same as the
+VDW_SR tag that is used for the VASP implementation of the many-body methods.
+
+Mind:
+LIBMBD_MBD_BETA can be set only if
+LIBMBD_XC =none. Important: This feature is available from VASP.6.4.3 onwards that needs to be compiled with -DLIBMBD . libMBD is a separate library package that has to be downloaded
+
+and compiled before VASP is compiled with the corresponding
+precompiler options
+and
+links to the libraries
+.
+
+Related tags and articles
+LIBMBD_METHOD
+,
+LIBMBD_XC
+,
+LIBMBD_MBD_A
+,
+Many-body dispersion energy
+Examples that use this tag
+References
+↑ a b
+https://libmbd.github.io/
+↑ a b c
+https://github.com/libmbd/
+↑ a b
+J. Hermann, M. Stöhr, S. Góger, S. Chaudhuri, B. Aradi, R. J. Maurer, and A. Tkatchenko,
+libMBD: A general-purpose package for scalable quantum many-body dispersion calculations
+, J. Chem. Phys.
+159
+, 174802 (2023).
+↑
+https://libmbd.github.io/type/mbd_input_t.html

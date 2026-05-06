@@ -1,0 +1,26 @@
+Title: PHON_TLIST
+URL: https://vasp.at/wiki/PHON_TLIST
+============================================================
+PHON_TLIST = [real array] Default:
+PHON_TLIST = none Description: Provides the list of temperatures for that the electron-phonon interaction using the ZG configuration
+
+is evaluated.
+For further usage of this tag see:
+Electron-phonon interactions from Monte-Carlo sampling
+.
+
+Mind:
+This feature is available for VASP >= 6.0.
+
+Related tags and articles
+Electron-phonon interactions from Monte-Carlo sampling
+,
+PHON_LMC
+,
+PHON_NSTRUCT
+Examples that use this tag
+References
+↑
+M. Zacharias and F. Giustino, Phys. Rev. B
+94
+, 075125 (2016).

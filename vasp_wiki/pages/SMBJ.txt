@@ -1,0 +1,28 @@
+Title: SMBJ
+URL: https://vasp.at/wiki/SMBJ
+============================================================
+SMBJ = [real] Default:
+SMBJ = 2 Description: sets the σ parameter (in
+
+) in the LMBJ potential.
+See the description of the
+METAGGA tag.
+
+Related tags and articles
+METAGGA
+,
+CMBJ
+,
+CMBJA
+,
+CMBJB
+,
+CMBJE
+,
+RSMBJ
+,
+LASPH
+,
+LMAXTAU
+,
+LMIXTAU

@@ -1,0 +1,8 @@
+Title: LVHAR
+URL: https://vasp.at/wiki/LVHAR
+============================================================
+LVHAR = [logical] Default:
+LVHAR = .FALSE. Description: Determines whether the local potential V_{{ionic}}({r}) +V_{{hartree}}({r}) (in eV) is written to the LOCPOT file. V_{{ionic}}({r})+V_{{hartree}}({r}) = V_{{ionic}}({r}) + ∫ {n({r'})}{|{r}-{r'}|}d{r'} where V_{{ionic}}({r}) is the ionic potential as mimicked by the pseudopotentials and V_{{hartree}}({r}) is the Hartree potential. The local potential is written to the LOCPOT file and hence to the same file as the local potential for
+LVTOT =T. Carefully check that the LOCPOT file contains the potential you expect. WRT_POTENTIAL also gives access to the ionic and Hartree potentials and offers more options. Warning: Setting
+LVHAR =True will set
+LVTOT =False. See LOCPOT to find out how to write V_{{ionic}}({r}) +V_{{hartree}}({r}) in VASP < 5.2.12. Related tags and articles Computing the work function , LVTOT , LOCPOT , WRT_POTENTIAL , LVACPOTAV

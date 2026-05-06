@@ -1,0 +1,21 @@
+Title: ML_SION1
+URL: https://vasp.at/wiki/ML_SION1
+============================================================
+ML_SION1 = [real] Default:
+ML_SION1 = 0.5 Description: This tag specifies the width σ_{atom} of the Gaussian functions used for broadening the atomic distributions of the radial descriptor ^{(2)}_i(r) within the machine learning force field method. The radial descriptor is constructed from _{i}^{(2)}(r) = {1}{4π} ∫ _{i}(r{r}) d{r}, {where} _{i}({r}) = Σ_{j=1}^{N_{{a}}} f_{{cut}}(r_{ij}) g({r}-{r}_{ij}) and g({r}) is the following approximation of the delta function: g({r})={1}{2σ_{{atom}π}}{exp}(-{|{r}|^{2}}{2σ_{{atom}}^{2}}). The tag ML_SION1 sets the width σ_{atom} of the above Gaussian function (see this section for more details). Tip: Our test calculations indicate that
+ML_SION1 = ML_SION2 results in an optimal training performance. Furthermore, a value of 0.5 was found to be a good default value for both. However, the best choice is somewhat system-dependent. For instance, a smaller value for ML_SION1 can increase the number of local reference configurations, and hence ultimately the quality of the MLFF. See also here . The unit of ML_SION1 is
+
+.
+
+Related tags and articles
+ML_LMLFF
+,
+ML_SION2
+,
+ML_RCUT1
+,
+ML_RCUT2
+,
+ML_MRB1
+,
+ML_MRB2

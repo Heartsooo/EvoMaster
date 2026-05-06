@@ -1,0 +1,5 @@
+Title: CMBJ
+URL: https://vasp.at/wiki/CMBJ
+============================================================
+CMBJ = [real (array)] Default:
+CMBJ = calculated self-consistently Description: defines the c parameter in the MBJ potential. The CMBJ tag can be set in the following ways: Specify a constant that is used at every point of space {r} CMBJ = c Specify one entry per atomic type CMBJ = c_1 c_2 .. c_n where the order and number n is in accordance with atomic types in your POSCAR file. The MBJ exchange potential at a point {r} will then be calculated using the parameter c_{i} belonging to the atomic species of the atomic site nearest to {r} . If CMBJ is not set, c is calculated at each electronic step as the average of n/n in the unit cell, as explained in the description of the METAGGA tag. Related tags and articles METAGGA , CMBJA , CMBJB , CMBJE , SMBJ , RSMBJ , LASPH , LMAXTAU , LMIXTAU Examples that use this tag References

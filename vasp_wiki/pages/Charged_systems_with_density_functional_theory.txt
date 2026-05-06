@@ -1,0 +1,160 @@
+Title: Charged systems with density functional theory
+URL: https://vasp.at/wiki/Charged_systems_with_density_functional_theory
+============================================================
+On this page, we describe technical issues with computing the energies of charged systems with periodic density functional theory (DFT) calculations.
+We first introduce the problem of divergence of the electrostatic energy in DFT calculations and illustrate how this divergence is removed for charge neutral computations.
+We then discuss why this divergence is present for charged systems.
+Finally, we present methods which have been implemented in VASP that allow for calculations of charged bulk, surface and molecular systems.
+Treating divergence in charge neutral calculations
+VASP utilizes efficient fast Fourier transforms (FFT) to compute the electrostatic potential from the charge density using the Poisson equation,
+V({r}) = 4π ∫ {({r}^)}{ | {r} - {r}^ |} d{r}^,
+where
+{r}
+and
+{r}^
+are all points in real space.
+Fourier transforming the Poisson equation to reciprocal space,
+V({G}) = {4π}{{G}^2} ({G}),
+where
+{G}
+is the reciprocal lattice vector and
+{G}
+is its norm.
+An obvious issue with computing
+V({G})
+is that it diverges for
+{G} 0
+.
+This divergence is handled in charge neutral DFT calculations by cancelling out individual divergences for the total electrostatic energy,
+
+which is the sum of electron-electron, ion-electron and ion-ion energies
+E_{{electrostatic}} = E_{{electron-electron}} + E_{{ion-electron}} + E_{{ion-ion}}.
+Individually, these terms have the following functional forms,
+E_{{electron-electron}} = {1}{2} Σ_{{G}} _{{electron}}({G}) V_{{electron}}({G}),
+where
+_{{electron}}
+and
+V_{{electron}}
+are the electronic charge density and potential respectively.
+E_{{ion-electron}} = -Σ_{{G}} _{{ion}}({G}) V_{{electron}}({G}),
+where
+_{{ion}}
+is the ion charge density.
+VASP does not explicitly compute
+E_{{ion-electron}}
+, but the potential of the ion is reflected through the eigenvalues.
+The ion-ion interactions are treated by Ewald summation
+E_{{ion-ion}} = E_{{long-range}} + E_{{short-range}} + E_{{self}} + E_{{homogeneous}},
+where
+E_{{long-range}}
+is the only component which sums over the
+{G}
+vectors and has the form,
+E_{{ion-ion}} = {1}{2} Σ_{{G}} _{{ion}}({G}) V_{{ion}}({G}).
+The summed
+{G}=0
+terms of
+E_{{electron-electron}}
+,
+E_{{ion-electron}}
+and
+E_{{ion-ion}}
+are given by,
+E_{{electrostatic}}({G}=0) = {1}{2}_{{electron}}({G}=0) V_{{electron}}({G}=0) - _{{ion}}({G}=0) V_{{electron}}({G}=0) + {1}{2}_{{ion}}({G}=0) V_{{ion}}({G}=0),
+which, can be expressed through the reciprocal space Poisson equation as,
+E_{{electrostatic}}({G}=0) = {4π}{{G}^2} [{1}{2}_{{electron}}({G}=0)^2 - _{{ion}}({G}=0)^2 + {1}{2}_{{ion}}({G}=0)^2 ].
+Under the condition that
+_{{electron}}({G}=0)=_{{ion}}({G}=0)
+, the individual divergences would cancel out and the total energy is convergent.
+Since the
+{G}=0
+term of a Fourier transformed quantity is its average, the above condition is satisfied when the average electron and ion charge density are the same, i.e. the system is charge neutral.
+Divergences in charged calculations
+The total energy does not converge when
+_{{electron}}({G}=0) ≠ _{{ion}}({G}=0)
+, i.e., when the system is not charge neutral.
+Alternatively, we can think of this divergence as coming a compensating uniformly smeared out charge density, δ
+with energy
+E_{{compensating}}
+E_{{compensating}} = {4π}{{G}^2} [ δ ^2 ]
+which cancels out the divergent terms in
+E_{{electrostatic}}({G}=0)
+.
+The consequences of adding a uniform compensating charge is system specific.
+For highly screened systems, the potential coming from a moderate compensating charge presents an acceptable amount of error.
+Conversely, systems containing vacuum (such as 2D materials, surfaces and molecules) have little screening and hence are more susceptible to artifacts caused by this compensating charge.
+Treating charged systems in practice
+We implement
+
+two separate methods to deal with charged systems.
+These methods are specific to the dimensionality of the system that is being computed.
+Bulk charged systems in orthorhombic cells can be treated by applying analytical monopole-monolpole corrections (see
+LMONO for further practical details).
+Surfaces and other two dimensional materials are treated with Coulomb kernel truncation methods.
+These methods replace the Coulomb kernel
+v({G})
+, i.e., the
+{4π}{{G}^2} in
+V({G})
+with a 2D kernel
+
+(
+v_{{2D}}({G})
+) that removes electrostatic interactions between non-periodic replicas along the surface normal,
+
+v_{{2D}}({G}) =
+cases
+4π / {G}^2 [ 1 - e^{-{G}_{}R} ( ({G}_ R_{c}) - {G}_ / {G}_{} ({G}_{}R_{c}) ) ] & {G} ≠ 0 \\
+4π / {G}_^2[ 1 - ({G}_ R_{c}) - {G}_{}R_{c} ({G}_ R_{c}) ] & {G}_{} = 0 \\
+-2π R_{c}^2 & {G}=0
+cases
+where
+{G}_{}
+is the norm of the
+{G}
+vector parallel to the surface and
+{G}_{}
+is the
+{G}
+vector along the surface normal.
+A similar change can be made to the Coulomb kernel to treat charged molecules (so-called 0D systems with
+v_{{0D}}({G}
+)) to remove interactions with periodic replicas in all directions,
+v_{{0D}}({G}) =
+cases
+4π/{G}^2 ( 1 - ({G}R_{c}) ) & {G}≠ 0 \\
+2π R_{c}^2 & {G} = 0
+cases
+See
+KERNEL_TRUNCATION/LTRUNCATE
+(available as of VASP.6.5.0) for further details on applying these Coulomb truncation methods in practice.
+
+Related tags and articles
+NELECT
+,
+KERNEL_TRUNCATION/LTRUNCATE
+,
+KERNEL_TRUNCATION/LCOARSEN
+,
+KERNEL_TRUNCATION/IDIMENSIONALITY
+,
+KERNEL_TRUNCATION/ISURFACE
+,
+LMONO
+References
+↑
+J. Ihm, A. Zunger, M. L. Cohen, Journal of Physics C: Solid State Physics
+12
+, 4409 (1979).
+↑
+S. Vijay, M. Schlipf, H. Miranda, F. Karsai, M. Kaltak, M. Marsman, and G. Kresse,
+Efficient periodic density functional theory calculations of charged molecules and surfaces using Coulomb kernel truncation
+, Phys. Rev. B
+112
+, 045409 (2025).
+↑
+C. A. Rozzi, D. Varsano, A. Marini, E. K. Gross, A. J. Rubio, Phys. Rev. B
+73
+, 20511 (2006).
+↑
+T. Sohier, M. Calandra, and F. Mauri, Phys. Rev. B 96, 75448 (2017).

@@ -1,0 +1,74 @@
+{
+  "task_type": "md",
+  "description": "Ab initio molecular dynamics simulation",
+  "use_cases": ["thermal properties", "phase transitions", "liquid structures", "diffusion", "reaction dynamics"],
+
+  "incar": {
+    "required": {
+      "IBRION": {"value": 0, "note": "molecular dynamics"},
+      "NSW": {"rule": "number of MD steps, typically 1000-100000 depending on timescale"},
+      "POTIM": {"value": 1.0, "unit": "fs", "note": "timestep, typically 1-2 fs. Reduce for light elements (H: 0.5 fs)"},
+      "MDALGO": {"rule": "0=standard(use SMASS), 2=Nosé-Hoover, 3=Langevin. See thermostat choice."},
+      "TEBEG": {"rule": "target temperature in K"},
+      "TEEND": {"rule": "end temperature (=TEBEG for NVT)"},
+      "ISIF": {"value": 2, "note": "2 for NVT/NVE (fixed cell). 3 for NpT."},
+      "ISMEAR": {"value": 0, "note": "Gaussian smearing. NEVER use -5 (tetrahedron) for MD!"},
+      "SIGMA": {"rule": "0.05-0.2, check that T*S << total energy per atom"},
+      "EDIFF": {"value": 1e-5, "note": "slightly looser than static, but test convergence"}
+    },
+    "recommended": {
+      "PREC": "Normal",
+      "ALGO": "Fast",
+      "LREAL": "Auto",
+      "LWAVE": false,
+      "LCHARG": false,
+      "NBLOCK": {"value": 10, "note": "write XDATCAR every 10 steps"},
+      "NWRITE": {"value": 0, "note": "reduce OUTCAR verbosity"},
+      "ISYM": {"value": 0, "note": "turn off symmetry for MD"}
+    },
+    "thermostat_options": {
+      "nve": {
+        "MDALGO": 0,
+        "SMASS": -3,
+        "note": "microcanonical, constant E. Good for checking energy conservation."
+      },
+      "nvt_nose_hoover": {
+        "MDALGO": 2,
+        "SMASS": {"rule": "2-3 typically, controls coupling strength"},
+        "note": "good for equilibrium sampling"
+      },
+      "nvt_langevin": {
+        "MDALGO": 3,
+        "LANGEVIN_GAMMA": {"rule": "friction per species in ps^-1, e.g., 10 10"},
+        "LANGEVIN_GAMMA_L": {"value": 0, "note": ">0 for lattice friction in NpT"},
+        "note": "good for rapid thermalization"
+      },
+      "nvt_andersen": {
+        "MDALGO": 1,
+        "ANDERSEN_PROB": {"value": 0.05},
+        "note": "simple but decorrelates velocities"
+      },
+      "npt": {
+        "MDALGO": 3,
+        "ISIF": 3,
+        "LANGEVIN_GAMMA": "per species",
+        "LANGEVIN_GAMMA_L": {"value": 10, "note": "lattice friction"},
+        "PMASS": {"rule": "fictitious lattice mass, ~100-1000"},
+        "PSTRESS": {"rule": "target pressure in kB (0 for ambient)"}
+      }
+    }
+  },
+
+  "kpoints": {
+    "rule": "Can use fewer k-points than static (Gamma-only for large supercells >=64 atoms)",
+    "note": "Balance accuracy vs. cost per step"
+  },
+
+  "workflow_notes": [
+    "Start from relaxed structure",
+    "Equilibration: run initial MD (few hundred steps) and discard",
+    "Production: collect data from equilibrated trajectory",
+    "For properties: use XDATCAR for trajectory analysis",
+    "Consider MLFF (ML_LMLFF=.TRUE.) for long timescales"
+  ]
+}

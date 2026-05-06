@@ -1,0 +1,61 @@
+{
+  "task_type": "scf",
+  "description": "Single-point self-consistent field (SCF) calculation to obtain ground-state energy and charge density",
+  "use_cases": ["total energy", "charge density", "initial step before band structure or DOS"],
+
+  "incar": {
+    "required": {
+      "ENCUT": {"rule": "1.3 * max(ENMAX from POTCAR), or use PREC to set automatically"},
+      "EDIFF": {"value": 1e-6, "note": "tight convergence for production"},
+      "ISMEAR": {"rule": "1 for metals, 0 for semiconductors/insulators"},
+      "SIGMA": {"rule": "0.1-0.2 for metals (ISMEAR=1), 0.01-0.05 for semiconductors (ISMEAR=0)"}
+    },
+    "recommended": {
+      "PREC": "Accurate",
+      "ALGO": "Fast",
+      "LREAL": {"rule": ".FALSE. for <20 atoms, Auto for >=20 atoms"},
+      "LWAVE": true,
+      "LCHARG": true
+    },
+    "conditional": {
+      "magnetic_system": {
+        "ISPIN": 2,
+        "MAGMOM": "set initial moments per atom"
+      },
+      "dft_plus_u": {
+        "LDAU": ".TRUE.",
+        "LDAUTYPE": 2,
+        "LDAUL": "per species",
+        "LDAUU": "per species",
+        "LDAUJ": "per species",
+        "LMAXMIX": "4 for d, 6 for f",
+        "LASPH": ".TRUE."
+      },
+      "vdw_system": {
+        "IVDW": "11 (D3) or 12 (D3-BJ) or 202 (MBD)"
+      },
+      "meta_gga": {
+        "METAGGA": "SCAN or R2SCAN",
+        "LASPH": ".TRUE."
+      },
+      "performance": {
+        "NCORE": "sqrt(total_cores)",
+        "KPAR": "divisor of n_kpoints"
+      }
+    }
+  },
+
+  "kpoints": {
+    "rule": "Gamma-centered Monkhorst-Pack grid",
+    "guideline": "k_i ~ 30/a_i for metals, 20/a_i for insulators (a_i in Angstrom)",
+    "note": "Always converge k-mesh for production calculations"
+  },
+
+  "poscar": {
+    "note": "Must be provided or generated from structure database"
+  },
+
+  "potcar": {
+    "rule": "Use recommended potentials. _pv or _sv for transition metals. Standard for main group. _GW for GW/BSE workflows."
+  }
+}

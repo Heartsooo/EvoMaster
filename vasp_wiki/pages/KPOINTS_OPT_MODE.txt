@@ -1,0 +1,10 @@
+Title: KPOINTS_OPT_MODE
+URL: https://vasp.at/wiki/KPOINTS_OPT_MODE
+============================================================
+KPOINTS_OPT_MODE = 0 | 1 | 2 Default:
+KPOINTS_OPT_MODE = 1 Description: Selects which diagonalization algorithm to use for the optional k-points driver Mind: Available as of VASP 6.5.0 Sometimes, the electronic Kohn-Sham orbitals are required on an alternative k-point mesh, for example via KPOINTS_OPT or KPOINTS_ELPH . In this case, the tag KPOINTS_OPT_MODE selects which diagonalization algorithm should be used to obtain these eigenvalues. Tag options
+KPOINTS_OPT_MODE = 0 The diagonalization of the Hamiltonian at the alternative k-points is skipped entirely
+KPOINTS_OPT_MODE = 1 Uses the Blocked-Davidson algorithm (same as
+ALGO = Normal )
+KPOINTS_OPT_MODE = 2 Performs an exact diagonalization (same as
+ALGO = Exact ) Related tags and articles KPOINTS_OPT

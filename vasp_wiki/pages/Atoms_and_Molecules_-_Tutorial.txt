@@ -1,0 +1,21 @@
+Title: Atoms and Molecules - Tutorial
+URL: https://vasp.at/wiki/Atoms_and_Molecules_-_Tutorial
+============================================================
+Overview
+>
+O atom
+>
+O atom spinpolarized
+>
+O atom spinpolarized low symmetry
+>
+O dimer
+>
+CO > CO vibration > CO partial DOS >
+H2O > H2O vibration > H2O molecular dynamics > Further things to try > List of tutorials The tutorial is made of the following parts: O atom O atom spinpolarized O atom spinpolarized low symmetry O dimer CO
+CO vibration
+CO partial DOS
+H2O
+H2O vibration
+H2O molecular dynamics
+Further things to try

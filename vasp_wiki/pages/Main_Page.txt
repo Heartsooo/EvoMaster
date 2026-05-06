@@ -1,0 +1,12 @@
+Title: Main Page
+URL: https://vasp.at/wiki/Main_Page
+============================================================
+MediaWiki has been successfully installed.
+Consult the
+User's Guide
+for information on using the wiki software.
+The VASP manual
+Getting started
+Configuration settings list
+MediaWiki FAQ
+MediaWiki release mailing list

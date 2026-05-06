@@ -1,0 +1,39 @@
+Title: Surface Science - Tutorial
+URL: https://vasp.at/wiki/Surface_Science_-_Tutorial
+============================================================
+Overview
+>
+Ni 100 surface relaxation
+>
+Ni 100 surface DOS
+>
+Ni 100 surface bandstructure
+>
+Ni 111 surface relaxation
+>
+CO on Ni 111 surface
+>
+Ni 111 surface high precision
+>
+partial DOS of CO on Ni 111 surface
+>
+vibrational frequencies of CO on Ni 111 surface
+>
+STM of graphite
+>
+STM of graphene
+>
+collective jumps of a Pt adatom on fcc-Pt (001): Nudged Elastic Band Calculation
+>
+List of tutorials
+The tutorial is made of the following parts:
+Ni 100 surface relaxation
+Ni 100 surface DOS
+Ni 100 surface bandstructure
+Ni 111 surface relaxation
+Ni 111 surface high precision
+partial DOS of CO on Ni 111 surface
+vibrational frequencies of CO on Ni 111 surface
+STM of graphite
+STM of graphene
+collective jumps of a Pt adatom on fcc-Pt (001): Nudged Elastic Band Calculation

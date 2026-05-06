@@ -1,0 +1,5 @@
+Title: PHON_LMC
+URL: https://vasp.at/wiki/PHON_LMC
+============================================================
+PHON_LMC = [logical] Default:
+PHON_LMC = .FALSE. Description: Controls whether electron-phonon interactions from Monte-Carlo sampling are calculated or not. For further usage of this tag see: Electron-phonon interactions from Monte-Carlo sampling . Mind: This feature is available for VASP >= 6.0. Related tags and articles Electron-phonon interactions from Monte-Carlo sampling , PHON_NSTRUCT , PHON_LBOSE , PHON_TLIST

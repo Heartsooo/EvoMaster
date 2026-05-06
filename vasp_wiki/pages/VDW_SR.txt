@@ -1,0 +1,10 @@
+Title: VDW_SR
+URL: https://vasp.at/wiki/VDW_SR
+============================================================
+VDW_SR = [real] Description: VDW_SR sets a parameter in the damping function of van der Waals methods. VDW_SR allows to set the value of a parameter in the following methods: Radii scaling s_{r,6} in the dipole-dipole zero-damping function of DFT-D3. VDW_SR can be used for both implementations of DFT-D3: DFT-D3 (
+IVDW =11) and simple-DFT-D3 (
+IVDW =15 with
+SDFTD3_DAMPING =zero or mzero). Radii scaling s_{R} in the damping function of the Tkatchenko-Scheffler methods (
+IVDW =2 and 21). Radii scaling β in the damping function of the many-body dispersion energy methods (
+IVDW =202 and 263). TT-damping factor b_0 in DDsC (
+IVDW =4). Related tags and articles IVDW , VDW_SR , DFT-D3 , simple-DFT-D3 , Tkatchenko-Scheffler method , Tkatchenko-Scheffler method with iterative Hirshfeld partitioning , Many-body dispersion energy , Many-body dispersion energy with fractionally ionic model for polarizability , DDsC

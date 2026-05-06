@@ -1,0 +1,88 @@
+Title: XCm_Pn
+URL: https://vasp.at/wiki/XCm_Pn
+============================================================
+XCm_Pn = [real]
+
+Description:
+XCm_Pn
+, where
+m=1, 2,
+and
+n=1, 2,
+allows to modify the parameters in a semilocal functional.
+The
+XCm_Pn
+tag allows to modify the parameters in the semilocal functional set with the
+XC tag. In
+XCm_Pn
+,
+m=1, 2,
+refers to the m
+th component of the functional and
+n=1, 2,
+to the n
+th parameter of this m
+th functional component.
+The
+XCm_Pn
+tag can be used for functionals that are implemented in VASP or in Libxc.
+Functionals in VASP:
+The number of functionals with modifiable parameters is for the moment very limited and concerns only a few MGGAs. Among the functionals listed at
+METAGGA
+, there is MS0, MS1, and MS2,
+
+for instance. The functionals with modifiable parameters can be found by searching for "XC%PARAM" in the subroutine SET_XC_DATA in the setex.F file.
+Functionals in Libxc:
+For many of the functionals implemented in the library of exchange-correlation functionals Libxc
+
+it is possible to modify the parameters. If a functional from Libxc has modifiable parameters, then they are listed in
+OUTCAR below "Parameters of Libxc functionals:" as P n
+(
+n=1, 2,
+). Note that
+LIBXC1_Pn
+and
+LIBXC2_Pn
+are equivalent to
+XCm_Pn
+when the functional is set with the tag
+GGA or
+METAGGA
+.
+More information about the mixing and screening parameters in hybrid functionals can be found at
+LIBXC1_Pn
+.
+
+Mind:
+XCm_Pn
+is available since VASP.6.4.3.
+Examples
+In the GGA PBE functional,
+
+as implemented in Libxc, the default parameters
+μ=0.21951
+in exchange and
+β=0.066725
+in correlation are changed to
+μ=10/81≈0.12345679
+and
+β=0.046
+to get the PBEsol functional
+
+(of course, the simpler way to use PBEsol from Libxc would be to call it directly with "
+XC =GGA_X_PBE_SOL GGA_C_PBE_SOL"). This example is equivalent to the one given for LIBXC1_Pn .
+XC = GGA_X_PBE GGA_C_PBE
+XC1_P2 = 0.12345679 #parameter mu, which is the 2nd parameter in GGA_X_PBE
+XC2_P1 = 0.046 #parameter beta, which is the 1st parameter in GGA_C_PBE In the MGGA MS1 functional the default parameters =0.404 , c=0.18150 and b=1.0 in exchange (see Table I in Ref.
+
+) are changed to
+=0.504
+,
+c=0.14601
+and
+b=4.0
+to get the MS2 functional.
+XC = MS1
+XC1_P1 = 0.504 #parameter kappa, which is the 1st parameter in MS0, MS1, and MS2
+XC1_P2 = 0.14601 #parameter c, which is the 2nd parameter in MS0, MS1, and MS2
+XC1_P3 = 4.0 #parameter b, which is the 3rd parameter in MS0, MS1, and MS2 Related tags and articles XC , XC_C , GGA , METAGGA , LIBXC1 , LIBXC2 , LIBXC1_Pn , LIBXC2_Pn References ↑ J. Sun, B. Xiao, and A. Ruzsinszky, J. Chem. Phys. 137 , 051101 (2012). ↑ a b J. Sun, R. Haunschild, B. Xiao, I. W. Bulik, G. E. Scuseria, and J. P. Perdew, J. Chem. Phys. 138 , 044113 (2013). ↑ M. A. L. Marques, M. J. T. Oliveira, and T. Burnus, Comput. Phys. Commun., 183 , 2272 (2012). ↑ S. Lehtola, C. Steigemann, M. J. T. Oliveira, and M. A. L. Marques, SoftwareX, 7 , 1 (2018). ↑ F. Tran, S. Lehtola, S. Pittalis, and M. A. L. Marques, Semi-Local Exchange-Correlation Approximations in Density Functional Theory , arXiv 2602.17333 (2026). ↑ https://libxc.gitlab.io ↑ J. P. Perdew, K. Burke, and M. Ernzerhof, Phys. Rev. Lett., 77 , 3865 (1996). ↑ J. P. Perdew, A. Ruzsinszky, G. I. Csonka, O. A. Vydrov, G. E. Scuseria, L. A. Constantin, X. Zhou, and K. Burke, Phys. Rev. Lett. 100 , 136406 (2008).

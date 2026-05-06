@@ -1,0 +1,8 @@
+Title: VDW_RADIUS
+URL: https://vasp.at/wiki/VDW_RADIUS
+============================================================
+VDW_RADIUS = [real] Default:
+VDW_RADIUS = 50 if
+IVDW =1, 2, 3, 4, or 21 = 50.20 if
+IVDW =11, 12, or 15 = 31.75 if
+IVDW =13 Description: VDW_RADIUS (in Å) sets the two-body interaction cutoff in van der Waals methods. VDW_RADIUS (in Å) allows to set the two-body interaction cutoff for the DFT-D2 , DFT-D3 ( DFT-D3 and simple-DFT-D3 implementations), DFT-D4 , DFT-ulg , DDsC , and Tkatchenko-Scheffler methods. Mind: Available for the DFT-D4 and simple-DFT-D3 packages since VASP.6.6.0. Related tags and articles IVDW , VDW_CNRADIUS , DFT-D2 , DFT-D3 , simple-DFT-D3 , DFT-D4 , DFT-ulg , DDsC , Tkatchenko-Scheffler method , Tkatchenko-Scheffler method with iterative Hirshfeld partitioning

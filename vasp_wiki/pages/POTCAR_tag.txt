@@ -1,0 +1,17 @@
+Title: Category:POTCAR tag
+URL: https://vasp.at/wiki/POTCAR_tag
+============================================================
+The
+POTCAR file contains the
+pseudopotentials
+. The settings it contains should not be edited by the user, but it sometimes helps to understand their meaning. Below is a list of
+POTCAR tags
+.
+Pages in category "POTCAR tag"
+The following 7 pages are in this category, out of 7 total. E
+EAUG L
+LEXCH P
+POMASS R
+RWIGS T
+TITEL Z
+ZVAL

@@ -1,0 +1,65 @@
+{
+  "task_type": "band_structure",
+  "description": "Electronic band structure calculation along high-symmetry k-paths",
+  "use_cases": ["band gap", "band dispersion", "electronic structure visualization"],
+
+  "workflow": "TWO-STEP process: 1) SCF on uniform k-mesh → 2) non-SCF on k-path",
+
+  "step1_scf": {
+    "description": "Standard SCF to get converged charge density",
+    "incar": {
+      "EDIFF": 1e-6,
+      "ISMEAR": "1 for metals, 0 for semiconductors",
+      "SIGMA": "0.1-0.2 for metals, 0.05 for semiconductors",
+      "LWAVE": false,
+      "LCHARG": true,
+      "ALGO": "Fast",
+      "PREC": "Accurate"
+    },
+    "kpoints": "uniform Gamma-centered mesh (well converged)"
+  },
+
+  "step2_band": {
+    "description": "Non-SCF calculation reading charge density, on k-path",
+    "incar": {
+      "ICHARG": {"value": 11, "note": "read CHGCAR and keep fixed"},
+      "ISMEAR": {"value": 0, "note": "Gaussian, tetrahedron NOT for k-path"},
+      "SIGMA": 0.05,
+      "LORBIT": {"value": 11, "note": "for projected band structure"},
+      "NBANDS": {"rule": "increase 50-100% above default for sufficient empty bands"},
+      "LWAVE": false,
+      "LCHARG": false,
+      "NEDOS": 2001,
+      "ALGO": "Fast",
+      "PREC": "Accurate"
+    },
+    "kpoints": {
+      "format": "line-mode",
+      "example": "k-points along high symmetry lines\n20\nLine-mode\nreciprocal\n0.0 0.0 0.0  ! GAMMA\n0.5 0.0 0.5  ! X\n\n0.5 0.0 0.5  ! X\n0.5 0.25 0.75 ! W",
+      "note": "Use SeeK-path or pymatgen to determine high-symmetry path for your space group"
+    },
+    "files_from_step1": ["CHGCAR", "POSCAR (or CONTCAR)", "POTCAR"]
+  },
+
+  "alternative_method": {
+    "description": "KPOINTS_OPT method (VASP 6.2+): both meshes in single run",
+    "incar_additions": {
+      "LKPOINTS_OPT": ".TRUE."
+    },
+    "note": "Provide KPOINTS for SCF mesh and KPOINTS_OPT for k-path"
+  },
+
+  "conditional": {
+    "hybrid_functional_band": {
+      "note": "Cannot use ICHARG=11 for hybrids. Use KPOINTS_OPT method or a zero-weight k-point approach.",
+      "LHFCALC": ".TRUE.",
+      "ALGO": "All",
+      "LKPOINTS_OPT": ".TRUE."
+    },
+    "soc_band": {
+      "LSORBIT": ".TRUE.",
+      "LNONCOLLINEAR": ".TRUE.",
+      "NBANDS": "must be even, typically 2x non-SOC value"
+    }
+  }
+}

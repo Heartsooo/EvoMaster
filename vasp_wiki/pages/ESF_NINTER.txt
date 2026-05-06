@@ -1,0 +1,5 @@
+Title: ESF_NINTER
+URL: https://vasp.at/wiki/ESF_NINTER
+============================================================
+ESF_NINTER = [integer] Default:
+ESF_NINTER = 15 Description: ESF_NINTER sets the maximum number of interpolation steps for the electronic structure factor ( ESF_SPLINES ). If the threshold set by ESF_CONV has not been reached within ESF_NINTER iterations VASP will print a warning about insufficient convergence. Related tags and articles ESF_SPLINES , ESF_CONV , LOPTICS

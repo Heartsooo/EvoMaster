@@ -1,0 +1,6 @@
+Title: LKPOINTS_OPT
+URL: https://vasp.at/wiki/LKPOINTS_OPT
+============================================================
+LKPOINTS_OPT = .TRUE.| .FALSE. Default:
+LKPOINTS_OPT = .TRUE. if KPOINTS_OPT file is present. Description: Enable reading the KPOINTS_OPT file. To avoid reading the KPOINTS_OPT file without removing it from the working directory, set
+LKPOINTS_OPT = .FALSE. in the INCAR file. Related tags and articles Tags: KSPACING_OPT Files: KPOINTS_OPT , PROCAR_OPT Workflows that use this tag

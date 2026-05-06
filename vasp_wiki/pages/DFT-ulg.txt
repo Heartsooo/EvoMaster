@@ -1,0 +1,69 @@
+Title: DFT-ulg
+URL: https://vasp.at/wiki/DFT-ulg
+============================================================
+In the DFT-ulg method of Kim et al.
+
+, the correction term takes the form:
+E_{{disp}} = -{1}{2} s_{lg}Σ_{i=1}^{N_{at}} Σ_{j=1}^{N_{at}} Σ_{{L}} {}^{} {C_{6ij}}{r_{ij,L}^{6}+b_{lg}(R_{0}^{ij})^{6}}
+where the first two summations are over all
+N_{at}
+atoms in the unit cell and the third summation is over all translations of the unit cell
+{{L}}=(l_1,l_2,l_3)
+where the prime indicates that
+i=j
+for
+{{L}}=0
+.
+C_{6ij}
+denotes the dispersion coefficient for the atom pair ij
+,
+{r}_{ij,{L}}
+is the distance between atom i
+located in the reference cell
+{L}=0
+and atom j
+in the cell L
+.
+Usage
+The DFT-ulg method can be activated by setting
+IVDW =3. The parameters in the DFT-ulg method (see Ref.
+
+for details) that can be modified are listed below.
+VDW_RADIUS =50.0 : cutoff radius (in
+
+) for pair interactions
+VDW_S6 =0.7012 : global scaling parameter s_{lg}
+VDW_D =0.6966 : universal correction parameter b_{lg}
+VDW_C6 =[real array] : C_6 parameters ( {Jnm}^{6}{mol}^{-1} ) for each species defined in the POSCAR file
+VDW_R0 =[real array] : R_0 parameters (
+
+) for each species defined in the
+POSCAR file
+LVDW_EWALD = .FALSE. : the lattice summation in E_{{disp}} expression is computed by means of Ewald's summation ( .TRUE. ) or via a real space summation over all atomic pairs within cutoff radius VDW_RADIUS ( .FALSE. ). (available in VASP.5.3.5 and later) Mind: The default value of the parameter s_{lg} (0.7012) was determined in conjunction with the PBE GGA functional
+
+. Therefore, it is not recommended to use the DFT-ulg dispersion correction with a
+GGA functional other than PBE, unless
+s_{lg}
+is reoptimized.
+
+Related tags and articles
+VDW_RADIUS
+,
+VDW_S6
+,
+VDW_D
+,
+VDW_C6
+,
+VDW_R0
+,
+LVDW_EWALD
+,
+IVDW
+,
+DFT-D2
+References
+↑ a b c
+H. Kim, J.-M. Choi, and W. A. Goddard, III, J. Phys. Chem. Lett.
+3
+, 360 (2012).

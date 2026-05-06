@@ -1,0 +1,25 @@
+Title: Category:Atoms and Molecules
+URL: https://vasp.at/wiki/Category:Molecules
+============================================================
+Theory
+Improved dimer method:
+Improved Dimer Method
+.
+How To
+Calculation of atoms:
+Calculation of atoms
+.
+Monopole, dipole and quadrupole corrections:
+Monopole Dipole and Quadrupole corrections
+.
+Calculation of dimers:
+Calculation of dimers
+.
+Improved dimer method:
+Improved Dimer Method
+.
+Pages in category "Atoms and Molecules"
+The following 3 pages are in this category, out of 3 total. C
+Calculation of atoms
+Calculation of dimers E
+Electrostatic corrections

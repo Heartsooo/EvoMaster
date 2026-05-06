@@ -1,0 +1,5 @@
+Title: Template:CITE
+URL: https://vasp.at/wiki/Tempalte:CITE
+============================================================
+Redirect to:
+Template:Cite

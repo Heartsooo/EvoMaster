@@ -1,0 +1,5 @@
+Title: ML_FF
+URL: https://vasp.at/wiki/ML_FFCAR
+============================================================
+This file contains the machine-learned force field, necessary for prediction-only mode (
+ML_MODE = run ). Its format is identical to the ML_FFN file written out during training, for further details please have a look at the documentation there.

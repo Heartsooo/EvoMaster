@@ -63,6 +63,7 @@ class AssistantMessage(BaseMessage):
     """Assistant message"""
     role: MessageRole = MessageRole.ASSISTANT
     tool_calls: list[ToolCall] | None = Field(default=None, description="List of tool calls")
+    reasoning_content: str | None = Field(default=None, description="Native LLM reasoning/thinking content")
 
 
 class ToolMessage(BaseMessage):

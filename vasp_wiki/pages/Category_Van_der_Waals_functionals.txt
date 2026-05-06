@@ -1,0 +1,264 @@
+Title: Category:Van der Waals functionals
+URL: https://vasp.at/wiki/Category:Van_der_Waals_functionals
+============================================================
+The semilocal (SL) and hybrid exchange-correlation functionals do not include the London dispersion forces. Therefore, they can not be applied reliably on systems where the London dispersion forces play an important role. To account more properly for the London dispersion forces in DFT, a correlation dispersion term can be added to the semilocal or hybrid functional.
+
+This leads to the so-called
+van der Waals functionals
+:
+E_{{xc}}^{{vdW}} = E_{{xc}}^{{SL/hybrid}} + E_{{c,disp}}.
+There are essentially three types of dispersion terms
+E_{{c,disp}}
+that are available in VASP, and a brief sketch of them is given below along with links to pages that provide more detail. Note that
+libMBD
+is an external package that provides the Tkatchenko-Scheffler atom-pairwise methods and their many-body dispersion extensions.
+Types of approximations
+Atom-pairwise methods
+Dipole-dipole interactions between atoms (black dots) and quadrupole-dipole interactions (purple arrows). All of these terms are pairwise. Adapted from Fig. 2 in Ref.
+
+.
+They consist of a sum over the atoms pairs A
+- B
+:
+E_{{c,disp}} = -Σ_{A B}Σ_{n=6,8,10,}f_{n}^{{damp}}(R_{AB}){C_{n}^{AB}}{R_{AB}^{n}},
+where
+C_{n}^{AB}
+are the dispersion coefficients,
+R_{AB}
+is the distance between atoms A
+and B
+, and
+f_{n}^{{damp}}
+is a damping function. Several variants of such atom-pair corrections exist and the most popular of them, listed below, are available in VASP and are selected with the
+IVDW tag.
+DFT-D2
+
+DFT-D3
+
+simple-DFT-D3
+
+(available as of VASP.6.6.0 as
+external package
+)
+DFT-D4
+
+(available as of VASP.6.2 as
+external package
+)
+DFT-ulg
+
+Tkatchenko-Scheffler method
+
+Tkatchenko-Scheffler method with iterative Hirshfeld partitioning
+
+Self-consistent screening in Tkatchenko-Scheffler method
+
+Library libMBD of many-body dispersion methods
+
+(available as of VASP.6.4.3 as
+external package
+)
+DDsC dispersion correction
+
+Many-body dispersion methods
+Dipole-dipole interactions between atoms (black dots) in many-body dispersions include the previously considered 2-body (pairwise) terms shown with purple arrows, in addition to the 3-, 4-, N-body dipole interaction terms shown with green arrows. Adapted from Fig. 2 in Ref.
+
+.
+These methods are based on the random-phase expression for the correlation energy, which is expressed as an integral over the frequency ω
+involving the frequency-dependent polarizability
+{{A}}_{LR}
+:
+E_{{c,disp}} = -∫_{{FBZ}}{d{{k}}}{v_{{FBZ}}} ∫_0^{∞} {{dω}{2π}} \, {{Tr}} \{ {ln} ({{1}}-{{A}}^{(0)}_{LR}(ω) {{T}}_{LR}({{k}}) ) \}.
+These methods, listed below, are selected with the
+IVDW tag.
+Many-body dispersion energy
+
+Many-body dispersion energy with fractionally ionic model for polarizability
+
+Library libMBD of many-body dispersion methods
+
+Nonlocal vdW-DF functionals
+Nonlocal DFT interaction (purple arrows) between pairwise dipole fluctuations in the density. Adapted from Fig. 2 in Ref.
+
+.
+These are density functionals that require a double spatial integration and are, therefore, nonlocal:
+E_{{c,disp}} = {1}{2}∫∫ n(bf{r})
+Φ(bf{r},bf{r}') n(bf{r}')
+d^{3}rd^{3}r',
+where the kernel Φ
+depends on the electronic density n
+, its derivative n
+as well as on the interelectronic distance
+-r'
+. The nonlocal functionals are more expensive to calculate than semilocal functionals, however, they are efficiently implemented by using FFTs
+
+. These methods are selected with the
+LUSE_VDW and
+IVDW_NL tags.
+Nonlocal vdW-DF functionals
+References
+↑
+S. Grimme, A. hansen, J. G. Brandenburg, and C. Bannwarth,
+Dispersion-Corrected Mean-Field Electronic Structure Methods
+, Chem. Rev.
+116
+, 5105 (2016).
+↑ a b c d
+J. Hermann, R. A. DiStasio Jr., and A. Tkatchenko,
+First-Principles Models for van der Waals Interactions in Molecules and Materials: Concepts, Theory, and Applications
+, Chem. Rev.
+117
+, 4714 (2017).
+↑
+S. Grimme, J. Comput. Chem.
+27
+, 1787 (2006).
+↑
+S. Grimme, J. Antony, S. Ehrlich, and S. Krieg, J. Chem. Phys.
+132
+, 154104 (2010).
+↑
+S. Grimme, S. Ehrlich, and L. Goerigk, J. Comput. Chem.
+32
+, 1456 (2011).
+↑
+S. Ehlert,
+Simple dft-d3: library first implementation of the d3 dispersion correction
+, J. Open Source Softw.
+9
+, 7169 (2024).
+↑
+https://dftd3.readthedocs.io
+↑
+https://github.com/dftd3
+↑
+E. Caldeweyher, S. Ehlert, A. Hansen, H. Neugebauer, S. Spicher, C. Bannwarth, and S. Grimme, J. Chem. Phys.
+150
+, 154122 (2019).
+↑
+https://dftd4.readthedocs.io
+↑
+https://github.com/dftd4
+↑
+H. Kim, J.-M. Choi, and W. A. Goddard, III, J. Phys. Chem. Lett.
+3
+, 360 (2012).
+↑
+A. Tkatchenko and M. Scheffler, Phys. Rev. Lett.
+102
+, 073005 (2009).
+↑
+T. Bučko, S. Lebègue, J. Hafner, and J. G. Ángyán, J. Chem. Theory Comput.
+9
+, 4293 (2013)
+↑
+T. Bučko, S. Lebègue, J. G. Ángyán, and J. Hafner, J. Chem. Phys.
+141
+, 034114 (2014).
+↑ a b
+A. Tkatchenko, R. A. DiStasio, Jr., R. Car, and M. Scheffler, Phys. Rev. Lett.
+108
+, 236402 (2012).
+↑ a b
+https://libmbd.github.io/
+↑ a b
+https://github.com/libmbd/
+↑ a b
+J. Hermann, M. Stöhr, S. Góger, S. Chaudhuri, B. Aradi, R. J. Maurer, and A. Tkatchenko,
+libMBD: A general-purpose package for scalable quantum many-body dispersion calculations
+, J. Chem. Phys.
+159
+, 174802 (2023).
+↑
+S. N. Steinmann and C. Corminboeuf, J. Chem. Phys.
+134
+, 044117 (2011).
+↑
+S. N. Steinmann and C. Corminboeuf, J. Chem. Theory Comput.
+7
+, 3567 (2011).
+↑
+A. Ambrosetti, A. M. Reilly, and R. A. DiStasio Jr., J. Chem. Phys.
+140
+, 018A508 (2014).
+↑
+T. Gould and T. Bučko,
+C6 Coefficients and Dipole Polarizabilities for All Atoms and Many Ions in Rows 1–6 of the Periodic Table
+, J. Chem. Theory Comput.
+12
+, 3603 (2016).
+↑
+T. Gould, S. Lebègue, J. G. Ángyán, and T. Bučko,
+A Fractionally Ionic Approach to Polarizability and van der Waals Many-Body Dispersion Calculations
+, J. Chem. Theory Comput.
+12
+, 5920 (2016).
+↑
+G. Román-Pérez and J. M. Soler, Phys. Rev. Lett.
+103
+, 096102 (2009).
+Pages in category "Van der Waals functionals"
+The following 66 pages are in this category, out of 66 total. A
+ALPHA VDW B
+BPARAM C
+CPARAM D
+DDsC dispersion correction
+DFT-D2
+DFT-D3
+DFT-D4
+DFT-ulg
+DFTD4 MODEL
+DFTD4 XC G
+GAMMA VDW H
+HITOLER I
+IVDW
+IVDW NL L
+LIBMBD ALPHA
+LIBMBD C6AU
+LIBMBD K GRID
+LIBMBD K GRID SHIFT
+LIBMBD MBD A
+LIBMBD MBD BETA
+LIBMBD METHOD
+LIBMBD N OMEGA GRID
+LIBMBD PARALLEL MODE
+LIBMBD R0AU
+LIBMBD TS D
+LIBMBD TS SR
+LIBMBD VDW PARAMS KIND
+LIBMBD XC
+LSCALER0
+LSPIN VDW
+LTSSURF
+LUSE VDW
+LVDW EWALD
+LVDW ONECELL
+LVDWEXPANSION M
+Many-body dispersion energy
+Many-body dispersion energy with fractionally ionic model for polarizability N
+Nonlocal vdW-DF functionals P
+PARAM1 S
+SCSRAD
+SDFTD3 DAMPING
+SDFTD3 XC
+Self-consistent screening in Tkatchenko-Scheffler method
+Simple-DFT-D3 T
+Tkatchenko-Scheffler method
+Tkatchenko-Scheffler method with iterative Hirshfeld partitioning V
+VDW A1
+VDW A2
+VDW ALPHA
+VDW BETA
+VDW C6
+VDW C6AU
+VDW CNRADIUS
+VDW D
+VDW R0
+VDW R0AU
+VDW RADIUS
+VDW S6
+VDW S8
+VDW S9
+VDW SR
+VDW SR8 Z
+ZAB VDW

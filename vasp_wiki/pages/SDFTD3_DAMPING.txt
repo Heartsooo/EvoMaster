@@ -1,0 +1,23 @@
+Title: SDFTD3_DAMPING
+URL: https://vasp.at/wiki/SDFTD3_DAMPING
+============================================================
+SDFTD3_DAMPING = zero | rational | mzero | mrational | optimizedpower Description: SDFTD3_DAMPING sets the type of damping function in the DFT-D3 method implemented in the simple-DFT-D3 package. SDFTD3_DAMPING allows to set the type of damping function to be used in the DFT-D3 method implemented in the simple-DFT-D3 package (
+IVDW =15). The available damping functions are
+SDFTD3_DAMPING =zero,
+
+rational,
+
+mzero,
+
+mrational,
+
+and optimizedpower.
+
+Mind:
+The
+SDFTD3_DAMPING tag is available from VASP.6.6.0 onwards.
+The
+SDFTD3_DAMPING can be used only for the
+simple-DFT-D3
+package (
+IVDW =15). Related tags and articles IVDW , simple-DFT-D3 Examples that use this tag References ↑ S. Grimme, J. Antony, S. Ehrlich, and S. Krieg, J. Chem. Phys. 132 , 154104 (2010). ↑ S. Grimme, S. Ehrlich, and L. Goerigk, J. Comput. Chem. 32 , 1456 (2011). ↑ a b D. G. A. Smith, L. A. Burns, K. Patkowski, and C. D. Sherrill, Revised Damping Parameters for the D3 Dispersion Correction to Density Functional Theory , J. Phys. Chem. Lett. 7 , 2197 (2016). ↑ J. Witte, N. Mardirossian, J. B. Neaton, and M. Head-Gordon, Assessing DFT-D3 Damping Functions Across Widely Used Density Functionals: Can We Do Better? , J. Chem. Theory Comput. 13 , 2043 (2017).

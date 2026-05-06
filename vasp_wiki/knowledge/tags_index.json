@@ -1,0 +1,735 @@
+{
+  "_meta": {
+    "description": "VASP INCAR tags structured index, extracted from vasp.at/wiki",
+    "version": "1.0",
+    "field_spec": {
+      "default": "default value(s)",
+      "values": "allowed values or type",
+      "type": "int|float|bool|string|array",
+      "category": "functional grouping",
+      "brief": "one-line description",
+      "notes": "important caveats or constraints"
+    }
+  },
+
+  "SYSTEM": {
+    "default": "unknown system",
+    "type": "string",
+    "category": "general",
+    "brief": "Name of the system (comment only, no effect on calculation)"
+  },
+
+  "ALGO": {
+    "default": "Normal",
+    "values": ["Normal", "VeryFast", "Fast", "Conjugate", "All", "Damped", "Subrot", "Eigenval", "Exact", "None", "Nothing", "CHI", "G0W0", "GW0", "GW", "scGW0", "scGW", "G0W0R", "GW0R", "GWR", "scGW0R", "scGWR", "ACFDT", "RPA", "BSE", "TDHF"],
+    "type": "string",
+    "category": "electronic_minimization",
+    "brief": "Electronic minimization algorithm or GW calculation type",
+    "notes": "VeryFast does NOT support hybrid functionals. For hybrids use All or Damped. Fast is a robust default for DFT."
+  },
+  "IALGO": {
+    "default": 38,
+    "values": [2, 3, 4, 5, 6, 7, 8, 15, 16, 17, 18, 28, 38, 44, 46, 48, 53, 58, 62, 68, 90],
+    "type": "int",
+    "category": "electronic_minimization",
+    "brief": "Low-level algorithm selector (prefer ALGO instead)",
+    "notes": "ALGO is the recommended interface. Only use IALGO for fine-grained control."
+  },
+
+  "PREC": {
+    "default": "Normal",
+    "values": ["Low", "Medium", "Normal", "High", "Accurate", "Single"],
+    "type": "string",
+    "category": "precision",
+    "brief": "Sets ENCUT, FFT grids, and other precision-related defaults",
+    "notes": "Accurate avoids wrap-around errors. Use for volume relaxation (ISIF>=3)."
+  },
+  "ENCUT": {
+    "default": "max(ENMAX) from POTCAR",
+    "type": "float",
+    "unit": "eV",
+    "category": "precision",
+    "brief": "Plane-wave energy cutoff",
+    "notes": "For volume relaxation set ENCUT >= 1.3*ENMAX to avoid Pulay stress. Always converge this for production."
+  },
+  "ENAUG": {
+    "default": "from POTCAR",
+    "type": "float",
+    "unit": "eV",
+    "category": "precision",
+    "brief": "Augmentation charge cutoff for PAW"
+  },
+  "ADDGRID": {
+    "default": ".FALSE.",
+    "values": [".TRUE.", ".FALSE."],
+    "type": "bool",
+    "category": "precision",
+    "brief": "Add additional support grid for augmentation charges"
+  },
+
+  "EDIFF": {
+    "default": 1e-4,
+    "type": "float",
+    "unit": "eV",
+    "category": "electronic_minimization",
+    "brief": "Energy convergence criterion for electronic SC loop",
+    "notes": "For phonons set <= 1E-6. For MD 1E-5 is often sufficient."
+  },
+  "EDIFFG": {
+    "default": "EDIFF * 10",
+    "type": "float",
+    "unit": "eV or eV/Å",
+    "category": "ionic_minimization",
+    "brief": "Convergence criterion for ionic relaxation. Negative = force criterion (recommended).",
+    "notes": "Negative value means force convergence in eV/Å (e.g., -0.01). Positive means energy difference in eV."
+  },
+  "NELM": {
+    "default": 60,
+    "type": "int",
+    "category": "electronic_minimization",
+    "brief": "Maximum number of electronic SC steps",
+    "notes": "Increase to 200+ for difficult convergence cases."
+  },
+  "NELMIN": {
+    "default": 2,
+    "type": "int",
+    "category": "electronic_minimization",
+    "brief": "Minimum number of electronic SC steps"
+  },
+  "NELMDL": {
+    "default": "-5 for ISTART=0, 0 otherwise",
+    "type": "int",
+    "category": "electronic_minimization",
+    "brief": "Number of initial non-selfconsistent steps"
+  },
+
+  "NSW": {
+    "default": 0,
+    "type": "int",
+    "category": "ionic_minimization",
+    "brief": "Maximum number of ionic steps",
+    "notes": "0 = single-point. For relaxation typically 100-500. For MD set to desired number of timesteps."
+  },
+  "IBRION": {
+    "default": "-1 if NSW<=0, else 0",
+    "values": [-1, 0, 1, 2, 3, 5, 6, 7, 8, 11, 12, 40, 44],
+    "type": "int",
+    "category": "ionic_minimization",
+    "brief": "Ion update algorithm: -1=none, 0=MD, 1=RMM-DIIS, 2=CG, 3=damped MD, 5-8=phonons, 44=dimer",
+    "notes": "2 (CG) is a robust default for relaxation. 1 (RMM-DIIS) faster when close to minimum. 0 for MD."
+  },
+  "ISIF": {
+    "default": 2,
+    "values": [0, 1, 2, 3, 4, 5, 6, 7],
+    "type": "int",
+    "category": "ionic_minimization",
+    "brief": "Controls which DOFs relax: 0-1=positions only, 2=positions+stress, 3=all(+volume+shape), 4=shape only, etc.",
+    "notes": "ISIF=3 for full cell relaxation. ISIF=2 for fixed cell. Set ENCUT high and PREC=Accurate when ISIF>=3."
+  },
+  "POTIM": {
+    "default": 0.5,
+    "type": "float",
+    "category": "ionic_minimization",
+    "brief": "Step width scaling for ionic relaxation, or timestep (fs) for MD",
+    "notes": "For relaxation ~0.1-1.0. For MD typically 1-2 fs."
+  },
+  "NFREE": {
+    "default": 0,
+    "type": "int",
+    "category": "ionic_minimization",
+    "brief": "Number of remembered steps in RMM-DIIS (IBRION=1), or displacements for finite diff (IBRION=5,6)"
+  },
+
+  "ISPIN": {
+    "default": 1,
+    "values": [1, 2],
+    "type": "int",
+    "category": "magnetism",
+    "brief": "1=non-spin-polarized, 2=spin-polarized",
+    "notes": "Set to 2 for systems with magnetic elements (Fe, Co, Ni, Mn, Cr, etc.)"
+  },
+  "MAGMOM": {
+    "default": "NIONS * 1.0 (if ISPIN=2)",
+    "type": "array",
+    "category": "magnetism",
+    "brief": "Initial magnetic moment per atom",
+    "notes": "Must match number of ions. Use N*val syntax. E.g., '4*5.0 8*0.0' for 4 magnetic + 8 non-magnetic atoms."
+  },
+  "LNONCOLLINEAR": {
+    "default": ".FALSE.",
+    "values": [".TRUE.", ".FALSE."],
+    "type": "bool",
+    "category": "magnetism",
+    "brief": "Enable noncollinear magnetism",
+    "notes": "MAGMOM needs 3x entries (x,y,z per atom) when enabled."
+  },
+  "LSORBIT": {
+    "default": ".FALSE.",
+    "values": [".TRUE.", ".FALSE."],
+    "type": "bool",
+    "category": "magnetism",
+    "brief": "Enable spin-orbit coupling",
+    "notes": "Automatically sets LNONCOLLINEAR=.TRUE. Needed for heavy elements (5d, 6p)."
+  },
+  "SAXIS": {
+    "default": "0 0 1",
+    "type": "array",
+    "category": "magnetism",
+    "brief": "Quantization axis for spin"
+  },
+
+  "ISMEAR": {
+    "default": 1,
+    "values": [-5, -4, -3, -2, -1, 0, 1, 2],
+    "type": "int",
+    "category": "smearing",
+    "brief": "Partial occupancy method: -5=tetrahedron+Blöchl, 0=Gaussian, >0=Methfessel-Paxton order N",
+    "notes": "Metals: 1 or 2 (MP). Semiconductors/insulators: 0 (Gaussian). Accurate DOS/total energy: -5 (tetrahedron). NEVER use -5 for MD or very few k-points."
+  },
+  "SIGMA": {
+    "default": 0.2,
+    "type": "float",
+    "unit": "eV",
+    "category": "smearing",
+    "brief": "Width of smearing",
+    "notes": "Metals with ISMEAR=1: 0.1-0.2. Semiconductors with ISMEAR=0: 0.01-0.05. Entropy term T*S should be < 1 meV/atom."
+  },
+
+  "ICHARG": {
+    "default": "2 if ISTART=0, else 0",
+    "values": [0, 1, 2, 4, 10, 11, 12, 14],
+    "type": "int",
+    "category": "startup",
+    "brief": "How to construct initial charge density: 0=from WAVECAR, 1=from CHGCAR, 2=superposition of atoms, +10=keep fixed",
+    "notes": "ICHARG=11 for non-SCF band structure calculation (keep charge from SCF fixed)."
+  },
+  "ISTART": {
+    "default": "1 if WAVECAR exists, else 0",
+    "values": [0, 1, 2, 3],
+    "type": "int",
+    "category": "startup",
+    "brief": "How to start: 0=from scratch, 1=continue from WAVECAR"
+  },
+  "LWAVE": {
+    "default": ".TRUE.",
+    "values": [".TRUE.", ".FALSE."],
+    "type": "bool",
+    "category": "output",
+    "brief": "Write WAVECAR"
+  },
+  "LCHARG": {
+    "default": ".TRUE.",
+    "values": [".TRUE.", ".FALSE."],
+    "type": "bool",
+    "category": "output",
+    "brief": "Write CHGCAR and CHG"
+  },
+
+  "LREAL": {
+    "default": ".FALSE.",
+    "values": [".FALSE.", "Auto", "On", ".TRUE."],
+    "type": "string",
+    "category": "performance",
+    "brief": "Projection in real space (fast for large cells) or reciprocal space (accurate for small cells)",
+    "notes": "Use Auto for >20 atoms. Use .FALSE. for small cells and high-precision work."
+  },
+  "NCORE": {
+    "default": 1,
+    "type": "int",
+    "category": "performance",
+    "brief": "Number of cores per orbital band",
+    "notes": "Set to sqrt(total_cores) as starting point. Must divide total cores evenly."
+  },
+  "NPAR": {
+    "default": "total_cores",
+    "type": "int",
+    "category": "performance",
+    "brief": "Number of bands treated in parallel (=total_cores/NCORE)",
+    "notes": "Prefer NCORE over NPAR."
+  },
+  "KPAR": {
+    "default": 1,
+    "type": "int",
+    "category": "performance",
+    "brief": "Number of k-points treated in parallel",
+    "notes": "Must divide total number of k-points. Use when many k-points available."
+  },
+  "NSIM": {
+    "default": 4,
+    "type": "int",
+    "category": "performance",
+    "brief": "Number of bands optimized simultaneously in RMM-DIIS"
+  },
+
+  "GGA": {
+    "default": "from POTCAR",
+    "values": ["PE", "91", "AM", "HL", "CA", "PW", "RP", "RE", "VW", "B3", "B5", "BF", "CO", "EV", "MK", "ML", "CX", "OR", "BO", "MN", "SG", "WC"],
+    "type": "string",
+    "category": "xc_functional",
+    "brief": "GGA exchange-correlation functional type",
+    "notes": "PE=PBE (most common). RP=revPBE. PS=PBEsol."
+  },
+  "METAGGA": {
+    "default": "None",
+    "values": ["TPSS", "RTPSS", "M06L", "MBJ", "SCAN", "R2SCAN", "MS0", "MS1", "MS2"],
+    "type": "string",
+    "category": "xc_functional",
+    "brief": "Meta-GGA functional",
+    "notes": "SCAN/R2SCAN are popular choices. Requires LASPH=.TRUE."
+  },
+  "LHFCALC": {
+    "default": ".FALSE.",
+    "values": [".TRUE.", ".FALSE."],
+    "type": "bool",
+    "category": "hybrid_functional",
+    "brief": "Enable Hartree-Fock/hybrid functional calculation",
+    "notes": "Must set ALGO=All or Damped. ALGO=VeryFast/Fast NOT supported."
+  },
+  "AEXX": {
+    "default": "0.0 (0.25 if LHFCALC=.TRUE.)",
+    "type": "float",
+    "category": "hybrid_functional",
+    "brief": "Fraction of exact exchange",
+    "notes": "0.25 for PBE0/HSE06."
+  },
+  "HFSCREEN": {
+    "default": 0.0,
+    "type": "float",
+    "unit": "1/Å",
+    "category": "hybrid_functional",
+    "brief": "Screening parameter for HSE-type functionals",
+    "notes": "0.2 for HSE06. 0.0 for PBE0 (no screening)."
+  },
+  "PRECFOCK": {
+    "default": "Normal",
+    "values": ["Low", "Medium", "Fast", "Normal", "Accurate"],
+    "type": "string",
+    "category": "hybrid_functional",
+    "brief": "FFT grid for HF exchange"
+  },
+
+  "IVDW": {
+    "default": 0,
+    "values": [0, 1, 10, 11, 12, 13, 14, 2, 20, 21, 202, 4],
+    "type": "int",
+    "category": "vdw",
+    "brief": "Van der Waals correction method: 11=DFT-D3, 12=DFT-D3(BJ), 13=DFT-D4, 20=TS, 202=MBD",
+    "notes": "DFT-D3(BJ) (IVDW=12) and MBD (IVDW=202) are popular choices."
+  },
+
+  "LDAU": {
+    "default": ".FALSE.",
+    "values": [".TRUE.", ".FALSE."],
+    "type": "bool",
+    "category": "dftu",
+    "brief": "Enable DFT+U (LDA+U)",
+    "notes": "Requires LDAUTYPE, LDAUL, LDAUU, LDAUJ."
+  },
+  "LDAUTYPE": {
+    "default": 2,
+    "values": [1, 2, 4],
+    "type": "int",
+    "category": "dftu",
+    "brief": "Type of DFT+U: 1=Liechtenstein, 2=Dudarev (simplified, most common), 4=on-site"
+  },
+  "LDAUL": {
+    "default": "2 for d-elements, 3 for f-elements",
+    "type": "array",
+    "category": "dftu",
+    "brief": "L quantum number for each species: -1=no U, 0=s, 1=p, 2=d, 3=f"
+  },
+  "LDAUU": {
+    "default": 0.0,
+    "type": "array",
+    "unit": "eV",
+    "category": "dftu",
+    "brief": "On-site Coulomb interaction U for each species"
+  },
+  "LDAUJ": {
+    "default": 0.0,
+    "type": "array",
+    "unit": "eV",
+    "category": "dftu",
+    "brief": "On-site exchange interaction J for each species",
+    "notes": "For LDAUTYPE=2, only U-J matters (Dudarev), so often set J=0."
+  },
+  "LMAXMIX": {
+    "default": 2,
+    "values": [2, 4, 6],
+    "type": "int",
+    "category": "dftu",
+    "brief": "Max l for on-site density matrix PAW charge density mixing",
+    "notes": "Set to 4 for d-electrons, 6 for f-electrons when using DFT+U."
+  },
+
+  "LORBIT": {
+    "default": 0,
+    "values": [0, 1, 2, 5, 10, 11, 12, 13, 14],
+    "type": "int",
+    "category": "dos_projection",
+    "brief": "Write projected DOS and orbital-decomposed info",
+    "notes": "10/11 are most common. 11 includes lm-decomposition. Requires RWIGS for LORBIT<10."
+  },
+  "NEDOS": {
+    "default": 301,
+    "type": "int",
+    "category": "dos_projection",
+    "brief": "Number of grid points for DOS"
+  },
+  "EMIN": {
+    "default": "lowest eigenvalue",
+    "type": "float",
+    "unit": "eV",
+    "category": "dos_projection",
+    "brief": "Minimum energy for DOS evaluation"
+  },
+  "EMAX": {
+    "default": "highest eigenvalue",
+    "type": "float",
+    "unit": "eV",
+    "category": "dos_projection",
+    "brief": "Maximum energy for DOS evaluation"
+  },
+
+  "NBANDS": {
+    "default": "auto (NELECT/2 + NIONS/2 for non-spin, more for spin)",
+    "type": "int",
+    "category": "electronic",
+    "brief": "Number of bands in calculation",
+    "notes": "Increase for DOS, GW, optical properties. Must include enough empty bands."
+  },
+  "NELECT": {
+    "default": "from POTCAR and POSCAR",
+    "type": "float",
+    "category": "electronic",
+    "brief": "Total number of electrons"
+  },
+  "NUPDOWN": {
+    "default": -1,
+    "type": "int",
+    "category": "electronic",
+    "brief": "Fix spin moment (difference of up/down electrons). -1=not fixed."
+  },
+
+  "LEPSILON": {
+    "default": ".FALSE.",
+    "values": [".TRUE.", ".FALSE."],
+    "type": "bool",
+    "category": "linear_response",
+    "brief": "Compute static dielectric tensor and Born effective charges via DFPT"
+  },
+  "LOPTICS": {
+    "default": ".FALSE.",
+    "values": [".TRUE.", ".FALSE."],
+    "type": "bool",
+    "category": "optical",
+    "brief": "Compute frequency-dependent dielectric function",
+    "notes": "Requires sufficient empty bands (NBANDS)."
+  },
+  "CSHIFT": {
+    "default": 0.1,
+    "type": "float",
+    "unit": "eV",
+    "category": "optical",
+    "brief": "Complex shift for Kramers-Kronig transformation in optics"
+  },
+
+  "DIPOL": {
+    "default": "not set",
+    "type": "array",
+    "category": "dipole_correction",
+    "brief": "Center of cell for dipole corrections (fractional coordinates)"
+  },
+  "IDIPOL": {
+    "default": 0,
+    "values": [0, 1, 2, 3, 4],
+    "type": "int",
+    "category": "dipole_correction",
+    "brief": "Direction of dipole correction: 1-3=along a1/a2/a3, 4=all directions"
+  },
+  "LDIPOL": {
+    "default": ".FALSE.",
+    "values": [".TRUE.", ".FALSE."],
+    "type": "bool",
+    "category": "dipole_correction",
+    "brief": "Enable dipole corrections to potential and forces"
+  },
+
+  "LASPH": {
+    "default": ".FALSE.",
+    "values": [".TRUE.", ".FALSE."],
+    "type": "bool",
+    "category": "xc_functional",
+    "brief": "Include non-spherical PAW contributions to XC energy",
+    "notes": "REQUIRED for meta-GGA and strongly recommended for GGA+U, hybrid, GW."
+  },
+  "LMAXMIX": {
+    "default": 2,
+    "type": "int",
+    "category": "density_mixing",
+    "brief": "Max l-quantum number for on-site PAW density mixing",
+    "notes": "4 for d-elements, 6 for f-elements."
+  },
+
+  "IMAGES": {
+    "default": 0,
+    "type": "int",
+    "category": "neb",
+    "brief": "Number of NEB images (for nudged elastic band calculations)",
+    "notes": "Requires running VASP with corresponding number of MPI groups."
+  },
+  "SPRING": {
+    "default": -5.0,
+    "type": "float",
+    "unit": "eV/Å²",
+    "category": "neb",
+    "brief": "Spring constant for NEB"
+  },
+
+  "MDALGO": {
+    "default": 0,
+    "values": [0, 1, 2, 3, 4, 11, 13, 21],
+    "type": "int",
+    "category": "md",
+    "brief": "MD algorithm: 0=standard NVE/NVT, 1=Andersen NVT, 2=Nosé-Hoover NVT, 3=Langevin NVT, 11=NpT",
+    "notes": "2 (Nosé-Hoover) and 3 (Langevin) are most common for NVT. 11 for NpT."
+  },
+  "TEBEG": {
+    "default": 0.0,
+    "type": "float",
+    "unit": "K",
+    "category": "md",
+    "brief": "Start temperature for MD"
+  },
+  "TEEND": {
+    "default": "TEBEG",
+    "type": "float",
+    "unit": "K",
+    "category": "md",
+    "brief": "End temperature for MD"
+  },
+  "SMASS": {
+    "default": -3.0,
+    "type": "float",
+    "category": "md",
+    "brief": "Controls Nosé mass in NVT MD. -3=NVE, -2=initial velocities scaling, -1=damped MD, >=0=Nosé-Hoover mass",
+    "notes": "Typical value 0-3 for Nosé-Hoover. Use MDALGO instead for new calculations."
+  },
+  "LANGEVIN_GAMMA": {
+    "default": 0.0,
+    "type": "array",
+    "unit": "ps⁻¹",
+    "category": "md",
+    "brief": "Friction coefficient per species for Langevin thermostat"
+  },
+  "ANDERSEN_PROB": {
+    "default": 0.0,
+    "type": "float",
+    "category": "md",
+    "brief": "Collision probability per atom per timestep for Andersen thermostat"
+  },
+
+  "NWRITE": {
+    "default": 2,
+    "values": [0, 1, 2, 3, 4],
+    "type": "int",
+    "category": "output",
+    "brief": "Verbosity of OUTCAR: 0=minimal, 2=normal, 3=verbose"
+  },
+  "NBLOCK": {
+    "default": 1,
+    "type": "int",
+    "category": "output",
+    "brief": "Write PCDAT and XDATCAR every NBLOCK ionic steps"
+  },
+
+  "ISYM": {
+    "default": "2 for PAW, 1 for US-PP",
+    "values": [-1, 0, 1, 2, 3],
+    "type": "int",
+    "category": "symmetry",
+    "brief": "Symmetry handling: -1=off, 0=off but use for k-mesh, 1=on(US-PP), 2=on(PAW), 3=off but symmetrize charge"
+  },
+  "SYMPREC": {
+    "default": 1e-5,
+    "type": "float",
+    "unit": "Å",
+    "category": "symmetry",
+    "brief": "Precision for symmetry detection"
+  },
+
+  "LELF": {
+    "default": ".FALSE.",
+    "values": [".TRUE.", ".FALSE."],
+    "type": "bool",
+    "category": "output",
+    "brief": "Write electron localization function (ELFCAR)"
+  },
+  "LVTOT": {
+    "default": ".FALSE.",
+    "values": [".TRUE.", ".FALSE."],
+    "type": "bool",
+    "category": "output",
+    "brief": "Write total local potential to LOCPOT"
+  },
+  "LVHAR": {
+    "default": ".FALSE.",
+    "values": [".TRUE.", ".FALSE."],
+    "type": "bool",
+    "category": "output",
+    "brief": "Write Hartree potential only to LOCPOT (for work function)"
+  },
+
+  "LPARD": {
+    "default": ".FALSE.",
+    "values": [".TRUE.", ".FALSE."],
+    "type": "bool",
+    "category": "partial_charge",
+    "brief": "Evaluate partial charge densities"
+  },
+  "IBAND": {
+    "default": "not set",
+    "type": "array",
+    "category": "partial_charge",
+    "brief": "Band indices for partial charge calculation"
+  },
+
+  "ENCUTGW": {
+    "default": "2/3 ENCUT",
+    "type": "float",
+    "unit": "eV",
+    "category": "gw",
+    "brief": "Energy cutoff for response function in GW"
+  },
+  "NBANDSGW": {
+    "default": "NBANDS",
+    "type": "int",
+    "category": "gw",
+    "brief": "Number of bands for which GW self-energy is computed"
+  },
+  "NOMEGA": {
+    "default": 0,
+    "type": "int",
+    "category": "gw",
+    "brief": "Number of frequency points for GW/ACFDT"
+  },
+
+  "LBERRY": {
+    "default": ".FALSE.",
+    "values": [".TRUE.", ".FALSE."],
+    "type": "bool",
+    "category": "berry_phase",
+    "brief": "Compute Berry phase for polarization"
+  },
+  "IGPAR": {
+    "default": 1,
+    "values": [1, 2, 3],
+    "type": "int",
+    "category": "berry_phase",
+    "brief": "Direction of Berry phase string"
+  },
+  "NPPSTR": {
+    "default": 1,
+    "type": "int",
+    "category": "berry_phase",
+    "brief": "Number of k-points in Berry phase string"
+  },
+  "LCALCPOL": {
+    "default": ".FALSE.",
+    "values": [".TRUE.", ".FALSE."],
+    "type": "bool",
+    "category": "berry_phase",
+    "brief": "Compute macroscopic polarization via Berry phase"
+  },
+
+  "LMAXMIX": {
+    "default": 2,
+    "values": [2, 4, 6],
+    "type": "int",
+    "category": "density_mixing",
+    "brief": "Max l for on-site density matrix",
+    "notes": "4 for d-electrons, 6 for f-electrons. Critical for DFT+U convergence."
+  },
+  "IMIX": {
+    "default": 4,
+    "values": [0, 1, 2, 4],
+    "type": "int",
+    "category": "density_mixing",
+    "brief": "Mixing type: 4=Broyden 2nd (default and recommended)"
+  },
+  "AMIX": {
+    "default": 0.4,
+    "type": "float",
+    "category": "density_mixing",
+    "brief": "Linear mixing parameter"
+  },
+  "BMIX": {
+    "default": 1.0,
+    "type": "float",
+    "category": "density_mixing",
+    "brief": "Kerker mixing parameter"
+  },
+  "AMIX_MAG": {
+    "default": 1.6,
+    "type": "float",
+    "category": "density_mixing",
+    "brief": "Linear mixing for magnetization density"
+  },
+  "BMIX_MAG": {
+    "default": 1.0,
+    "type": "float",
+    "category": "density_mixing",
+    "brief": "Kerker mixing for magnetization density"
+  },
+
+  "ML_LMLFF": {
+    "default": ".FALSE.",
+    "values": [".TRUE.", ".FALSE."],
+    "type": "bool",
+    "category": "mlff",
+    "brief": "Enable machine-learned force field"
+  },
+  "ML_ISTART": {
+    "default": 0,
+    "values": [0, 1, 2, 3],
+    "type": "int",
+    "category": "mlff",
+    "brief": "MLFF startup mode: 0=from scratch, 1=from ML_AB, 2=retrain, 3=prediction only"
+  },
+
+  "LATTICE_CONSTRAINTS": {
+    "default": ".TRUE. .TRUE. .TRUE.",
+    "type": "array",
+    "category": "ionic_minimization",
+    "brief": "Constrain lattice vectors during relaxation (T/F for a,b,c)"
+  },
+
+  "KSPACING": {
+    "default": 0.5,
+    "type": "float",
+    "unit": "1/Å",
+    "category": "kpoints",
+    "brief": "Automatic k-mesh spacing (replaces KPOINTS file if set)",
+    "notes": "Smaller = denser mesh = more accurate. Typical: 0.2-0.5 for metals, 0.3-0.5 for insulators."
+  },
+  "KGAMMA": {
+    "default": ".TRUE.",
+    "values": [".TRUE.", ".FALSE."],
+    "type": "bool",
+    "category": "kpoints",
+    "brief": "Center k-mesh at Gamma point"
+  },
+
+  "LOCPROJ": {
+    "default": "not set",
+    "type": "string",
+    "category": "projection",
+    "brief": "Local projectors for band unfolding, Wannier, etc."
+  },
+  "LSORBIT": {
+    "default": ".FALSE.",
+    "type": "bool",
+    "category": "soc",
+    "brief": "Enable spin-orbit coupling"
+  }
+}

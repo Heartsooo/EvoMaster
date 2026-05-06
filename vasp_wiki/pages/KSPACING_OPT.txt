@@ -1,0 +1,7 @@
+Title: KSPACING_OPT
+URL: https://vasp.at/wiki/KSPACING_OPT
+============================================================
+KSPACING_OPT = [real] Default:
+KSPACING_OPT = 0.5 Description: Spacing between k points in the automatically generated mesh for the KPOINTS_OPT driver if the KPOINTS_OPT file is not present. KSPACING_OPT is used to define the k -point mesh of the KPOINTS_OPT driver, where the wave functions are computed non-self-consistently. This is useful to obtain the density of states on a mesh finer than the one used in the SCF run. KSPACING_OPT is the smallest allowed spacing between k points in units of ^{-1} . The number of k points increases when the spacing is decreased. The number of k points in the direction of the first, second and third reciprocal lattice vector is determined by N_i= {max}(1, {ceiling}( | {b}_i| 2π / {KSPACING\_OPT} )) , where {ceiling}( x ) returns the least integer that is equal or larger than x . Here, {b}_i are the reciprocal lattice vectors {b}_i {a}_j = δ_{ij} . The generated grid is centered at the Γ point if
+KGAMMA = T (default), i.e., includes the Γ point. For
+KGAMMA = F , the grid is shifted away from the Γ point as done for Monkhorst-Pack grids. Mind: Available as of VASP 6.6.0 Related tags and articles Tags: KSPACING , KGAMMA , LKPOINTS_OPT Files: KPOINTS , KPOINTS_OPT Workflows that use this tag

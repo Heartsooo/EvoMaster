@@ -1,0 +1,105 @@
+Title: CO on Ni 111 surface
+URL: https://vasp.at/wiki/CO_on_Ni_111_surface
+============================================================
+Overview
+>
+Ni 100 surface relaxation
+>
+Ni 100 surface DOS
+>
+Ni 100 surface bandstructure
+>
+Ni 111 surface relaxation
+>
+CO on Ni 111 surface
+>
+Ni 111 surface high precision
+>
+partial DOS of CO on Ni 111 surface
+>
+vibrational frequencies of CO on Ni 111 surface
+>
+STM of graphite
+>
+STM of graphene
+>
+collective jumps of a Pt adatom on fcc-Pt (001): Nudged Elastic Band Calculation
+>
+List of tutorials
+Task
+Adsorbtion of a CO molecule at the top site of a Ni (111) surface.
+Input
+POSCAR
+Ni - (111) + CO on-top
+3.53
+.70710678 .0000000 .000000
+-0.35355339 0.6123724 .000000
+.000000 .000000 5.1961524
+5 1 1
+selective dynamics
+direct
+.00000000 .00000000 .00000000 F F F
+.33333333 .66666667 .11111111 F F F
+.66666667 .33333333 .22222222 F F F
+.00000000 .00000000 .33333333 T T T
+.33333333 .66666667 .44444444 T T T
+.33333333 .66666667 .54029062 T T T
+.33333333 .66666667 .60298866 T T T
+CO molecule put above surface atom "on-top".
+z_{{C}}=(.540-.444)· 5.196 · 3.53 ≈ 1.76
+
+.
+d_{{CO}}=(.603-.540)· 5.196 · 3.53 ≈ 1.16
+
+.
+INCAR = 0
+ICHARG = 2
+
+general:
+SYSTEM = CO adsorption on Ni(111)
+ENMAX = 400
+ISMEAR = 2  ;
+SIGMA = 0.2
+ALGO = Fast
+EDIFF = 1E-6
+
+dynamic:
+NSW =100
+POTIM = 0.2
+IBRION = 1 KPOINTS K-Points 0 Monkhorst-Pack 9 9 1 0 0 0 Calculation Two additional atom types (C and O) in the calculations: append C and O potentials to the POTCAR file. The sample output for the forces should look like the following: POSITION TOTAL-FORCE (eV/Angst) ----------------------------------------------------------------------------------- 0.00000 0.00000 0.00000 0.000000 0.000000 0.175780 0.00000 1.44112 2.03805 0.000000 0.000000 -0.104008 1.24804 0.72056 4.07609 0.000000 0.000000 -0.036305 0.00000 0.00000 6.10852 0.000000 0.000000 -0.083336 0.00000 1.44112 8.15366 0.000000 0.000000 0.009539 0.00000 1.44112 9.90873 0.000000 0.000000 0.011228 0.00000 1.44112 11.06339 0.000000 0.000000 0.027102 ----------------------------------------------------------------------------------- total drift: -0.000093 -0.000213 0.019852 Small outward relaxation of surface due to adsorption: Δ d_{12} = (8.154-6.109)/2.038 = 0.4 \% . CO geometry change: d_{{CO}} = 11.063 - 9.909 = 1.155
+
+;
+z_{{C}} = 9.909 -8.154 = 1.755
+
+.
+Visualize the structure using p4vasp:
+Download
+COonNi111_rel.tgz
+Overview
+>
+Ni 100 surface relaxation
+>
+Ni 100 surface DOS
+>
+Ni 100 surface bandstructure
+>
+Ni 111 surface relaxation
+>
+CO on Ni 111 surface
+>
+Ni 111 surface high precision
+>
+partial DOS of CO on Ni 111 surface
+>
+vibrational frequencies of CO on Ni 111 surface
+>
+STM of graphite
+>
+STM of graphene
+>
+collective jumps of a Pt adatom on fcc-Pt (001): Nudged Elastic Band Calculation
+>
+List of tutorials
+Back to the
+main page
+.

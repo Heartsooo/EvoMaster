@@ -1,0 +1,44 @@
+Title: MSDGW NXI
+URL: https://vasp.at/wiki/MSDGW_NXI
+============================================================
+MSDGW_NXI = [integer] Default:
+MSDGW_NXI = 2 Description: Number of pseudo orbitals per compressed energy of mixed stochastic-deterministic compression algorithm.
+
+Mind:
+Available as of VASP 6.6.0
+MSDGW_NXI sets the number of stochastic orbitals per energy in the unprotected space beyond band
+MSDGW_NP
+. This tag is set in combination with
+MSDGW_F
+, the constant energy ratio F
+of the compression algorithm. If a positive value of
+MSDGW_F is found, energies beyond the protected space defined by
+MSDGW_NP are subdivided into energy bins of width
+Δ E_i
+and replaced by their average energy
+E_i
+, such that
+F=Δ E_i/E_i
+. The original orbitals are replaced by
+MSDGW_NXI randomly linear combined orbitals. Larger values of
+MSDGW_NXI decrease the compression level and improve accuracy of results. The same holds true for smaller values of
+MSDGW_F
+.
+Use cases
+The pseudo-random phases used to construct the stochastic orbitals are generated from the seed
+MSDGW_SEED
+.
+
+Related tags and articles
+MSDGW_F
+,
+MSDGW_SEED
+,
+MSDGW_NP
+References
+↑
+Altman, A. R. and Kundu, S. and da Jornada, F. H.,
+Mixed Stochastic-Deterministic Approach for Many-Body Perturbation Theory Calculations
+, Phys. Rev. Lett.
+132
+, 086401 (2024).

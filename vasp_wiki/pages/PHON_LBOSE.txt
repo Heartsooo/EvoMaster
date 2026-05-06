@@ -1,0 +1,8 @@
+Title: PHON_LBOSE
+URL: https://vasp.at/wiki/PHON_LBOSE
+============================================================
+PHON_LBOSE = [logical] Default:
+PHON_LBOSE = .TRUE. Description: Determines whether structures in the sampling are created according to Bose-Einstein or Maxwell-Boltzmann statistics. For
+PHON_LBOSE = .TRUE. Bose-Einstein statistics is used. For
+PHON_LBOSE = .FALSE. Maxwell-Boltzmann statistics is used. For further usage of this tag see: Electron-phonon interactions from Monte-Carlo sampling . Warning: This tag does not work together with
+PHON_NSTRUCT =0. Mind: This feature is available for VASP >= 6.0. Related tags and articles Electron-phonon interactions from Monte-Carlo sampling , PHON_LMC , PHON_NSTRUCT , PHON_TLIST , TEBEG

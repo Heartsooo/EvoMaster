@@ -1,0 +1,9 @@
+Title: BEXX
+URL: https://vasp.at/wiki/BEXX
+============================================================
+BEXX = [real] Default:
+BEXX = 1 if
+LHFCALC =.TRUE. Description: BEXX specifies the fraction of short-range exact exchange in range-separated hybrid-functionals constructed with
+LMODELHF =.TRUE. Mind: Available as of VASP 6.6.0 Important: Until VASP.6.5.1, the fraction of short-range exact exchange (when
+LMODELHF =.TRUE.) was fixed to 1 and could not be changed. The BEXX tag specifies the fraction of short-range exact exchange in range-separated hybrid-functionals. This tag can be used only when
+LMODELHF =.TRUE. More details can be found in the description of this class of hybrid functionals . Related tags and articles AEXX , LMODELHF , ALDAX , ALDAC , AGGAX , AGGAC , AMGGAX , AMGGAC , LHFCALC , HFSCREEN , LRHFCALC , List of hybrid functionals , Hybrid functionals: formalism

@@ -1,0 +1,125 @@
+Title: Wrap-around errors
+URL: https://vasp.at/wiki/Wrap-around_error
+============================================================
+Wrap-around errors
+arise if the
+Fast Fourier transformation (FFT) meshes
+are not
+sufficiently large. It can be shown that no errors exist
+if the
+FFT meshes
+contain all
+{G}
+vectors up to
+2 G_{ cut}
+.
+Fig. 1: Sphere intersections for
+G_{{cut}}
+It can be shown that the charge density contains
+components up to
+2 G_{{cut}}
+, where
+2 G_{{cut}} is
+the "longest" plane wave in the basis set:
+The wavefunction is defined as
+| φ_{n{k}} = Σ_{G} C_{{G}n{k}} | {k}+{G},
+and in real space it is given by
+{r}| φ_{n{k}} = Σ_{G} {r}| {k}+{G} {k}+{G}|φ_{n{k}} = {1}{^{1/2}} Σ_{G} e^{i({k}+{G}){r}} C_{{G}n{k}}.
+Using FFTs one can define
+C_{{r}n{k}}= Σ_{{G}} C_{{G}n{k}} e^{i{G} {r}}
+C_{{G}n{k}}= {1}{N_{{FFT}}} Σ_{{r}} C_{{r}n{k}} e^{-i{G} {r}}.
+Therefore the wavefunction can be written in real space as
+r| φ_{n{k}} = φ_{n{k}}(r) = {1}{^{1/2}} C_{{r}n{k}} e^{i{k}{r}}.
+The charge density is simply given by
+^{{ps}}_{{r}} {r} |^{{ps}} | {r} =
+Σ_{k} w_{{k}} Σ_n f_{n{k}} φ_{n{k}}(r) φ^{*}_{n{k}}(r) ,
+and in the reciprocal mesh it can be written as
+^{{ps}}_{G}
+{1}{} ∫ r | ^{{ps}}| {r} e^{-i {G}{r}}\, d {r} {1}{N_{{FFT}}} Σ_{{r}} ^{{ps}}_{{r}} e^{-i {G}{r}}.
+Using the above equations for
+^{{ps}}_{{r}}
+and
+C_{{r}n{k}} it
+is very easy to show that
+^{{ps}}_{{r}}
+contains Fourier-components up to
+2 G_{{cut}}
+.
+Generally it can be shown that
+a the convolution
+f_r=f^1_r f^2_r
+of two functions
+f^1_r
+with Fourier-components
+up to
+G_1 and
+f^2_r
+with Fourier-components
+up to
+G_2 contains Fourier-components up to
+G_1+G_2
+.
+The property of the convolution comes once again into play,
+when the action of the Hamiltonian onto a wavefunction is
+calculated. The action of the local-potential is given by
+a_{{r}} = V_{{r}} C_{{r}n{k}}.
+Only the components
+a_{{G}}
+with
+|{G}| G_{{cut}}
+are taken into
+account (see section
+ALGO
+:
+a_{{G}}
+is added to the wavefunction
+during the iterative refinement of the wavefunctions
+C_{{G}n{k}}
+,
+and
+C_{{G}n{k}}
+contains only components up to
+G_{{cut}}
+).
+From the previous theorem we see that
+a_{{r}}
+contains
+components up to
+3 G_{{cut}}
+(
+V_{{r}}
+contains components up to
+2 G_{{cut}}
+).
+If the FFT mesh contains all components up to
+2 G_{ cut}
+the resulting wrap-around error is once again 0. This can
+be easily seen in Fig. 1. Here we see that the small sphere contains all plane waves included in the basis set
+G G_{{cut}}
+.
+The charge density contains components up to
+2 G_{{cut}}
+(second sphere), and
+the acceleration a
+components up to
+3 G_{{cut}}
+, which are reflected
+in (third sphere) because of the finite size of the FFT mesh. Nevertheless
+the components
+a_{{G}}
+with
+| {G}| G_{{cut}}
+are correct i.e.
+the small sphere does not intersect with the third large sphere}
+
+Related tags and articles
+PREC
+,
+ENCUT
+,
+NGX
+,
+NGY
+,
+NGZ
+Energy cutoff and FFT meshes

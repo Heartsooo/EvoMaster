@@ -1,0 +1,14 @@
+Title: SCSRAD
+URL: https://vasp.at/wiki/SCSRAD
+============================================================
+SCSRAD = [real] Default:
+SCSRAD = 120 Description: SCSRAD defines the cutoff radius (in
+
+) used in the calculation of
+_{ij}
+within the Tkatchenko-Scheffler method
+Self-consistent screening in Tkatchenko-Scheffler method
+.
+
+Related tags and articles
+Self-consistent screening in Tkatchenko-Scheffler method

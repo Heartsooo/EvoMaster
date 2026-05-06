@@ -1,0 +1,150 @@
+Title: Category:Many-body perturbation theory
+URL: https://vasp.at/wiki/Many-body_perturbation_theory
+============================================================
+Treating the electron-electron interaction within
+many-body perturbation theory
+includes screening and renormalization effects beyond density-functional theory (DFT). It is based on the Green's-function formalism and can be derived and visualized in terms of a diagrammatic expansion of the electron interacting with other electrons. Instead of describing electrons by means of Kohn-Sham (KS) orbitals, the renormalized (or dressed) propagators yield quasiparticle orbitals. Another area that can be discussed in the language of many-body perturbation theory is
+electron-phonon coupling
+, which treats the interaction between electronic and ionic degrees of freedom.
+Available methods
+Random-phase approximation (RPA)
+GW and RPA are post-DFT methods used to solve the many-body problem approximately.
+RPA stands for the random-phase approximation and is often used as a synonym for the adiabatic connection fluctuation-dissipation theorem (ACFDT). RPA/ACFDT provides access to the correlation energy of a system and can be understood in terms of Feynman diagrams as an infinite sum of all bubble diagrams, where excitonic effects (interactions between electrons and holes) are neglected. The RPA/ACFDT is used as a post-processing tool to determine a more accurate ground-state energy.
+RPA/ACFDT: Correlation energy in the Random Phase Approximation
+— theory
+ACFDT/RPA calculations
+— practical guide
+Lecture on
+RPA
+Constrained random-phase approximation (cRPA)
+The constrained random-phase approximation (cRPA) is a method that allows calculating the effective interaction parameter U
+, J
+and
+J'
+for model Hamiltonians. The main idea is to neglect the screening effects of specific target states in the screened Coulomb interaction W
+of the
+GW method. Usually, the target space is low-dimensional (up to 5 states) and therefore allows for the application of a higher-level theory, such as dynamical-mean-field theory (DMFT).
+Formalism used for the cRPA method
+GW method
+The GW approximation goes hand in hand with the RPA since the very same diagrammatic contributions are taken into account in the screened Coulomb interaction of a system often denoted as W. However, in contrast to the RPA/ACFDT, the GW method provides access to the spectral properties of the system by means of determining the energies of the quasiparticles using a screened exchange-like contribution to the self-energy. The GW approximation is currently one of the most accurate many-body methods to calculate bandgaps.
+The GW approximation of Hedin's equations
+— theory
+Practical guide to GW calculations
+— practical guide
+GW and dielectric matrix
+Tutorial for
+GW calculations
+Lecture on GW
+Lecture on the
+optical bandgap
+, including using many-body perturbation theory (GW and RPA)
+Bethe-Salpeter equations (BSE)
+VASP offers a powerful module for solving time-dependent DFT (TD-DFT) and time-dependent Hartree-Fock equations (TDHF) (the Casida equation) or the Bethe-Salpeter (BSE) equation
+
+. These approaches are used for obtaining the frequency-dependent dielectric function with excitonic effects and can be based on the ground-state electronic structure in the DFT, hybrid-functional, or
+GW approximations. VASP also offers the TDHF and BSE calculations beyond the Tamm-Dancoff approximation (TDA)
+
+.
+Bethe-Salpeter equations
+— all tags and articles
+BSE calculations
+— practical guide
+Tutorial for
+BSE calculations
+X-ray absorption spectra
+The BSE/TDHF algorithm can also be used to model the X-ray absorption spectra (XAS), i.e., excitations from the core states into conduction bands. Detailed documentation of this method can be found in the
+XAS category page
+.
+Second-order Møller-Plesset perturbation theory (MP2)
+There are three implementations available:
+MP2
+
+: this implementation is recommended for very small unit cells, very few k-points and very low plane-wave cutoffs. The system size scaling of this algorithm is N⁵.
+LTMP2
+
+: for all larger systems this Laplace-transformed MP2 (LTMP2) implementation is recommended. Larger cutoffs and denser k-point meshes can be used. It possesses a lower system size scaling (N⁴) and a more efficient k-point sampling.
+stochastic LTMP2
+
+: even faster calculations at the price of statistical noise can be achieved with the stochastic MP2 algorithm. It is an optimal choice for very large systems where only relative errors per valence electron are relevant. Keeping the absolute error fixed, the algorithm exhibits a cubic scaling with the system size, N³, whereas for a fixed relative error, a linear scaling, N¹, can be achieved. Note that there is no k-point sampling and no spin polarization implemented for this algorithm.
+MP2 ground state calculation - Tutorial
+References
+↑
+S. Albrecht, L. Reining, R. Del Sole, and G. Onida, Phys. Rev. Lett.
+80
+, 4510-4513 (1998).
+↑
+M. Rohlfing and S. G. Louie, Phys. Rev. Lett.
+81
+, 2312-2315 (1998).
+↑
+T. Sander, E. Maggio, and G. Kresse,
+Beyond the Tamm-Dancoff approximation for extended systems using exact diagonalization
+, Phys. Rev. B
+92
+, 045209 (2015).
+↑
+M. Marsman, A. Grüneis, J. Paier, and G. Kresse, J. Chem. Phys. 130, 184103 (2009).
+↑
+T. Schäfer, B. Ramberger, and G. Kresse, J. Chem. Phys. 146, 104101 (2017).
+↑
+T. Schäfer, B. Ramberger, and G. Kresse, J. Chem. Phys. 148, 064103 (2018).
+Subcategories
+This category has the following 6 subcategories, out of 6 total. A
+ACFDT B
+Bethe-Salpeter equations C
+Constrained-random-phase approximation G GW L
+Low-scaling GW and RPA M
+MP2
+Pages in category "Many-body perturbation theory"
+The following 81 pages are in this category, out of 81 total. A
+ACFDT/RPA calculations
+ALGO B
+Best practices for Bethe-Salpeter calculations
+Bethe-Salpeter equation
+Bethe-Salpeter equation for core excitations
+Bethe-Salpeter-equations calculations
+BSEELECTRON C
+Constrained–random-phase–approximation formalism
+CSHIFT E
+Electron-energy-loss spectrum
+ENCUTGW G
+GW and dielectric matrix
+GW approximation of Hedin's equations I
+IALL IN ONE
+IBSE K
+KPOINT BSE L
+LADDER
+LALL IN ONE
+LANCZOSTHR
+LFINITE TEMPERATURE
+LFOCKAEDFT
+LOCALIZED BASIS
+Low-scaling GW: The space-time formalism
+LSCK
+LTMP2 - Tutorial
+LTRIPLET M
+DFT+DMFT calculations
+Matsubara formalism
+MAXMEM
+MP2 calculations
+MP2 ground state calculation - Tutorial N
+NATURALO
+NBANDS WAVE
+NBANDSEXACT
+NCRPA BANDS
+NCSHMEM
+NMAXFOCKAE and LMAXFOCKAE
+NOMEGA
+NOMEGA DUMP
+NOMEGAPAR
+NTARGET STATES
+NTAUPAR O
+ODDONLY P
+Plot BSE fatbands
+Plotting exciton wavefunction
+Practical guide to GW calculations R
+RPA/ACFDT: Correlation energy in the Random Phase Approximation S
+SCISSOR
+Stochastic LTMP2 T
+Time-evolution algorithm V
+VCUTOFF

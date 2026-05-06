@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Materials Playground Console</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="shell">
+    <aside class="nav-pane">
+      <div class="brand-block">
+        <h1>Materials Playground</h1>
+        <p class="sub">Agent Console · Timeline · Artifacts</p>
+      </div>
+      <div class="nav-actions">
+        <button id="newSessionTopBtn">新建会话</button>
+        <button id="clearSessionBtn" class="btn-danger">清除会话及工作区</button>
+      </div>
+      <div class="section-label">会话</div>
+      <div id="sessions" class="session-list"></div>
+    </aside>
+
+    <main class="center-pane">
+      <section class="composer panel">
+        <div class="composer-head">
+          <div>
+            <div class="section-title">运行控制</div>
+            <div class="section-sub">继续当前会话，选择模型并运行</div>
+          </div>
+          <div class="composer-actions">
+            <select id="modelSelect">
+              <option value="openai">Kimi K2.5</option>
+              <option value="claude_opus">Claude 4.6 Opus</option>
+              <option value="gpugeek_gpt54">GPT-5.4</option>
+              <option value="litellm_cds_claude46_opus">LiteLLM · cds Claude 4.6 Opus</option>
+              <option value="litellm_ez_claude_opus">LiteLLM · ez Claude Opus 4.6</option>
+              <option value="litellm_cds_gpt54">LiteLLM · GPT-5.4</option>
+            </select>
+            <button id="attachImageBtn">附加图片</button>
+            <button id="runBtn">运行</button>
+            <button id="terminateBtn" class="btn-danger">终止</button>
+          </div>
+        </div>
+        <textarea id="messageInput" class="prompt-box" placeholder="输入需求，明确目标、产物和约束"></textarea>
+        <div id="messageAttachments" class="section-sub"></div>
+      </section>
+
+      <section class="status-strip panel">
+        <div class="status-head">
+          <div class="section-title">会话状态</div>
+          <div id="contextGauge" class="context-gauge" data-level="low" title="当前上下文长度（估算 tokens）">
+            <div class="context-gauge-ring">
+              <div class="context-gauge-inner">
+                <div id="contextGaugeValue" class="context-gauge-value">0</div>
+                <div id="contextGaugePct" class="context-gauge-pct">0%</div>
+              </div>
+            </div>
+            <div id="contextGaugeHint" class="context-gauge-hint">上下文</div>
+          </div>
+        </div>
+        <div id="apiTokenCost" class="section-sub">API累计 tokens: 0</div>
+        <div id="sessionMeta" class="meta-block">未选择会话</div>
+      </section>
+
+      <section class="timeline panel">
+        <div class="panel-head">
+          <div>
+            <div class="section-title">执行轨迹</div>
+            <div class="section-sub">逐条事件流：思考、工具调用、进度、结果、完成状态</div>
+          </div>
+        </div>
+        <div id="trajectory" class="timeline-stream"></div>
+      </section>
+    </main>
+
+    <aside class="right-pane">
+      <section class="panel artifact-summary-panel">
+        <div class="panel-head">
+          <div>
+            <div class="section-title">Artifacts</div>
+            <div class="section-sub">最近产物、工作区概览、关键文件</div>
+          </div>
+        </div>
+        <div id="artifactSummary" class="artifact-summary"></div>
+      </section>
+
+      <section class="panel artifacts-panel">
+        <div class="panel-head">
+          <div>
+            <div class="section-title">Workspace</div>
+            <div class="section-sub">目录浏览与文件打开</div>
+          </div>
+          <div class="actions-inline">
+            <button id="uploadFileBtn">上传文件</button>
+            <button id="refreshWorkspace">刷新文件树</button>
+          </div>
+        </div>
+        <div id="workspaceTree" class="workspace-tree workspace-tree-large"></div>
+      </section>
+
+      <section class="panel editor-panel">
+        <div class="panel-head">
+          <div>
+            <div class="section-title">文件查看 / 编辑</div>
+            <div id="currentPath" class="section-sub">未选择文件</div>
+          </div>
+          <div class="actions-inline">
+            <button id="saveFileBtn">保存</button>
+            <button id="newDirBtn">新建目录</button>
+          </div>
+        </div>
+        <textarea id="fileEditor" class="editor" placeholder="选择文件后可查看/编辑"></textarea>
+        <div id="imagePreview" class="image-preview hidden">
+          <img id="imagePreviewEl" class="image-preview-el" alt="PNG 预览" />
+        </div>
+      </section>
+
+      <section class="panel aux-panel">
+        <div class="tabs">
+          <button class="tab-btn active" data-tab="messages">消息</button>
+          <button class="tab-btn" data-tab="logs">日志</button>
+        </div>
+        <div id="tab-messages" class="tab-content active">
+          <div id="messages" class="messages"></div>
+        </div>
+        <div id="tab-logs" class="tab-content">
+          <pre id="logs" class="logs-small">请选择或创建一个会话...</pre>
+        </div>
+      </section>
+    </aside>
+  </div>
+  <script src="./app.js"></script>
+</body>
+</html>

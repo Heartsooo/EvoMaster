@@ -1,0 +1,124 @@
+Title: Category:NMR
+URL: https://vasp.at/wiki/Category:NMR
+============================================================
+Nuclear magnetic resonance
+(NMR) spectroscopy is a highly sensitive technique for probing the atomic-scale structure of molecules, liquids, and solids. However, directly extracting structural information from NMR spectra is often challenging. Consequently,
+ab-initio
+quantum mechanical simulations, such as those performed using VASP, play a crucial role in accurately linking NMR spectra to atomic-scale structural properties.
+This page presents an overview of nuclear-electron interactions that can be computed and are relevant to interpret NMR spectra.
+Chemical shielding
+The external magnetic field B
+ext
+(purple) induces currents in the electrons in atoms. These NMR response currents (black arrows) in turn induce an opposing magnetic field B in
+(red), reducing the magnetic field at the position of the nucleus, effectively shielding the nucleus from B
+ext
+.
+The effective B-field felt by a nucleus with finite nuclear spin is related to the applied B field via the chemical shielding tensor. The applied B-field induces a para- and diamagnetic NMR response current in the electrons and screens the nucleus with an induced B-field that follows from the Biot-Savart law, c.f. figure. The chemical shift is the difference in chemical shielding σ relative to a reference σ
+ref
+.
+δ_{ij} = σ_{ij}^{{ref}} - σ_{ij}.
+VASP can efficiently compute electronic properties in bulk systems thanks to the
+projector-augmented wave
+(PAW) method which takes advantage of
+pseudopotentials
+and a
+frozen core approximation
+. However, the
+standard PAW transformation
+does not fully account for how the gauge field A
+interacts with the reconstructed wavefunctions in the augmentation regions (near atomic cores). Thus, NMR calculations (
+LCHIMAG = True ) are based on an extended version of the PAW method , the gauge-invariant PAW (GIPAW) method
+
+that properly ensures the gauge invariance. The NMR currents (
+WRT_NMRCUR
+) are computed using linear response theory.
+Learn
+how to calculate the chemical shielding
+.
+Nuclear-independent chemical shielding
+Nuclear-independent chemical shielding (NICS) is a computational method used to quantify aromaticity in molecules by calculating the magnetic shielding at a virtual point (not at a nucleus) in space, typically at the center of a ring or above it
+
+. See
+NUCIND for more information.
+Magnetic susceptibility
+The macroscopic magnetic susceptibility χ
+is defined by
+
+bf{B}_{rm{in}}^{(1)}(bf{G}=0) = {8 π}{3} χ bf{B}_{ext},
+where
+bf{B}_{ext}
+is the external magnetic field and
+bf{B}_{rm{in}}^{(1)}
+is the induced magnetic field. This must be taken into account for the chemical shielding as a G=0 contribution.
+It is calculated within linear response theory (
+LCHIMAG = True ), where a key variable Q ij is approximated in two ways. The so-called pGv approximation is used by default
+
+, where p
+is momentum, v
+is velocity, and G
+is a Green's function. An alternative approach, the
+vGv
+approximation is available to calculate the susceptibility
+
+. See
+LVGVCALC and
+LVGVAPPL to control the approximation.
+Learn
+how to perform a magnetic susceptibility calculation.
+Quadrupolar nuclei - electric field gradient
+The quadrupolar electric field of a nitrogen nucleus coupling to electric field gradient V
+in MAPbI3 (methyl ammonium lead (III) iodide)
+Nuclei with I
+> ± ½ have a non-zero electric field gradient (EFG) and an electronic quadrupolar moment. The electric quadrupolar moment couples with the EFG and so the chemical environment of the nucleus may be probed using nuclear quadrupole resonance (NQR)
+
+(sometimes called zero-field NMR spectroscopy). The EFG is the second derivative of the potential V
+:
+V_{ij} = {^2 V}{ x_i x_j}
+,
+which is a sum of three parts along the Cartesian i
+, j
+axes:
+V_{i,j} = V_{i,j} -V_{i,j}^1 + V_{i,j}^1
+where
+V_{i,j}
+is the plane-wave part of the AE potential,
+V_{i,j}^1
+is the one-center expansion of the pseudopotential method, and
+V_{i,j}^1
+is the one-center expansion of the AE potential.
+In VASP, the EFG is calculated using the
+LEFG tag. The commonly reported nuclear quadrupolar coupling constant C q
+is then printed using isotope-specific quadrupole moment defined using
+QUAD_EFG
+
+.
+Learn
+how to perform an electric field gradient calculation
+.
+Hyperfine coupling
+Hyperfine coupling between the nuclear spin and the electronic spin of the unpaired electron at a nitrogen-vacancy (NV) center in diamond.
+The hyperfine tensor
+A^I
+describes the interaction between a nuclear spin
+S^I
+and the electronic spin distribution
+S^e
+. In most cases associated with a paramagnetic defect state measureable by electron paramagnetic resonance (EPR)
+
+:
+E=Σ_{ij} S^e_i A^I_{ij} S^I_j.
+The hyperfine tensor is split into two terms, isotropic (or Fermi contact)
+A^I_{iso}
+and anisotropic (or dipolar contributions)
+A^I_{ani}
+:
+A^I_{i,j} = (A^I_{iso})_{i,j} + (A^I_{ani})_{i,j}.
+A^I_{iso}
+is calculated based on the spin-density
+
+and
+A^I_{ani}
+is calculated based on the dipolar-dipolar contribution terms
+W_{i,j}(bf{R})
+. The hyperfine tensor calculation itself is defined using
+LHYPERFINE = True . Both the Fermi contact and dipolar contribution terms are related to the nuclear gyromagnetic moment γ, which are controlled by setting NGYROMAG . Learn how to perform a hyperfine coupling calculation. Additional resources Lectures Lecture on PAW, GIPAW, and NMR theory . Lecture on NMR theory and calculations . Tutorials Tutorial for chemical shielding calculations . Tutorial for coupling constants and two-center correction calculations . Tutorial for NICS and current calculations . References ↑ C. J. Pickard and F. Mauri, All-electron magnetic response with pseudopotentials: NMR chemical shifts , Phys. Rev. B 63 , 245101 (2001). ↑ a b J. R. Yates, C. J. Pickard, and F. Mauri, Calculation of NMR chemical shifts for extended systems using ultrasoft pseudopotentials , Phys. Rev. B 76 , 024401 (2007). ↑ P. von Ragué Schleyer, C. Maerker, A. Dransfeld, H. Jiao, and N. J. R. van Eikema Hommes, Nucleus-Independent Chemical Shifts:  A Simple and Efficient Aromaticity Probe , J. Am. Chem. Soc. 118 , 6317 (1996). ↑ Z. Chen, C. S. Wannere, C. Corminboeuf, R. Puchta, and P. von Ragué Schleyer, Nucleus-Independent Chemical Shifts (NICS) as an Aromaticity Criterion , Chem. Rev. 10, 105 , 3842–3888 (2005). ↑ F. Mauri and S. G. Louie, Magnetic Susceptibility of Insulators from First Principles , Phys. Rev. Lett. 76 , 4246 (1996). ↑ M. d'Avezac, N. Marzari, and F. Mauri, Spin and orbital magnetic response in metals: Susceptibility and NMR shifts , Phys. Rev. B 76 , 165122 (2007). ↑ Nuclear quadrupole resonance, www.wikipedia.org (2025) ↑ H. M. Petrilli, P. E. Blöchl, P. Blaha, and K. Schwarz, Electric-field-gradient calculations using the projector augmented wave method , Phys. Rev. B 57 , 14690 (1998). ↑ J. Weil and J. Bolton, Electron Paramagnetic Resonance: Elementary Theory and Practical Applications , (2007). ↑ K. Szasz, T. Hornos, M. Marsman, and A. Gali, Hyperfine coupling of point defects in semiconductors by hybrid density functional calculations: The role of core spin polarization , Phys. Rev. B, 88 , 075202 (2013). Subcategories This category has only the following subcategory. M Magnetism Pages in category "NMR" The following 30 pages are in this category, out of 30 total. C Calculating the chemical shieldings Calculating the electric field gradient Calculating the hyperfine-coupling constant Calculating the magnetic susceptibility D DQ I ICHIBARE L LBONE LNMR SYM RED LNMRCAR N NGYROMAG NMRCAR.magres NMRCURBX P POSNICS Q QUAD EFG W WRT NMRCUR

@@ -1,0 +1,54 @@
+{
+  "task_type": "dos",
+  "description": "Density of states (total and projected/partial DOS)",
+  "use_cases": ["electronic structure analysis", "orbital contributions", "bonding analysis"],
+
+  "workflow": "TWO-STEP: 1) SCF on uniform k-mesh → 2) dense k-mesh non-SCF for DOS",
+
+  "step1_scf": {
+    "description": "Standard SCF with normal k-mesh",
+    "incar": {
+      "EDIFF": 1e-6,
+      "ISMEAR": "1 for metals, 0 for semiconductors",
+      "LCHARG": true,
+      "LWAVE": false,
+      "ALGO": "Fast",
+      "PREC": "Accurate"
+    },
+    "kpoints": "standard converged mesh"
+  },
+
+  "step2_dos": {
+    "description": "Non-SCF or SCF with dense k-mesh for accurate DOS",
+    "incar": {
+      "ICHARG": {"value": 11, "note": "non-SCF from CHGCAR"},
+      "ISMEAR": {"value": -5, "note": "tetrahedron method with Blöchl corrections for accurate DOS"},
+      "LORBIT": {"value": 11, "note": "projected DOS with lm-decomposition"},
+      "NEDOS": {"value": 2001, "note": "number of energy grid points for DOS"},
+      "EMIN": {"rule": "set to cover valence band, e.g., -10"},
+      "EMAX": {"rule": "set to cover conduction band, e.g., 10"},
+      "NBANDS": {"rule": "increase for good coverage of empty states"},
+      "LWAVE": false,
+      "LCHARG": false,
+      "PREC": "Accurate"
+    },
+    "kpoints": {
+      "rule": "DENSER mesh than SCF, e.g., 2x in each direction",
+      "note": "Must be Gamma-centered for ISMEAR=-5"
+    },
+    "files_from_step1": ["CHGCAR", "POSCAR", "POTCAR"]
+  },
+
+  "output_files": {
+    "DOSCAR": "total DOS",
+    "PROCAR": "projected DOS (if LORBIT set)",
+    "vaspout.h5": "HDF5 output (VASP 6)"
+  },
+
+  "conditional": {
+    "magnetic": {
+      "ISPIN": 2,
+      "note": "DOSCAR will contain spin-up and spin-down columns"
+    }
+  }
+}

@@ -1,0 +1,68 @@
+Title: Fcc Si bandstructure
+URL: https://vasp.at/wiki/Fcc_Si_bandstructure
+============================================================
+Overview
+>
+fcc Si
+>
+fcc Si DOS
+>
+fcc Si bandstructure
+>
+cd Si
+>
+cd Si volume relaxation
+>
+cd Si relaxation
+>
+beta-tin Si
+>
+fcc Ni
+>
+graphite TS binding energy
+>
+graphite MBD binding energy
+>
+graphite interlayer distance
+>
+List of tutorials
+Task
+Computation of the bandstructure in fcc Si along L-Γ-X-U and K-Γ.
+Input
+POSCAR fcc Si:
+3.9
+0.5 0.5 0.0
+0.0 0.5 0.5
+0.5 0.0 0.5
+1
+cartesian
+0 0 0
+INCAR
+System = fcc Si
+ICHARG = 11 #charge read file
+ENCUT = 240
+ISMEAR = 0;
+SIGMA = 0.1;
+LORBIT = 11 KPOINTS k-points for bandstructure L-G-X-U K-G 10 line reciprocal 0.50000 0.50000 0.50000 1 0.00000 0.00000 0.00000 1
+
+0.00000 0.00000 0.00000 1
+0.00000 0.50000 0.50000 1
+
+0.00000 0.50000 0.50000 1
+0.25000 0.62500 0.62500 1
+
+0.37500 0.7500 0.37500 1
+0.00000 0.00000 0.00000 1
+k points along the line
+L - Γ - X - U K - Γ
+.
+10 points per line.
+Keyword
+line
+to generate bandstructure.
+In reciprocal coordinates.
+All points with weight 1.
+Example bandstructure should look like this:
+CHGCAR
+This calculation needs a converged charge density as input (
+ICHARG =11). You may use the CHGCAR file of the fcc Si DOS example. CALCULATION To copy the self-consistent charge density of example fccSidos to your current working directory, type: cp ../fccSidos/CHGCAR . You must do this otherwise VASP can not read the CHGCAR and will terminate. To plot the bandstructure use p4vasp: Mind : For this calculations you need the CHGCAR file of the fcc Si DOS example . Download fccSiband.tgz Overview > fcc Si > fcc Si DOS > fcc Si bandstructure > cd Si > cd Si volume relaxation > cd Si relaxation > beta-tin Si > fcc Ni > graphite TS binding energy > graphite MBD binding energy > graphite interlayer distance > List of tutorials

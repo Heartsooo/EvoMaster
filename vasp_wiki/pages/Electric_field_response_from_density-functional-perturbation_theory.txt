@@ -1,0 +1,116 @@
+Title: Electric field response from density-functional-perturbation theory
+URL: https://vasp.at/wiki/Electric_field_response_from_density-functional-perturbation_theory
+============================================================
+Density-functional-perturbation theory (DFPT)
+provides a way to compute the behaviour of a material under an external perturbation (e.g. ionic displacement, strain, electric fields) within the limits of linear-response theory. For the case of an external electric field VASP can employ DFPT for the computation of the static dielectric tensor, the Born effective charges, and the piezoelectric tensor.
+Introduction
+Under the presence of a small, finite external electric field,
+E_α
+, the changes in the total energy of the system due to
+E_α
+can be computed from the polarization at first order, and at second order in
+E_α
+from the dielectric susceptibility, Born-effective charges, and piezoelectric tensor.
+All quantities can be computed via finite-differences methods (see for instance
+perturbation expansion after discretization
+or the
+modern theory of polarisation
+), but they can also be computed employing DFPT. The essential quantities are the wave functions at finite electric field, which can be approximated as
+|^{E_α}_ =
+| +
+|_{E_α},
+with
+
+being the vanishing strength of the field, and the static dielectric tensor
+^{∞}( q,0)= 1 - {8 π e^2}{} _{{q} arrow 0}{1}{ q^2} Σ_{c, v, {k}} 2 w_{{k}} | u_{c {k+q}}|u_{v {k}}|^2,
+which requires the periodic part of the wave function to be computed at different momenta. However, in the limit of very small q
+, this can be expanded as
+u_{n {k}+{q}}=u_{n {k}}+{q} · _{{k}} u_{n {k}}+O({q}^2).
+So, both the derivative with respect to the crystal momentum k
+and the finite electric field
+E_α
+are required. Fortunately both can be obtained from a system of coupled equations called the Sternheimer equations.
+Sternheimer equations
+The starting point is density-functional theory (DFT), where one has to solve the Kohn-Sham (KS) equations
+H({k}) | _{n{k}} =
+e_{n{k}}S({k}) | _{n{k}} ,
+where
+H({k})
+is the DFT Hamiltonian,
+S({k})
+is the overlap operator and,
+| _{n{k}}
+and
+e_{n{k}}
+are the KS eigenpairs.
+As it was mentioned before, to compute the response with respect to an external electric field
+E_α
+one requires the derivative of the orbitals with respect to
+{k}
+and
+E_α
+. For the former we have that
+
+[ H({k}) - e_{n{k}}S({k}) ]
+|_{k}u_{n{k}}
+=
+-_{k} [ H({k}) - e_{n{k}}S({k})]
+|u_{n{k}}
+while the latter is given by
+[ H({k}) - e_{n{k}}S({k}) ]
+|_E_αu_{n{k}}
+=
+-Δ H_{{SCF}}({k}) |u_{n{k}}
+-{q_α}·
+|β_{n{k}}.
+Here
+Δ H_{{SCF}}({k}) |u_{n{k}}
+is the change in the microscopic cell periodic part of the Hamiltonian that comes from the change in wave functions (self-consistent field effects). These are computed at first order only, thus ensuring that local field effects are included directly in the evaluation of the dielectric response.
+The derivative with respect to
+{k}
+in the second equation enters via the polarization vector,
+β_{n k}
+, which in the
+PAW formalism
+is given by
+|β_{n{k}}=
+(
+1+Σ_{ij}
+|p_{i{k}} Q_{ij}
+_{j{k}}|
+)
+|_{k} u_{n{k}}+
+i(
+Σ_{ij}
+|p_{i{k}} Q_{ij} ({r}-{R}_i)-_{ij}
+_{j{k}}|
+)|u_{n{k}},
+where
+Q_{ij}
+and
+_{ij}
+are the norm and the dipole moments of the one-center charge densities, each respectively expressed as
+Q_{ij} = ∫_{_{PAW}}
+[
+φ_i({r}) φ_j({r}) -
+φ_i({r}) φ_j({r})
+]
+d^3 {r}
+and
+_{ij} = ∫_{_{PAW}}
+({r}-{R}_i)
+[
+φ_i({r}) φ_j({r}) -
+φ_i({r}) φ_j({r})
+]
+d^3 {r}.
+For norm-conserving pseudopotentials the expression for
+|β_{n{k}}
+is reduced to
+|β_{n{k}}=|_{k} u_{n{k}}.
+To employ the Sternheimer formalism you should set
+LEPSILON = TRUE  in the INCAR file. However, if you want to use the instead of that of the perturbation expansion after discretisation formalism and finite differences of an electric field you should use
+LCALCEPS = .TRUE. . Computation of physical quantities After obtaining the derivatives of the Kohn-Sham orbitals with respect to the electric field |_E_αu_{n{k}} , the dielectric tensor can then be computed using ε^∞({q},0) = 1-{8π e^2}{} Σ_{v{k}} 2 w_{k} {q}β_{n{k}} | _{E_α} u_{n{k}} . Note that the sum runs over occupied states only! Meaning that very few empty states are required in this calculation. The macroscopic dielectric tensor is reported in the OUTCAR in the field MACROSCOPIC STATIC DIELECTRIC TENSOR (including local field effects in DFT) By computing the the forces on each atom, a , for a given set of perturbed KS orbitals it is also possible to obtain the Born effective charges using Z^a_{ij}={}{e}{ P_i}{ u^a_j} ={1}{e}{ F^a_j}{ E_i} ≈{1}{e}{ ( {F}[\{^{E_i}_{/2}\}]- {F}[\{^{E_i}_{-/2}\}] )^a_j}{}. These are also reported in the OUTCAR , after BORN EFFECTIVE CHARGES (in e, cummulative output) Finally, the ion-clamped piezoelectric tensor e_{ij} can be computed from the strain tensor, {σ}[_{n{k}}] , using e_{ij} =-{ σ_j}{ E_i} ≈ -{ ( σ[\{^{E_i}_{/2}\}]- σ[\{^{E_i}_{-/2}\}] )_j }{}, which can be found in PIEZOELECTRIC TENSOR for field in x, y, z (e Angst) Ionic contributions Piezoelectric tensor The ionic contributions to the piezoelectric tensor can be computed by setting
+IBRION =6, 8, and
+LEPSILON =.TRUE. or
+LCALCEPS = TRUE  in the INCAR . This will correct the piezoelectric tensor using e_{α j} = e_{α j} + _0^{-1}Z_{mα}(Φ)^{-1}_{mn}_{nj}, where Φ_{mn} and _{nj} are the force constants and force response to the internal strain tensors, respectively. The second term on the right-hand side will be written to the OUTCAR in PIEZOELECTRIC TENSOR IONIC CONTR for field in x, y, z (C/m^2) while the contributions from the ion-clamped tensor are written in PIEZOELECTRIC TENSOR (including local field effects) (e Angst) Dielectric tensor Setting the same tags in the INCAR as for the corrected piezoelectric tensor, it is possible to compute the ionic contributions to the dielectric tensor. These are given by χ_{αβ} = χ_{αβ} + _0^{-1}Z_{mα}(Φ)^{-1}_{mn}Z_{nβ}. The ionic contributions (second term on the right-hand side) are written in the OUTCAR to MACROSCOPIC STATIC DIELECTRIC TENSOR IONIC CONTRIBUTION while the ion-clamped tensor is written to MACROSCOPIC STATIC DIELECTRIC TENSOR (including local field effects) Related tags and sections LEPSILON , LRPA , LPEAD , Born effective charges References ↑ M. Gajdoš, K. Hummer, G. Kresse, J. Furthmüller, and F. Bechstedt, Phys. Rev. B 73 , 045112 (2006).

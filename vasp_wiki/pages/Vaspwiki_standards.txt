@@ -1,0 +1,54 @@
+Title: Vaspwiki standards
+URL: https://vasp.at/wiki/Vaspwiki_standards
+============================================================
+You might start a page on the INCAR-tag "tagname" as follows
+{{TAGDEF|TAGNAME|val1 [{{!}} val2 {{!}} val3 {{!}} .. ] [|default] }}
+Examples:
+{{TAGDEF|NELM|[integer]}}
+NELM = [integer] {{TAGDEF|NELM|[integer]|60}}
+NELM = [integer] Default:
+NELM = 60 {{TAGDEF|ISTART|0 {{!}} 1 {{!}} 2|0}}
+ISTART = 0 | 1 | 2 Default:
+ISTART = 0 When an INCAR-tag has more than one default (a conditional default) use the following construct {{TAGDEF|TAGNAME|val1 {{!}} val2 {{!}} val3}} {{DEF|TAGNAME|default1|condition1|default2|condition2 [|default3|condition3] ... }}
+TAGNAME = val1 | val2 | val3 Default:
+TAGNAME = default1 condition1 = default2 condition2 = default3 condition3 for instance {{TAGDEF|ICHARG|0 {{!}} 1 {{!}} 2 {{!}} 4}} {{DEF|ICHARG|2|if {{TAG|ISTART}}{{=}}0|0|else}}
+ICHARG = 0 | 1 | 2 | 4 Default:
+ICHARG = 2 if
+ISTART =0 = 0 else The TAGDEF template can harbor up to six "default|condition" combinations. Followed by Description: {{TAG|TAGNAME}} ... ---- and maybe lots of text ... like if you want to know how to put in an equation in LaTeX style then have a look at the source of the {{TAG|PREC}} page Description: TAGNAME ... and your text maybe lots of text ... like if you want to know how to put in an equation in LaTeX style then have a look at the source of an equation array . By the way this is how to refer to all tags and files {{TAG|TAGNAME}} and {{FILE|FILENAME}} TAGNAME and FILENAME If you want to know how to quote whole pieces of input and output have a look at the source of ROPT and a page with pieces of INCAR text , or to the source of this page of course. To create a hook to which one may jump, for instance to the following equation array: <span id="eqnarray"> <math> align {e}{π} & =∫_ ({r}) d{r} \\ a & = b \\ align </math> </span> align {e}{π} & =∫_ ({r}) d{r} \\ a & = b \\ align You may then jump to the aformention equation array with [[Vaspwiki_standards#eqnarray|an equation array]] an equation array or to another example in another section. Optionally put in
+== Related Tags and Sections ==
+{{TAG|PREC}},
+[[list_of_hybrid_functionals|an internal link]]
+
+[http://www.mediawiki.org/wiki/Help:Formatting How to format text etc]
+
+[http://www.mediawiki.org/wiki/Help:Links Links in a mediawiki environment]
+Related Tags and Sections
+PREC
+,
+an internal link
+How to format text etc
+Links in a mediawiki environment
+And if applicable
+.... in your text somewhere ... <ref name="name1"/>
+and .. somewhere else <ref name="name2"/>
+....
+....
+== References ==
+<references>
+<ref name="name1">[http://link.aps.org/doi/10.1103/PhysRevB.39.4997 I. Stich, R. Car, M. Parrinello and S. Baroni, Phys Rev. B 39, 4997 (1989).]</ref>
+<ref name="name2">[http://dx.doi.org/10.1088/0953-8984/1/4/005 M.J. Gillan, J. Phys.: Condens. Matter 1, 689 (1989).]</ref>
+</references>
+.... in your text somewhere ...
+
+and .. somewhere else
+
+....
+....
+References
+↑
+|I. Stich, R. Car, M. Parrinello and S. Baroni, Phys Rev. B 39, 4997 (1989).
+↑
+|M.J. Gillan, J. Phys.: Condens. Matter 1, 689 (1989).
+End with
+----
+[[Category:INCAR]]

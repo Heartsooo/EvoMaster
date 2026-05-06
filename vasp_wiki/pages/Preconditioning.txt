@@ -1,0 +1,41 @@
+Title: Preconditioning
+URL: https://vasp.at/wiki/Preconditioning
+============================================================
+The idea is to find a matrix that multiplied with the residual vector gives the
+exact error in the wavefunction. Formally this matrix (the Greens function) can be written
+down and is given by
+{1}{{ H} - ε_n},
+where
+ε_n
+is the exact eigenvalue for the band in interest.
+Actually the evaluation of this matrix is not possible, recognizing that the
+kinetic energy dominates the Hamiltonian for large
+{G}
+-vectors
+(i.e.
+H_{{G},{G'}} δ_{{G},{G'}} {^2}{2m} {G}^2
+), it
+is a good idea to approximate the matrix by a diagonal
+function which converges to
+{2m}{^2 {G}^2}
+for large
+{G}
+vectors, and possess
+a constant value for small
+{G}
+vectors.
+We actually use the preconditioning function proposed by Teter et. al
+
+{G} | { K} | {G'} = δ_{{G} {G'}} { 27 + 18 x+12 x^2 + 8x^3}
+{27 + 18x + 12x^2+8x^3 +16x^4} and
+x = {^2}{2m} {G^2} {1.5 E^{ kin}( {R}) },
+with
+E^{ kin}({R})
+being the kinetic energy of the residual vector.
+The preconditioned residual vector is then simply
+| p_n = { K} | R_n .
+References
+↑
+M. P. Teter, M. C. Payne, and D. C. Allan, Phys. Rev. B
+40
+, 12255 (1989).

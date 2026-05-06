@@ -1,0 +1,26 @@
+# ── System ──
+  SYSTEM               = MoS2 structure optimization  # Name of the system (comment only, no effect on calculation)
+
+# ── Electronic ──
+  ALGO                 = Fast  # Electronic minimization algorithm or GW calculation type
+  PREC                 = Accurate  # Sets ENCUT, FFT grids, and other precision-related defaults
+  ENCUT                = 336  # Plane-wave energy cutoff
+  EDIFF                = 1e-06  # Energy convergence criterion for electronic SC loop
+  ISMEAR               = 0  # Partial occupancy method: -5=tetrahedron+Blöchl, 0=Gaussian, >0=Methfessel-Paxton order N
+  SIGMA                = 0.05  # Width of smearing
+  LREAL                = .FALSE.  # Projection in real space (fast for large cells) or reciprocal space (accurate for small cells)
+
+# ── Ionic ──
+  IBRION               = 2  # Ion update algorithm: -1=none, 0=MD, 1=RMM-DIIS, 2=CG, 3=damped MD, 5-8=phonons, 44=dimer
+  NSW                  = 200  # Maximum number of ionic steps
+  ISIF                 = 3  # Controls which DOFs relax: 0-1=positions only, 2=positions+stress, 3=all(+volume+shape), 4=shape only, etc.
+  EDIFFG               = -0.01  # Convergence criterion for ionic relaxation. Negative = force criterion (recommended).
+  POTIM                = 0.5  # Step width scaling for ionic relaxation, or timestep (fs) for MD
+
+# ── vdW ──
+  IVDW                 = 12  # Van der Waals correction method: 11=DFT-D3, 12=DFT-D3(BJ), 13=DFT-D4, 20=TS, 202=MBD
+
+# ── Output ──
+  LWAVE                = .FALSE.  # Write WAVECAR
+  LCHARG               = .FALSE.  # Write CHGCAR and CHG
+

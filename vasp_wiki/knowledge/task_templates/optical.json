@@ -1,0 +1,48 @@
+{
+  "task_type": "optical",
+  "description": "Optical properties and frequency-dependent dielectric function",
+  "use_cases": ["absorption spectra", "reflectivity", "refractive index", "dielectric constant"],
+
+  "workflow": "TWO-STEP: 1) SCF → 2) LOPTICS calculation with many empty bands",
+
+  "step1_scf": {
+    "incar": {
+      "ALGO": "Fast",
+      "EDIFF": 1e-6,
+      "PREC": "Accurate",
+      "LWAVE": true,
+      "LCHARG": true
+    }
+  },
+
+  "step2_optics": {
+    "incar": {
+      "LOPTICS": ".TRUE.",
+      "NBANDS": {"rule": "2-3x default, need many empty bands for good spectra"},
+      "NEDOS": 2000,
+      "CSHIFT": {"value": 0.1, "note": "broadening in eV"},
+      "ISMEAR": 0,
+      "SIGMA": 0.05,
+      "EDIFF": 1e-6,
+      "ALGO": "Exact",
+      "NELM": 1,
+      "LWAVE": false
+    },
+    "note": "Reads WAVECAR from step 1"
+  },
+
+  "output_files": {
+    "OUTCAR": "contains dielectric function",
+    "vaspout.h5": "HDF5 output (VASP 6)"
+  },
+
+  "kpoints": {
+    "rule": "Dense Gamma-centered mesh for well-resolved spectra"
+  },
+
+  "notes": [
+    "Independent-particle approximation (no excitonic effects)",
+    "For excitonic effects use BSE (Bethe-Salpeter equation)",
+    "Scissor operator can be applied post-processing to correct band gap"
+  ]
+}

@@ -20,6 +20,10 @@ from .builtin import (
     ThinkToolParams,
     FinishTool,
     FinishToolParams,
+    WebSearchTool,
+    WebSearchToolParams,
+    PaperSearchTool,
+    PaperSearchToolParams,
 )
 
 # MCP tools
@@ -48,6 +52,10 @@ __all__ = [
     "ThinkToolParams",
     "FinishTool",
     "FinishToolParams",
+    "WebSearchTool",
+    "WebSearchToolParams",
+    "PaperSearchTool",
+    "PaperSearchToolParams",
     #Skill Tools
     "SkillTool",
     "SkillToolParams",

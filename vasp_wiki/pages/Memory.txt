@@ -1,0 +1,23 @@
+Title: Category:Memory
+URL: https://vasp.at/wiki/Memory
+============================================================
+Memory
+can be a limiting factor for VASP calculations of large systems. However, there are some tags that can significantly reduce the
+memory
+requirements and still achieve the same results. The reduction often comes at the cost of an extended computational time, though. Complimentary to
+memory
+, consider the
+parallelization
+of the calculation. These topics strongly influence each other.
+Pages in category "Memory"
+The following 10 pages are in this category, out of 10 total. I
+ISYM K
+KPOINTS OPT NKBATCH M
+MAXMEM
+Memory requirements
+ML MCONF N
+NCSHMEM
+Not enough memory
+NTAUPAR P
+PREC S
+Shared memory

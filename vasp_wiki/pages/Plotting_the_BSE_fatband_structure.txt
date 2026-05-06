@@ -1,0 +1,5 @@
+Title: Plot BSE fatband
+URL: https://vasp.at/wiki/Plotting_the_BSE_fatband_structure
+============================================================
+Redirect to:
+Plot BSE fatbands

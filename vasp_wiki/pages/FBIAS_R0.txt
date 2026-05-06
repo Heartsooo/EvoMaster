@@ -1,0 +1,4 @@
+Title: FBIAS_R0
+URL: https://vasp.at/wiki/FBIAS_R0
+============================================================
+FBIAS_R0 = [real (array)] Description: Defines the half-step position for the bias potential. FBIAS_R0 defines the half-step position ( _{0μ} ) for the Fermi-like step-shaped bias potential of the following form: V(_1,,_{M_4}) = Σ_{μ=1}^{M_4}{A_{μ}}{1+{exp} [-D_{μ}({(q)}{_{0μ}} -1) ]}, \; where the sum runs over all ( M_4 ) coordinates the potential acts upon, which are defined in the ICONST file by setting the status to 4. The units of _{0μ} correspond to units of the coordinate the potential acts upon (e.g., {} for coordinates with flag R, rad. for coordinates with flag A, dimensionless for coordinates with flag W, etc...). The number of items defined via FBIAS_R0 must be equal to M_4 . Otherwise, the calculation terminates with an error message. Related tags and articles FBIAS_A , FBIAS_D , ICONST

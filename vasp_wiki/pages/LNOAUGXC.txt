@@ -1,0 +1,9 @@
+Title: LNOAUGXC
+URL: https://vasp.at/wiki/LNOAUGXC
+============================================================
+LNOAUGXC = .TRUE. | .FALSE. Default:
+LNOAUGXC = .FALSE. Description: LNOAUGXC specifies if a METAGGA functional is evaluated with a density that is augmented or not. The Kohn-Sham kinetic-energy density _{σ}={1}{2}Σ_{i}_{iσ}^{*}·_{iσ} should, in principle, be larger than the von Weizsäcker kinetic-energy density
+
+_{σ}^{rm{W}}={ n_{σ}^{2}}{8 n_{σ}}.
+However, this may not always be the case, particularly within the PAW spheres, when the pseudo density is augmented with the compensation charge. If
+LNOAUGXC =.TRUE. is set in the INCAR file, then the pseudo density is not augmented, which should alleviate the breaking of the condition _{σ}^{rm{W}} _{σ} . A violation of _{σ}^{rm{W}} _{σ} can make the calculations unstable, in particular with the TPSS family of functionals. Mind: This tag is available since VASP.6.5.0 and is a replacement of the compiler option -DnoAugXCmeta that was available until VASP.6.4.3. This option may negatively affect the results, therefore it should be used only for functionals, e.g., TPSS, for which the breaking of the condition _{σ}^{rm{W}} _{σ} may lead to numerical problems. Related tags and articles METAGGA , LTBOUNDLIBXC Examples that use this tag References ↑ S. Kurth, J. P. Perdew, and P. Blaha, Molecular and solid-state tests of density functional approximations: LSD, GGAs, and meta-GGAs , Int. J. Quantum Chem. 75 , 889 (1999).

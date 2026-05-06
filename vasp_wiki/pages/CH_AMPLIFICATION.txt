@@ -1,0 +1,5 @@
+Title: CH_AMPLIFICATION
+URL: https://vasp.at/wiki/CH_AMPLIFICATION
+============================================================
+CH_AMPLIFICATION = [real] Default:
+CH_AMPLIFICATION = 1.0 Description: This tag is used to scale (amplify) the calculated dielectric function within the supercell core-hole method and the BSE+GW method for core electrons. Related tags and articles CH_LSPEC , CH_NEDOS , ICORELEVEL , CLNT , CLN , CLL , CLZ , CH_SIGMA

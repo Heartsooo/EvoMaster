@@ -1,0 +1,8 @@
+Title: LWRITE_SPN
+URL: https://vasp.at/wiki/LWRITE_SPN
+============================================================
+LWRITE_SPN = .TRUE. | .FALSE. Default:
+LWRITE_SPN = .FALSE. Description: Write wannier90.spn file for noncollinear calculations. For noncollinear calculations (
+LNONCOLLINEAR =T using vasp_ncl) the wannier90.spn file is written when
+LWANNIER90 =T ! switch on Wannier90 interface
+LWRITE_SPN =T The file is formatted, and the appropriate line ( spn_formatted = .true. ) is automatically added to the wannier90.win file. Warning: Only the default setting for SAXIS is supported. Mind: Available for VASP version > 6.4.2. Related tags and articles LWANNIER90 , LWRITE_UNK , LWRITE_MMN_AMN , LWANNIER90_RUN , NUM_WANN

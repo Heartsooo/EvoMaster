@@ -1,0 +1,12 @@
+Title: INIMIX
+URL: https://vasp.at/wiki/INIMIX
+============================================================
+INIMIX = 0 | 1 | 2 Default:
+INIMIX = 1 Description: Determines the functional form of the initial mixing matrix in the Broyden scheme (
+IMIX =4). The initial mixing matrix might influence the convergence speed for complex situations (especially surfaces and magnetic systems), nevertheless INIMIX must not be changed from the default setting: anything which can be done with INIMIX can also be done with AMIX and BMIX , and changing AMIX and BMIX is definitely preferable. Possible choices for INIMIX are:
+INIMIX =0 Linear mixing according to the setting of
+AMIX =1 Kerker mixing (see
+IMIX =1) according to the settings of AMIX and BMIX . The mixed density is given by _{ mix}(G)=_{ in}(G)+A {G^2}{G^2+B^2}(_{ out}(G)-_{ in}(G)) with A = AMIX and B =
+BMIX =2 No mixing (equal to
+INIMIX =0 and
+AMIX =1, not recommended) Related tags and articles IMIX , MAXMIX , AMIX , BMIX , AMIX_MAG , BMIX_MAG , AMIN , MIXPRE , WC

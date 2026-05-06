@@ -1,0 +1,7 @@
+Title: ML_ABN
+URL: https://vasp.at/wiki/ML_ABNCAR
+============================================================
+In context of the machine-learned force fields method this file serves as an output for the collected training data set. When running VASP with
+ML_MODE = train, select it is automatically written out whenever a learning step is performed. The file format is shared with the ML_AB input file, for further details please have a look at the ML_AB Wiki entry. An ML_ABN file can be reused as a starting point for continuation runs (
+ML_MODE = train ) and local reference configuration re-selection runs (
+ML_MODE = select ) simply by renaming (or copying) it to ML_AB .

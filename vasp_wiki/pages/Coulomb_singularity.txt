@@ -1,0 +1,177 @@
+Title: Coulomb singularity
+URL: https://vasp.at/wiki/Coulomb_singularity
+============================================================
+The bare Coulomb operator
+V(r-{r}')={1}{r-{r}'}
+in the
+unscreened HF exchange
+has a representation in the reciprocal space that is given by
+V(q)={4π}{q^2}
+It has an (integrable) singularity at
+q=k'-{k}+{G}=0
+that leads to a very slow convergence of the results with respect to the cell size or number of k
+points. In order to alleviate this issue different methods have been proposed: the auxiliary function
+
+, probe-charge Ewald
+
+(
+HFALPHA
+), and Coulomb truncation
+
+methods (selected with
+HFRCUT
+). These mostly involve modifying the Coulomb Kernel in a way that yields the same result as the unmodified kernel in the limit of large supercell sizes.
+These methods can also be applied to the
+Thomas-Fermi
+and
+error function
+screened Coulomb operators given by
+V(r-{r}')={e^{--{r}'}}{r-{r}'}
+and
+V(r-{r}')={{erfc}({--{r}'})}{r-{r}'}
+respectively, whose representations in the reciprocal space are given by
+V(q)={4π}{q^{2}+^{2}}
+and
+V(q)={4π}{q^{2}}(1-e^{-q^{2}/(4^2)})
+respectively.
+Auxiliary function
+In this approach an auxiliary periodic function
+F(q)
+with the same
+1/q^2
+divergence as the Coulomb potential in reciprocal space is subtracted in the k
+points used to integrate the Hartree-Fock energy, thus regularizing the integral
+
+. This function is chosen such that it has a closed analytical expression for its integral
+
+or the integral is evaluated numerically
+
+. This approach is currently not implemented in VASP, instead, the probe-charge Ewald method is used.
+Probe-charge Ewald
+A similar approach to the auxiliary function method described above is the probe-charge Ewald method
+
+. In this case, the auxiliary function
+F(q)
+is chosen to have the form of the Coulomb kernel times a Gaussian function
+e^{-α q^2}
+with a width α
+(
+HFALPHA
+) comparable to the Brillouin zone diameter.
+This function is used to regularize the Coulomb integral that is evaluated in the regular k
+point grid with the divergent part being evaluated by analytical integration of the Coulomb kernel (see eq. 29 in ref.
+
+).
+The value of the integral of the bare Coulomb potential is (see eq. 31 in ref.
+
+)
+aligned
+{1}{2π^2} ∫ {4π}{{|q|}^2} e^{-α{|q|}^2} d{q}=
+{2}{π} ∫ {1}{q^2} e^{-α q^2} q^2 dq =
+{2}{π} ∫ e^{-α q^2} dq= {1}{π α}
+aligned
+for the Thomas-Fermi and error function screened Coulomb kernels we have
+aligned
+{1}{2π^2} ∫ {4π}{{|q|}^2+^2} e^{-α{|q|}^2} d{q}=
+{2} {π} ∫ {q^2}{q^2+^2} e^{-α q^2} q^2 dq =
+- e^{α ^2} {erfc}({ α}) + {1}{π α}
+aligned
+and
+aligned
+{1}{2π^2} ∫ {4π}{{q}^2}
+(
+1-e^{-{|q|}^2/(4^2)}
+) e^{-
+α{|q|}^2} d{q}=
+{2}{π} ∫ {1}{q^2}
+(
+1-e^{-q^2/(4^2)}
+) e^{-α q^2} q^2 dq =
+{1}{π α} -
+{1}{π (α+{1{4^2})}}
+aligned
+respectively.
+Spherical truncation
+In this method
+
+the bare Coulomb operator
+V(r-{r}')
+is spherically truncated by multiplying it by the step function
+(R_{{c}}-r-{r}')
+, and in the reciprocal this leads to
+V(q)={4π}{q^{2}}(1-(q R_{{c}}))
+whose value at
+q=0
+is finite and is given by
+V(q=0)=2π R_{{c}}^{2}
+, where the truncation radius
+R_{{c}}
+(
+HFRCUT
+) is by default chosen as
+R_{{c}}=(3/(4π)N_{{k}})^{1/3}
+with
+N_{{k}}
+being the number of k
+-points in the full Brillouin zone.
+The screened potentials have no singularity at
+q=0
+. Nevertheless, it is still beneficial for accelerating the convergence with respect to the number of k
+points to multiply these screened operators by
+(R_{{c}}-r-{r}')
+, which in the reciprocal space gives
+V(q)={4π}{q^{2}+^{2}}
+(
+1-e^{- R_{{c}}}({}{q}
+(qR_{{c}}) +
+(qR_{{c}})))
+and
+V(q)={4π}{q^{2}}
+(
+1-(qR_{{c}}){erfc}( R_{{c}}) -
+e^{-q^{2}/(4^2)}
+({{erf}( R_{{c}} +
+{i}{q}{2})}))
+respectively, with the following values at
+q=0
+:
+V(q=0)={4π}{^{2}}(1-e^{- R_{{c}}}( R_{{c}} + 1))
+and
+V(q=0)=2π(R_{{c}}^{2}{erfc}( R_{{c}}) -
+{R_{{c}}e^{-^{2}R_{{c}}^{2}}}{π} +
+{{erf}( R_{{c}})}{2^{2}})
+Note that the spherical truncation method described above works very well in the case of 3D systems. However, it is not recommended for systems with a lower dimensionality
+
+. For such systems, the approach proposed in ref.
+
+(not implemented in VASP) is more adapted since the truncation is done according to the Wigner-Seitz cell and therefore more general.
+
+Related tags and articles
+HFRCUT
+,
+FOCKCORR
+,
+Hybrid functionals: formalism
+,
+Downsampling of the Hartree-Fock operator
+References
+↑ a b c
+F. Gygi and A. Baldereschi, Phys. Rev. B
+34
+, 4405(R) (1986).
+↑ a b c d
+S. Massidda, M. Posternak, and A. Baldereschi, Phys. Rev. B
+48
+, 5058 (1993).
+↑ a b
+J. Spencer and A. Alavi, Phys. Phys. Rev. B
+77
+, 193110 (2008).
+↑
+P. Carrier, S. Rohra, and A. Görling, Phys. Rev. B
+75
+, 205126 (2007).
+↑ a b
+R. Sundararaman and T. A. Arias, Phys. Rev. B
+87
+, 165122 (2013).

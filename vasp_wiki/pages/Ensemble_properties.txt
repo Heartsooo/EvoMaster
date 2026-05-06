@@ -1,0 +1,40 @@
+Title: Category:Ensemble properties
+URL: https://vasp.at/wiki/Ensemble_properties
+============================================================
+In a
+molecular-dynamics
+calculation, VASP simulates a specific
+ensemble
+. In principle, any property of the system can be monitored, and then one can take the ensemble average of this property. For some observables, VASP provides convenient tags, articles, and files that help evaluate these so-called
+ensemble properties
+.
+Theory
+For any property A
+of the system, we can define the observable macroscopic property
+A_{{obs}}
+by taking the ensemble average:
+A_{{obs}} = A(p(t), q(t))_{{time}} = _{t_{{obs}} ∞} {1}{t_{{obs}}} ∫_0^{t_{{obs}}} \, A(p(t), q(t)) \, {d}t.
+Here,
+t_{obs}
+corresponds to the simulation time,
+p(t)
+and
+q(t)
+are the canonical momenta and positions, and an average of
+A(p(t), q(t))
+is taken over time t
+.
+How to
+References
+Pages in category "Ensemble properties"
+The following 10 pages are in this category, out of 10 total. E
+PCDAT F
+FMP ACTIVE
+FMP DIRECTION
+FMP PERIOD
+FMP SNUMBER
+FMP SWAPNUM I
+ICONST
+Construction:ICONST M
+Müller-Plathe method R
+REPORT

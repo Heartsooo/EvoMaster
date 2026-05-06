@@ -1,0 +1,5 @@
+Title: Downsampling of Hartree-Fock operator
+URL: https://vasp.at/wiki/Downsampling
+============================================================
+Redirect to:
+Downsampling of the Hartree-Fock operator

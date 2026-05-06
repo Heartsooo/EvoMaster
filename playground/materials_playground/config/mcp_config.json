@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "mat_struct_db": {
+      "headers": {},
+      "transport": "http",
+      "url": "https://mrdice-uuid1772180309.appspace.bohrium.com/mcp?token=a0d973885b6441eca858e165e90ae9c7"
+    },
+    "mat_sn": {
+      "transport": "sse",
+      "url": "http://bohrium-mcp-internal.dp.tech:11003/sse",
+      "headers": {}
+    }
+  }
+}

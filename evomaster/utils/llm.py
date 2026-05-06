@@ -267,6 +267,7 @@ class LLMConfig(BaseModel):
 class LLMResponse(BaseModel):
     """LLM response."""
     content: str | None = Field(default=None, description="Generated text content")
+    reasoning_content: str | None = Field(default=None, description="Native LLM reasoning/thinking content")
     tool_calls: list[ToolCall] | None = Field(default=None, description="Tool call list")
     finish_reason: str | None = Field(default=None, description="Finish reason")
     usage: dict[str, int] = Field(default_factory=dict, description="Token usage statistics")
@@ -281,6 +282,7 @@ class LLMResponse(BaseModel):
         return AssistantMessage(
             content=self.content,
             tool_calls=self.tool_calls,
+            reasoning_content=self.reasoning_content,
             meta={
                 "finish_reason": self.finish_reason,
                 "usage": self.usage,
@@ -498,10 +500,33 @@ class BaseLLM(ABC):
             LLM response.
         """
         last_error = None
+        event_callback = getattr(self, '_materials_event_callback', None)
+        retry_callback = getattr(self, '_materials_retry_callback', None)
+
+        if callable(event_callback):
+            try:
+                event_callback({
+                    'type': 'llm_request_started',
+                    'model': self.config.model,
+                    'max_attempts': self.config.max_retries,
+                    'timeout': self.config.timeout,
+                })
+            except Exception:
+                pass
 
         for attempt in range(self.config.max_retries):
             try:
-                return self._call(messages, tools, **kwargs)
+                response = self._call(messages, tools, **kwargs)
+                if callable(event_callback):
+                    try:
+                        event_callback({
+                            'type': 'llm_request_succeeded',
+                            'model': self.config.model,
+                            'attempt': attempt + 1,
+                        })
+                    except Exception:
+                        pass
+                return response
             except Exception as e:
                 last_error = e
 
@@ -523,10 +548,37 @@ class BaseLLM(ABC):
                 )
 
                 if attempt < self.config.max_retries - 1:
-                    delay = self.config.retry_delay * (2 ** attempt)  # Exponential backoff
+                    delay = 10.0 if attempt < 5 else 30.0
+                    info = {
+                        'attempt': attempt + 1,
+                        'max_attempts': self.config.max_retries,
+                        'wait_seconds': delay,
+                        'error': str(e),
+                        'model': self.config.model,
+                    }
+                    if callable(retry_callback):
+                        try:
+                            retry_callback(info)
+                        except Exception:
+                            pass
+                    if callable(event_callback):
+                        try:
+                            event_callback({'type': 'llm_retry', **info})
+                        except Exception:
+                            pass
                     time.sleep(delay)
 
         # All retries exhausted
+        if callable(event_callback):
+            try:
+                event_callback({
+                    'type': 'llm_request_failed',
+                    'model': self.config.model,
+                    'attempt': self.config.max_retries,
+                    'error': str(last_error),
+                })
+            except Exception:
+                pass
         raise RuntimeError(f"LLM call failed after {self.config.max_retries} attempts") from last_error
 
     @staticmethod
@@ -627,8 +679,30 @@ class OpenAILLM(BaseLLM):
                 for tc in message.tool_calls
             ]
 
+        reasoning_content = None
+        if hasattr(message, 'reasoning_content') and getattr(message, 'reasoning_content', None):
+            reasoning_content = getattr(message, 'reasoning_content', None)
+        elif hasattr(message, 'reasoning') and getattr(message, 'reasoning', None):
+            reasoning = getattr(message, 'reasoning', None)
+            if isinstance(reasoning, str):
+                reasoning_content = reasoning
+            elif isinstance(reasoning, list):
+                parts = []
+                for item in reasoning:
+                    if isinstance(item, str):
+                        parts.append(item)
+                    elif hasattr(item, 'text') and getattr(item, 'text', None):
+                        parts.append(str(item.text))
+                    elif isinstance(item, dict):
+                        txt = item.get('text') or item.get('content') or item.get('reasoning')
+                        if txt:
+                            parts.append(str(txt))
+                if parts:
+                    reasoning_content = ''.join(parts)
+
         return LLMResponse(
             content=message.content,
+            reasoning_content=reasoning_content,
             tool_calls=tool_calls,
             finish_reason=choice.finish_reason,
             usage={
@@ -1051,6 +1125,8 @@ class AnthropicLLM(BaseLLM):
                 "response_id": response.id,
             }
         )
+
+
 
 
 def create_llm(config: LLMConfig, output_config: dict[str, Any] | None = None) -> BaseLLM:

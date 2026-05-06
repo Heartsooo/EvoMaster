@@ -1,0 +1,8 @@
+Title: SDFTD3_XC
+URL: https://vasp.at/wiki/SDFTD3_XC
+============================================================
+SDFTD3_XC = [string] Default:
+SDFTD3_XC = The functional set by the GGA , METAGGA or XC tag. Description: SDFTD3_XC sets the exchange-correlation functional which determines the van der Waals parameters used in the DFT-D3 method implemented in the simple-DFT-D3 package. SDFTD3_XC allows to choose the exchange-correlation functional that determines which set of van der Waals parameters is used in the DFT-D3 method implemented in the simple-DFT-D3 package (
+IVDW =15). The possible choices (e.g.,
+SDFTD3_XC =pbe, hse06, ...) depend on the damping function selected with the SDFTD3_DAMPING tag and are listed in the file param.f90 of the simple-DFT-D3 source code. Mind: The SDFTD3_XC tag is available from VASP.6.6.0 onwards. The SDFTD3_XC tag can be used only for the simple DFT-D3 package (
+IVDW =15). Related tags and articles IVDW , SDFTD3_DAMPING , GGA , METAGGA , XC , DFTD4_XC , simple-DFT-D3

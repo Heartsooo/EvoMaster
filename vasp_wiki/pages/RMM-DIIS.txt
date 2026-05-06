@@ -1,0 +1,113 @@
+Title: RMM-DIIS
+URL: https://vasp.at/wiki/RMM-DIIS
+============================================================
+The implementation of the Residual Minimization Method with Direct Inversion in the Iterative Subspace (RMM-DIIS) in VASP
+
+is based on the original work of Pulay:
+
+The procedure starts with the evaluation of the preconditioned residual vector for some selected orbital
+^0_m
+:
+K R^0_m = K R(^0_m)
+where K
+is the
+preconditioning
+function, and the residual is computed as:
+R() = (H-ε_{ app})
+with
+ε_{ app} = { H }{ S }
+Then a Jacobi-like trial step is taken in the direction of the vector:
+^1_m = ^0_m + K R^0_m
+and a new residual vector is determined:
+R^1_m = R(^1_m)
+Next a linear combination of the initial orbital
+^0_m
+and the trial orbital
+^1_m
+^M = Σ^M_{i=0} α_i ^i_m , \,\, M=1
+is sought, such that the norm of the residual vector is minimized. Assuming linearity in the residual vector:
+R^M = R(^M) = Σ^M_{i=0} α_i R^i_m
+this requires the minimization of:
+{Σ_{ij} α_i^* α_j R^i_m R^j_m }{Σ_{ij}α_i^* α_j ^i_m S ^j_m }
+with respect to
+{\{α_i | i=0,..,M\}}
+.
+This step is usually called
+direct inversion of the iterative subspace
+(DIIS).
+The next trial step (
+M=2
+) starts from
+^1
+, along the direction
+K R^1
+. In each iteration M
+is increased by 1, and a new trial orbital:
+^M_m = ^{M-1} + K R^{M-1}
+and its corresponding residual vector
+R(^M_m)
+are added to the iterative subspace, that is subsequently inverted to yield
+^M
+.
+The algorithm keeps iterating until the norm of the residual
+R^M
+has dropped below a certain threshold, or the maximum number of iterations per orbital has been reached (
+NRMM
+).
+Replace
+^0_m by
+^M
+and move on to start work on the next orbital,
+e.g.
+^0_{m+1}
+.
+The size of the trial step
+
+is a critical value for the stability of the algorithm. We have found that a reasonable choice for the trial step can be obtained from the minimization of the Rayleigh quotient along the search direction in
+the first step
+, this optimal
+
+is then used for a particular orbital until the algorithm moves on to the next orbital.
+
+As mentioned before, the optimization of an orbital is stopped when either the maximum number of iterations per orbital (
+NRMM
+), or a certain convergence threshold has been reached. The latter may be fine-tuned by means of the
+EBREAK
+,
+DEPER
+, and
+WEIMIN tags. Note: we do not recommend you to do so! Rather rely on the defaults instead.
+The
+RMM-DIIS
+algorithm works on a "per-orbital" basis and as such it trivially parallelizes over orbitals, which is the default
+parallelization strategy of VASP
+. However, to cast some of the operations involved into the form of
+matrix-matrix multiplications
+and leverage the performance of BLAS3 library calls, the
+RMM-DIIS
+implementation in VASP works on
+NSIM orbitals simultaneously.
+Note that, in the
+self-consistency cycle
+of VASP, subspace rotation and
+RMM-DIIS
+refinement of the orbitals alternate.
+Furthermore, VASP re-orthonormalizes the orbitals after the
+RMM-DIIS
+refinement step.
+It should be emphasized that, in principle, the
+RMM-DIIS
+method should also converge without any explicit subspace diagonalization and/or re-orthonormalization.
+However, in our experience their inclusion speeds up convergence so substantially that it shortens the time-to-solution of most calculations, even though these operations scale as
+O(N^3)
+.
+
+A drawback of the
+RMM-DIIS
+method is that it always converges toward the eigenstates which are closest to the initial trial orbitals. This leads, in principle, to serious problems because there is no guarantee of convergence to the correct ground state at all: if the initial set of orbitals does not ‘‘span’’ the ground state it might happen that in the final solution some eigenstates are ‘‘missing’’. To avoid this, the initialization of the orbitals must be done with great care.
+Therefore, either the number of non-selfconsistent cycles at the start of
+self-consistency cycle
+is chosen to be large (
+NELMDL = 12, for
+ALGO = VeryFast), or the non-selfconsistent cycles are done with the blocked-Davidson algorithm before switching over to the use of the RMM-DIIS (
+ALGO = Fast). The RMM-DIIS is approximately a factor of 1.5-2 faster than the blocked-Davidson algorithm , but less robust. References ↑ a b c G. Kresse and J. Furthmüller, Comp. Mater. Sci. 6 , 15 (1996) ↑ a b c G. Kresse and J. Furthmüller, Phys. Rev. B 54 , 11169 (1996). ↑ P. Pulay, Chem. Phys. Lett. 73 , 393 (1980).

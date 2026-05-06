@@ -1,0 +1,44 @@
+Title: Category:Performance
+URL: https://vasp.at/wiki/Performance
+============================================================
+The
+performance
+of VASP depends on multiple factors that the user can influence. First of all, state-of-the-art computer architecture, proper use of libraries, and compilation are prerequisites for good performance; see the
+instructions on installation
+.
+Then, there are many features and algorithms implemented in VASP. Sometimes different algorithms can compute the same quantity with one algorithm being better performing for specific systems. For instance, one algorithm is faster for metallic systems, or another is suitable for systems with many atoms, etc.
+Next, there are two main aspects of performance: memory consumption and compute time. These are discussed in detail on the following pages:
+Memory
+Parallelization
+Subcategories
+This category has the following 3 subcategories, out of 3 total. G
+GPU M
+Memory P
+Parallelization
+Pages in category "Performance"
+The following 38 pages are in this category, out of 38 total. B
+Best practices for Bethe-Salpeter calculations C
+Compiler options
+CUDA-C GPU port of VASP F
+FAQ I
+Installing VASP.5.X.X
+Installing VASP.6.X.X K
+KBLOCK L
+LASYNC
+Linking to libraries
+LPLANE M
+Makefile.include
+Memory requirements N
+NBLK
+NBLOCK FOCK
+NCORE
+Not enough memory
+NPAR P
+Performance issues, try NCORE, KPAR, ALGO, LREAL
+PFLAT
+Precompiler options
+Profiling
+PROUTINE S
+Shared memory
+STOP ON T
+Toolchains

@@ -1,0 +1,40 @@
+Title: LDISENTANGLED
+URL: https://vasp.at/wiki/LDISENTANGLED
+============================================================
+LDISENTANGLED = [logical] Default:
+LDISENTANGLED = .FALSE. Description: Selects the disentanglement-cRPA method . Selects the cRPA method of Miyake, Aryasetiawan, and Imada
+
+. Following screening is subtracted from the full RPA polarizability:
+χ^σ_{{ G,G}'}({ q},iω)=
+1{N_k}Σ_{ k}Σ_{nn' T}
+{
+f_{n k}-f_{n' k-q}
+}{
+ε_{n{ k}} - ε_{n' k-q} - i ω
+}
+
+u_{n { k }}^{σ }
+|e^{-i (G+q) r}|
+u_{n'{ k-q}}^{ σ' }
+
+u_{n' { k-q}}^{σ' }
+|e^{-i (G'-q)r'} |
+u_{n{ k }}^{ σ }
+
+,
+where
+ε_{n k}^σ
+is the disentangled band structure.
+
+Related tags and articles
+LWEIGHTED
+,
+LSCRPA
+,
+ALGO
+Workflows that use this tag
+References
+↑
+T. Miyake, F. Aryasetiawan, and M. Imada, Phys. Rev. B
+80
+, 155134 (2009).

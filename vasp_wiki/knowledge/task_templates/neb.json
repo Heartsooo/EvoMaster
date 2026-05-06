@@ -1,0 +1,53 @@
+{
+  "task_type": "neb",
+  "description": "Nudged Elastic Band for transition state and reaction path finding",
+  "use_cases": ["reaction barriers", "diffusion barriers", "transition states", "minimum energy paths"],
+
+  "workflow": [
+    "1. Relax initial state (reactant)",
+    "2. Relax final state (product)",
+    "3. Generate intermediate images (VTST tools or linear interpolation)",
+    "4. Run NEB"
+  ],
+
+  "incar": {
+    "required": {
+      "IMAGES": {"rule": "number of intermediate images (typically 4-8)"},
+      "IBRION": {"value": 1, "note": "RMM-DIIS, or 3 for FIRE/quick-min with VTST tools"},
+      "NSW": {"value": 200},
+      "POTIM": {"value": 0.5},
+      "SPRING": {"value": -5.0, "unit": "eV/Å²", "note": "spring constant, negative = nudging"},
+      "EDIFF": {"value": 1e-6},
+      "EDIFFG": {"value": -0.03, "note": "force criterion"},
+      "ISIF": {"value": 2, "note": "fixed cell"},
+      "ENCUT": {"rule": "consistent with relaxation"},
+      "ISMEAR": {"rule": "same as relaxation"},
+      "SIGMA": {"rule": "same as relaxation"},
+      "LCLIMB": {"value": ".TRUE.", "note": "climbing image NEB for accurate saddle point (VTST)"}
+    },
+    "recommended": {
+      "ALGO": "Fast",
+      "LREAL": "Auto",
+      "LWAVE": false,
+      "LCHARG": false,
+      "NCORE": {"rule": "sqrt(cores_per_image)"},
+      "ISYM": 0
+    }
+  },
+
+  "directory_structure": {
+    "note": "Each image in its own directory: 00/ 01/ 02/ ... NN/",
+    "00": "initial state (fixed, POSCAR only)",
+    "01_to_N-1": "intermediate images (POSCAR for each)",
+    "NN": "final state (fixed, POSCAR only)"
+  },
+
+  "execution": {
+    "note": "Run with: mpirun -np (IMAGES+2)*cores_per_image vasp_std",
+    "important": "Total MPI processes must be divisible by IMAGES"
+  },
+
+  "kpoints": {
+    "rule": "Same as relaxation, may reduce for cost"
+  }
+}

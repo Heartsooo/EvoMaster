@@ -1,0 +1,38 @@
+Title: ENCUTGWSOFT
+URL: https://vasp.at/wiki/ENCUTGWSOFT
+============================================================
+ENCUTGWSOFT = [real] Default:
+ENCUTGWSOFT = ENCUTGW × 0.8 for
+ALGO =
+ACFDT = ENCUTGW × 0.8 as of VASP.6.3 = ENCUTGW else Important: For vasp.6.3 and later releases ENCUTGWSOFT always defaults to ENCUTGW × 0.8 . Descprition: The flag ENCUTGWSOFT sets the energy cutoff for the response function, such that it allows to truncate the Coulomb kernel slowly between the energy specified by ENCUTGWSOFT and ENCUTGW using a cosine window function. RPA/ACFDT correlation energies converge very slowly with respect to {G}_{ max } . Thus VASP automatically extrapolates to the infinite basis set limit using a linear regression to the equation:
+
+E_{{c}}({{G}})=E_{{c}}(∞)+{A}{{{G}}^3}
+.
+This usually leads to much smoother energy-volume curves in
+ACFDT calculations
+and
+MP2 calculations
+.
+The modified Coulomb kernel is in this case:
+v_{G} = {4 π e^2} {G^2} {1}{2} ( 1 + ( π \, { {^{2} G^2 }{2 m_e} - { ENCUTGWSOFT} }{ {ENCUTGW} - {ENCUTGWSOFT}} ) )
+for {^2 G^2 }{2 m_e} {ENCUTGWSOFT} If
+LSCK is set to .TRUE., the squeezed Coulomb kernel is used instead of the cosine window:
+
+v_{G} = 4 π e^2 {
+(G_{max}-G_{min})(G_{max}-G)
+}{
+(G_{min}^2 - G(2G_{min}-G_{max}))^2
+}
+for {ENCUTGWSOFT}={^2G_{min}^2}{2m_e} {^2 G^2}{2m_e} {^2G_{max}^2}{2m_e}={ENCUTGW}
+This kernel
+squeezes
+contributions from large wave vectors
+G G_{max}
+into the window given by
+ENCUTGWSOFT
+.
+For GW type calculations the squeezed Coulomb kernel was the default (when
+ENCUTGWSOFT was set in the INCAR file) before version vasp.6.3, but
+in newer releases the code always defaults to a smoothed Coulomb kernel (both for GW and RPA type calculations). If one desires to recover the behavior
+of vasp.6.2 and older versions,
+LSCK =.TRUE. must be set in the INCAR file for GW type calculations if ENCUTGWSOFT is set in the INCAR file. Mind: The infinite basis set limit extrapolation for RPA/ACFDT is described in more detail here . Related tags and articles PRECFOCK , ENCUT , ENCUTGW , GW calculations , LSCK , RPA/ACFDT basis set convergence , Examples that use this tag ↑ J. Harl and G. Kresse, Phys. Rev. B 77 , 045136 (2008). ↑ J. Harl, L. Schimka, and G. Kresse, Phys. Rev. B 81 , 115126 (2010). ↑ J. Klimeš, M. Kaltak, and G. Kresse, Phys. Rev. B 90 , 075125 (2014). ↑ S. Riemelmoser, M. Kaltak, and G. Kresse, J. Chem. Phys. 152(13) , 134103 (2020).

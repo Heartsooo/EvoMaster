@@ -263,12 +263,14 @@ def _get_builtin_factories() -> dict[str, Any]:
     """Lazily load the builtin tool factory mapping (name -> no-arg constructor)."""
     global _BUILTIN_TOOL_FACTORIES
     if _BUILTIN_TOOL_FACTORIES is None:
-        from .builtin import BashTool, EditorTool, ThinkTool, FinishTool
+        from .builtin import BashTool, EditorTool, ThinkTool, FinishTool, WebSearchTool, PaperSearchTool
         _BUILTIN_TOOL_FACTORIES = {
             "execute_bash": BashTool,
             "str_replace_editor": EditorTool,
             "think": ThinkTool,
             "finish": FinishTool,
+            "web_search": WebSearchTool,
+            "paper_search": PaperSearchTool,
         }
     return _BUILTIN_TOOL_FACTORIES
 

@@ -1,0 +1,48 @@
+{
+  "task_type": "md",
+  "description": "Ab initio molecular dynamics simulation",
+  "input": {
+    "required": {
+      "calculation": "md",
+      "basis_type": "lcao or pw",
+      "ecutwfc": {"rule": "same as SCF"},
+      "md_type": {"rule": "nhc (Nose-Hoover chain, NVT), nve, msst, langevin, fire (relaxation)"},
+      "md_nstep": {"rule": "total MD steps, typically 1000-100000"},
+      "md_dt": {"value": 1.0, "unit": "fs", "note": "reduce to 0.5 for light elements"},
+      "md_tfirst": {"rule": "target temperature in K"},
+      "scf_thr": {"value": 1e-6, "note": "can be slightly looser than static"},
+      "scf_nmax": {"value": 100}
+    },
+    "recommended": {
+      "md_thermostat": {"value": "nhc", "note": "Nose-Hoover chain for NVT"},
+      "md_tfreq": {"rule": "thermostat coupling frequency, typical 1/40 ~ 1/100 of md_dt^-1"},
+      "md_tchain": {"value": 1, "note": "number of Nose-Hoover chain thermostats"},
+      "md_restart": {"value": 0, "note": "1 to restart from previous MD"},
+      "md_restartfreq": {"value": 5, "note": "write restart info every N steps"},
+      "md_dumpfreq": {"value": 1, "note": "write trajectory every N steps"},
+      "dump_force": 1,
+      "dump_vel": 1,
+      "dump_virial": 0,
+      "symmetry": 0,
+      "smearing_method": "gauss",
+      "smearing_sigma": {"rule": "0.01-0.02 Ry for metals"},
+      "cal_force": 1,
+      "cal_stress": 0
+    },
+    "thermostat_options": {
+      "nve": {"md_type": "nve", "note": "microcanonical, no thermostat"},
+      "nvt_nhc": {"md_type": "nhc", "md_thermostat": "nhc", "md_tfreq": 0.025, "note": "Nose-Hoover chain, default NVT"},
+      "nvt_langevin": {"md_type": "langevin", "md_damp": 1.0, "note": "Langevin thermostat"},
+      "npt_nhc": {"md_type": "nhc", "md_pmode": "iso", "md_pfirst": 0, "md_pfreq": 0.001, "cal_stress": 1, "note": "NPT with Nose-Hoover barostat"}
+    }
+  },
+  "kpt": {
+    "rule": "Can use fewer k-points for large supercells. Gamma-only for >64 atoms."
+  },
+  "workflow_notes": [
+    "Start from relaxed structure",
+    "Equilibration phase: discard first few hundred steps",
+    "md_seed for reproducibility",
+    "Use dp_rescaling for DP-based MD acceleration"
+  ]
+}

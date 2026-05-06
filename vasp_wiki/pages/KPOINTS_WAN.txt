@@ -1,0 +1,18 @@
+Title: KPOINTS WAN
+URL: https://vasp.at/wiki/KPOINTS_WAN
+============================================================
+KPOINTS_WAN is an optional input file to obtain eigenstates and eigenenergies at the specified k
+points from
+Wannier functions
+.
+The format is the same as for the
+KPOINTS file.
+Important:
+The VASP calculation must include the construction of
+Wannier functions
+, e.g., using
+LSCDM or
+LWANNIER90
+.
+KPOINTS_WAN is read automatically when present. To avoid this, set
+LKPOINTS_WAN =.FALSE. in the INCAR file. VASP writes corresponding fields in the vaspout.h5 file and vasprun.xml file indicated by the keyword kpoints_wan . Mind: Available as of VASP 6.3.0. Related tags and sections KPOINTS , KPOINTS_OPT , LKPOINTS_WAN , PROCAR_WAN , LSCDM , LWANNIER90 , LOCPROJ

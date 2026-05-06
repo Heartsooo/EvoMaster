@@ -1,0 +1,12 @@
+Title: DIMER_DIST
+URL: https://vasp.at/wiki/DIMER_DIST
+============================================================
+DIMER_DIST = [real] Default:
+DIMER_DIST = 0.01 Description: The flag DIMER_DIST defines the step size for the numerical differentiation (in
+
+) for the
+Improved Dimer Method
+.
+
+Related tags and articles
+Improved Dimer Method

@@ -1,0 +1,107 @@
+Title: Static linear response: theory
+URL: https://vasp.at/wiki/Static_linear_response:_theory
+============================================================
+Let’s consider three types of static perturbations
+atomic displacements
+u_m
+with
+m=Iα
+with
+I=\{1..N_{atoms}\}
+and
+α=\{1..3\}
+homogeneous strains
+η_j
+with
+j=\{1..6\}
+static electric field
+E_α
+with
+α=\{1..3\}
+By performing a Taylor expansion of the total energy E
+in terms of these perturbations we obtain
+
+aligned
+E(u,E,η) =
+&E_0 + \\
+&{ E}{ u_m} u_m +
+{ E}{ E_α} E_α+
+{ E}{ η_j} η_j + \\
+&{1}{2} {^2 E}
+{ u_m u_n }
+u_m u_n +
+{1}{2} {^2 E}
+{ E_α E_β }
+E_α E_β +
+{1}{2} {^2 E}
+{ η_j η_k}
+η_j η_k + \\
+&{^2 E}{ u_m E_α}
+u_m E_α +
+{^2 E}{ u_m η_j}
+u_m η_j +
+{^2 E}{ E_α η_j}
+E_α η_j +
+{terms of higher order}
+aligned
+The derivatives of the energy with respect to an electric field are the polarization, with respect to atomic displacements are the forces, with respect to changes in the lattice vectors are the stress tensor.
+P_α = -{ E}{ E_α}
+{polarization}
+F_m = -_0{ E}{ u_m}
+{forces}
+σ_j = { E}{ η_j}
+{stresses}
+This leads to the following ‘clamped-ion’ or ‘frozen-ion’ definitions:
+χ_{αβ} =
+- {^2 E}{ E_α E_β} |_{u,η}
+{dielectric susceptibility}
+C_{jk} =
+{^2 E}{ η_j η_k} |_{u,E}
+{elastic tensor}
+Φ_{mn}=_0 {^2 E}{ u_m u_n} |_{E,η}
+{force-constants}
+e_{α k} =
+{^2 E}{ E_α η_k} |_{u}
+{piezoelectric tensor}
+Z^*_{mα}=-_0 {^2 E}{ u_m E_α} |_{η}
+{Born effective charges}
+_{mj}=-_0 {^2 E}{ u_m η_j} |_{E}
+{force response internal strain tensor}
+To compare with experimental results, however, the static response properties should take into account the ionic relaxation. This follows from the Taylor expansion above by looking at the ionic positions where the energy is minimal:
+E(E,η) = {min}_u E(u,E,η)
+The physical ‘relaxed-ion’ tensors are
+aligned
+χ_{αβ} &= χ_{αβ} +
+_0^{-1} Z^*_{mα} (Φ)^{-1}_{mn} Z^*_{nβ}
+{dielectric susceptibility}\\
+C_{jk} &= C_{jk} +
+_0^{-1} _{mj} (Φ)^{-1}_{mn} _{nk}
+{elastic tensor}\\
+e_{α j} &= e_{α j} +
+_0^{-1}Z^*_{mα} (Φ)^{-1}_{mn} _{nj}
+{piezoelectric tensor}
+aligned
+The second term on the right-hand side of each of these equations is called the ionic contributions to the dielectric susceptibility, elastic tensor, and piezoelectric tensor.
+The ionic contributions to the dielectric tensor are:
+ε^{{ion}}_{ij}={4π}{}
+Σ_{kl}
+Z^*_{ik}
+Φ^{-1}_{kl}
+Z^*_{lj}
+The ionic contributions to the elastic tensor
+C^{{ion}}_{ik}=
+Σ_{kl}
+_{ij}
+Φ^{-1}_{jk}
+_{kl}
+The ionic contributions to the piezoelectric tensor
+e^{{ion}}_{ij}=
+Σ_{kl}
+Z^*_{ij}
+Φ^{-1}_{jk}
+_{kl}
+References
+↑
+X. Wu, D. Vanderbilt, and D. R. Hamann, Phys. Rev. B
+72
+, 035105 (2005).

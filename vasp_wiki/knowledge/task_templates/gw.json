@@ -1,0 +1,66 @@
+{
+  "task_type": "gw",
+  "description": "GW quasiparticle calculations for accurate band gaps and spectral functions",
+  "use_cases": ["accurate band gaps", "quasiparticle energies", "photoemission spectra"],
+
+  "workflow": "MULTI-STEP: 1) PBE SCF → 2) exact diag → 3) GW",
+
+  "step1_scf": {
+    "description": "DFT ground state with enough empty bands",
+    "incar": {
+      "ALGO": "Fast",
+      "EDIFF": 1e-7,
+      "PREC": "Accurate",
+      "ISMEAR": 0,
+      "SIGMA": 0.05,
+      "NBANDS": {"rule": "many more than default, typically 4-8x occupied bands"},
+      "LWAVE": true,
+      "LCHARG": true,
+      "LOPTICS": false
+    },
+    "potcar": "_GW variants required"
+  },
+
+  "step2_exact_diag": {
+    "description": "Exact diagonalization to get all orbitals",
+    "incar": {
+      "ALGO": "Exact",
+      "EDIFF": 1e-7,
+      "NBANDS": {"rule": "same as step 1"},
+      "NELM": 1,
+      "LOPTICS": ".TRUE.",
+      "note": "reads WAVECAR from step 1"
+    }
+  },
+
+  "step3_gw": {
+    "description": "GW calculation",
+    "incar": {
+      "ALGO": {"value": "GW0", "note": "G0W0 for one-shot, GW0 for partially self-consistent"},
+      "NBANDS": {"rule": "same as step 1-2"},
+      "NBANDSGW": {"rule": "number of QP energies to compute, typically around occupied bands + few empty"},
+      "NOMEGA": {"value": 100, "note": "frequency grid points, converge this"},
+      "ENCUTGW": {"rule": "converge, typically 200-400 eV"},
+      "PRECFOCK": "Fast",
+      "LWAVE": false,
+      "LCHARG": false
+    },
+    "gw_variants": {
+      "G0W0": {"ALGO": "G0W0", "note": "cheapest, one-shot, starting-point dependent"},
+      "GW0": {"ALGO": "GW0", "note": "partial self-consistency in G, better than G0W0"},
+      "scGW": {"ALGO": "scGW", "note": "full self-consistency, expensive"}
+    }
+  },
+
+  "kpoints": {
+    "rule": "Gamma-centered, typically coarser than DFT due to cost. 4x4x4 is common.",
+    "note": "Converge NBANDS, ENCUTGW, NOMEGA, and k-points independently"
+  },
+
+  "convergence_parameters": [
+    "NBANDS: most critical, needs many empty bands",
+    "ENCUTGW: response function cutoff",
+    "NOMEGA: frequency grid",
+    "k-points: systematic but expensive to converge"
+  ]
+}

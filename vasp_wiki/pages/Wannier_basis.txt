@@ -1,0 +1,75 @@
+Title: Category:Wannier functions
+URL: https://vasp.at/wiki/Wannier_basis
+============================================================
+Wannier functions
+|w_{m{R}}
+are constructed by a linear combination of Bloch states
+|_{n{k}}
+, i.e., the computed Kohn-Sham (KS) orbitals, as follows:
+|w_{m{R}} =
+Σ_{n{k}}
+e^{-i{k}·{R}}
+U_{mn{k}}
+|_{n{k}}.
+Here,
+U_{mn{k}}
+is a unitary matrix which can be generated using different approaches discussed below, m
+is an index enumerating Wannier functions with position
+{R}
+, n
+is the band index, and
+{k}
+is the Bloch vector.
+Generally, one starts with an initial guess for
+U_{mn{k}}
+that is built from
+A_{mn{k}}
+. The latter can be built from projections onto some localized-orbital basis.
+Comprehensive instructions on
+how to construct Wannier orbitals
+.
+One-shot singular-value decomposition (SVD)
+In one-shot SVD,
+A_{mn{k}}
+is computed by projecting the KS orbitals onto localized orbitals basis
+φ_{m{k}}
+that is specified by the
+LOCPROJ tag:
+A_{mn{k}} =
+_{n{k}} | S |φ_{m{k}},
+where
+φ_{i{k}}({r}) = e^{{i}{k}·{r}} Y_{lm}(r)R_n(r).
+Note that i
+encodes the quantum numbers n
+, l
+, and m
+. Thus, in
+A_{mn{k}}
+, m
+is not the magnetic quantum number.
+Then, VASP performs one-shot SVD for each k point
+A_{mn{k}} = [D V^*]_{mn{k}}
+to obtain the unitary matrix
+U_{mn{k}} = [DV^*]_{mn{k}}.
+Selected columns of the density matrix (SCDM)
+The SCDM method
+
+is switched on using
+LSCDM
+. It has the advantage that the specification of a local basis in terms of atomic quantum numbers is omitted.
+Maximally localized Wannier functions using Wannier90
+The interface of VASP with the Wannier90 code
+
+is mainly controlled by
+LWANNIER90 and
+LWANNIER90_RUN
+. First, the initial guess for
+A_{mn{k}}
+can be created by providing the
+projections block
+in the
+wannier90.win
+file (also see
+WANNIER90_WIN
+) and setting
+LWANNIER90 =True. In order to obtain maximally localized Wannier functions, U_{mn{k}} is constructed in a second step. For this, A_{mn{k}} could be created using any projection method in the first step, i.e., single-shot SVD method ( LOCPROJ ), SCDM method ( LSCDM ), or Wannier90 ( LWANNIER90 ). Then, Wannier90 can be executed directly or through VASP with the LWANNIER90_RUN tag. References ↑ A. Damle and L. Lin, Multiscale Model. Simul., 16(3) , 1392–1410 (2018). ↑ A. A. Mostofi, J. R. Yates, G. Pizzi, Y.-S. Lee, I. Souza, D. Vanderbilt, and N. Marzari, An Updated Version of Wannier90: A Tool for Obtaining Maximally-Localised Wannier Functions , Computer Physics Communications 185 , 2309 (2014). ↑ G. Pizzi et al., Wannier90 as a community code: new features and applications , J. Phys.: Condens. Matter 32 , 165902 (2020). Pages in category "Wannier functions" The following 21 pages are in this category, out of 21 total. C Constrained–random-phase–approximation formalism Constructing Wannier orbitals CUTOFF MU CUTOFF SIGMA CUTOFF TYPE K KPOINTS WAN L LDOWNSAMPLE LKPOINTS WAN LOCALIZED BASIS LOCPROJ LWANNIER90 RUN LWRITE MMN AMN LWRITE SPN LWRITE UNK LWRITE WANPROJ N NTARGET STATES NUM WANN P PROJCAR W WANNIER90 WIN

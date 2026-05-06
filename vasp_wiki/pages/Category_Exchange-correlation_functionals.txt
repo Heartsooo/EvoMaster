@@ -1,0 +1,418 @@
+Title: Category:Exchange-correlation functionals
+URL: https://vasp.at/wiki/Category:Exchange-correlation_functionals
+============================================================
+In the Kohn-Sham (KS) formulation of density-functional theory (DFT),
+
+the total energy is given by
+E_{ tot}^{ DFT} = -{1}{2}Σ_{i}∫_{i}^{*}({ r})^{2}_{i}({ r})d^{3}r - Σ_{A}∫{Z_{A}}{ r-{ R}_{A}}n({ r})d^{3}r + {1}{2}∫∫{n({ r})n({ r'})}{ r-{ r'}}d^{3}rd^{3}r' + E_{ xc} + {1}{2}Σ_{A B}{Z_{A}Z_{B}}{ R_{A}-{ R}_{B}}
+where the terms on the right-hand side represent the non-interacting kinetic energy of the electrons, the electrons-nuclei attraction energy, the classical Coulomb electron-electron repulsive energy, the exchange-correlation energy, and the nuclei-nuclei repulsion energy, respectively. The KS orbitals
+_{i}
+and the electron density
+n=Σ_{i}_{i}^{2}
+that are used to evaluate
+E_{ tot}^{ DFT}
+are obtained by
+solving self-consistently the (generalized) KS equations
+(-{1}{2}^{2} -Σ_{A}{Z_{A}}{ r-{ R}_{A}} + ∫{n({ r'})}{ r-{ r'}}d^{3}r' + v_{ xc}({ r}))_{i}({ r}) = ε_{i}_{i}({ r}).
+The only terms in
+E_{ tot}^{ DFT}
+and in the (g)KS equations that are not known exactly are the
+exchange-correlation energy functional
+E_{ xc}
+and
+potential
+v_{ xc}
+. Therefore, the accuracy of the calculated properties depends strongly on the approximations used for
+E_{ xc}
+and
+v_{ xc}
+.
+Note that depending on the type of approximation for
+E_{ xc}
+the potential
+v_{ xc}
+is calculated either as the derivative with respect to the density,
+v_{ xc}=δ E_{ xc}/δ n
+(KS scheme
+
+), or as the derivative with respect to the orbitals,
+v_{{xc}}_{i}=δ E_{{xc}}/δ_{i}^{*}
+(generalized KS scheme
+
+).
+Several hundreds of approximations for the
+exchange and correlation
+have been proposed.
+
+They can be classified into families like the local density approximation (LDA), semilocal approximations (generalized gradient approximation (
+GGA
+) and
+METAGGA
+), or
+hybrid
+. There is also the possibility to include a
+van der Waals correction
+or an on-site Coulomb repulsion using
+DFT+U
+on top of another functional. The different types of approximations available in VASP are listed below. Also mentioned are the many-body methods for an accurate calculation of the correlation energy, which, however, are not DFT methods.
+Which exchange-correlation method to choose?
+Among the hundreds of methods available,
+
+the choice for the exchange and correlation method should be done by considering the following points:
+Appropriate for the studied system and property
+:
+Some functionals were constructed without emphasis on a particular property or class of systems, while others were developed specifically for van der Waals interactions, strongly correlated systems, or band gap calculation, for instance.
+Therefore, a method should be appropriately chosen according to the information found in the literature.
+Computational power
+:
+The hybrid functionals and the many-body methods are computationally much more expensive (by orders of magnitude!) than the (semi)local approximations. Thus, it is especially important for such methods to have a rough idea of the required computational time and memory. This can be done by first considering systems of smaller size and reduced parameters (basis-set size and k-point mesh), and then increasing them gradually to see how the calculation time evolves.
+If the calculations are unaffordable given the available computer power, then using a cheaper method should be considered. For instance, for strongly correlated systems, the DFT+U may be as reliable as the much more costly hybrid functionals.
+Types of approximations
+Local density approximation (LDA)
+The LDA functionals are purely local in the sense that they depend solely on the
+electron density n
+:
+E_{{xc}}^{{LDA}}=∫ε_{{xc}}^{{LDA}}(n)d^{3}r
+with a corresponding potential given by
+v_{{xc}}^{{LDA}} = {ε_{{xc}}^{{LDA}}}{ n}.
+The most common LDA functionals, e.g. Slater+Perdew-Zunger,
+
+provide the (nearly) exact exchange-correlation energy for the homogeneous electron gas. However, they are in general quite inaccurate for real systems and rarely used nowadays.
+GGA
+, XC
+Generalized gradient approximation (GGA)
+Compared to LDA there is an additional dependency on the
+gradient of the electron density n
+:
+E_{{xc}}^{{GGA}}=∫ε_{{xc}}^{{GGA}}(n, n)d^{3}r
+leading to an additional term in the potential:
+v_{{xc}}^{{GGA}} = {ε_{{xc}}^{{GGA}}}{ n} -
+·{ε_{{xc}}^{{GGA}}}{ n}.
+The GGA functional that has been the most commonly used in solid-state physics is PBE,
+
+and is still widely used in particular for the geometry optimization.
+GGA
+, XC
+Meta generalized gradient approximation (meta-GGA)
+Compared to the GGAs, the meta-GGA functionals depend additionally on the
+kinetic-energy density
+
+and/or the
+Laplacian of the electron density
+^{2}n
+:
+E_{{xc}}^{{MGGA}}=∫ε_{{xc}}^{{MGGA}}(n, n,^{2}n,)d^{3}r
+leading to
+v_{{xc}}^{{MGGA}}_{i} =
+{δ E_{{xc}}^{{MGGA}}}{δ_{i}^{*}} =
+({ε_{{xc}}^{{MGGA}}}{ n} -
+·{ε_{{xc}}^{{MGGA}}}{ n} +
+^2{ε_{{xc}}^{{MGGA}}}{^2 n}
+)_{i} -
+{1}{2}·({ε_{{xc}}^{{MGGA}}}{ }
+_{i}).
+The last term is of non-multiplicative type and arises due to the dependency of the functional on
+
+.
+
+Thus, the
+
+-dependency leads to a method that belongs to the generalized KS scheme.
+Although meta-GGAs are slightly more expensive than GGAs, they are still fast to evaluate and appropriate for very large systems. Furthermore, meta-GGAs, like SCAN,
+
+can be more accurate than GGAs and more broadly applicable.
+METAGGA
+,
+XC band-structure calculation using meta-GGA functionals
+Hartree-Fock (HF) and hybrid functionals
+In hybrid functionals
+
+the exchange part consists of a linear combination of the
+HF exchange
+and a semilocal (e.g., GGA) functional:
+E_{{xc}}^{{hybrid}}=α E_{{x}}^{{HF}} + (1-α)E_{{x}}^{{SL}} + E_{{c}}^{{SL}}
+where α
+determines the relative amount of HF and semilocal exchange. The hybrid functionals can be divided into families according to the interelectronic range at which the HF exchange is applied: at full range (unscreened hybrids) or either at short or long range (called screened or range-separated hybrids). From the practical point of view, the short-range hybrid functionals like HSE06
+
+are preferable for periodic solids, since leading to faster convergence with respect to the number of k-points (or size of the unit cell).
+The HF method, where
+E_{{xc}}=E_{{x}}^{{HF}}
+, is not accurate since correlation is entirely missing, however it is the basis of the many-body methods.
+On the technical side,
+E_{{x}}^{{HF}}
+is expensive to evaluate and, since it is orbital-dependent, it leads to a nonlocal potential implemented in the generalized KS scheme.
+Hybrid functionals
+Hybrid_functionals - formalism
+Exact exchange optimized-effective potential (EXX-OEP), localized Hartree-Fock (LHF), and Krieger-Li-Iafrate (KLI)
+In these methods the minimization of the exact-exchange HF energy expression is done with respect to the electron density n
+, instead of with respect to the orbitals
+_i
+. That means that a local (in the sense of multiplicative) KS potential is calculated. EXX-OEP
+
+provides the exact exchange potential, however, performing such calculations is non-trivial in particular since the unoccupied orbitals are required. LHF
+
+is an approximation to EXX-OEP that alleviates the use of unoccupied orbitals, while KLI
+
+is a further approximation.
+These methods are available in VASP, but not documented. Note, however, that the tests SiC_OEP and SiC_OEPR of the testsuite use these methods.
+Density functional theory plus U (DFT+U)
+The semilocal approximations, LDA and GGA in particular, often fail to describe systems with localized (strongly correlated) d or f
+electrons (this manifests itself primarily in the form of unrealistic one-electron energies or too small magnetic moments). In some cases this can be remedied by introducing on the d or f
+atom a strong intra-atomic interaction in a simplified (screened) Hartree-Fock like manner (
+E_{{HF}}[n]
+), as an on-site replacement of the semilocal functional:
+E_{{xc}}^{{DFT}+U}[n,n] = E_{{xc}}^{{SL}}[n] + E^{{HF}}[n] - E_{{dc}}[n]
+where
+E_{{dc}}[n]
+is the double-counting term, that removes some of the on-site exchange-correlation effects present in
+E_{{xc}}^{{SL}}[n]
+, and n
+is the on-site occupancy matrix of the d or f
+electrons. This approach, known as the DFT+U method (traditionally called LSDA+U,
+
+) can often be used as a cheap alternative to the much more costly hybrid functionals. Several variants of the DFT+U method exist, differing mostly in the expression for
+E_{{dc}}[n]
+.
+DFT+U
+van der Waals (vdW) functionals
+The semilocal and hybrid functionals do not include the London dispersion forces. Therefore, they can not be applied reliably on systems where the London dispersion forces play an important role. To account more properly for the London dispersion forces in DFT, a correlation dispersion term can be added to the semilocal or hybrid functional.
+
+This leads to the so-called
+van der Waals functionals
+:
+E_{{xc}}^{{vdW}} = E_{{xc}}^{{SL/hybrid}} + E_{{c,disp}}.
+Most of the existing approximations for calculating
+E_{{c,disp}}
+belong to one of these types: atom-pairwise, many-body dispersion, or nonlocal vdW-DF functionals.
+Van der Waals functionals
+Many-body methods
+Methods based on many-body perturbation theory provide a first-principle approach to the correlation effects. They allow to calculate accurately the total energy or the electronic structure of materials. Such methods lie formally outside the DFT framework, although strong connections to DFT can be made.
+
+Some of the most known many-body methods are the random-phase approximation (RPA) and GW. The disadvantage of these methods is to be computationally much more expensive than DFT.
+Also quite popular is DFT+DMFT,
+
+which is a non-perturbative method to calculate the correlation effects. It can be regarded as a many-body extension of DFT+U and is also mainly used for systems with strongly correlated d or f
+electrons.
+Many-body perturbation theory
+DFT+DMFT
+References
+↑
+P. Hohenberg and W. Kohn, Phys. Rev.
+136
+, B864 (1964).
+↑ a b
+W. Kohn and L. J. Sham,
+Self-Consistent Equations Including Exchange and Correlation Effects
+, Phys. Rev.
+140
+, A1133 (1965).
+↑
+A. Seidl, A. Görling, P. Vogl, J.A. Majewski, and M. Levy, Phys. Rev. B
+53
+, 3764 (1996).
+↑ a b
+https://libxc.gitlab.io/functionals/
+↑ a b
+F. Tran, S. Lehtola, S. Pittalis, and M. A. L. Marques,
+Semi-Local Exchange-Correlation Approximations in Density Functional Theory
+, arXiv
+2602.17333
+(2026).
+↑ a b
+F. Della Sala, E. Fabiano, and L. A. Constantin,
+Kinetic-energy-density dependent semilocal exchange-correlation functionals
+, Int. J. Quantum Chem.
+116
+, 1641 (2016).
+↑ a b
+N. Mardirossian and M. Head-Gordon,
+Thirty years of density functional theory in computational chemistry: an overview and extensive assessment of 200 density functionals
+, Mol. Phys.
+115
+, 2315 (2017).
+↑
+P. A. M. Dirac, Math. Proc. Cambridge Philos. Soc.
+26
+, 376 (1930).
+↑
+D. M. Ceperley and B. J. Alder, Phys. Rev. Lett.
+45
+, 566 (1980).
+↑
+J. P. Perdew and A. Zunger, Phys. Rev. B
+23
+, 5048 (1981).
+↑
+J. P. Perdew, K. Burke, and M. Ernzerhof, Phys. Rev. Lett.,
+77
+, 3865 (1996).
+↑
+R. Neumann, R. H. Nobes, and N. C. Handy,
+Exchange functionals and potentials
+, Mol. Phys.
+87
+, 1 (1996).
+↑
+J. Sun, M. Marsman, G. Csonka, A. Ruzsinszky, P. Hao, Y.-S. Kim, G. Kresse, and J. P. Perdew, Phys. Rev. B
+84
+, 035117 (2011).
+↑
+J. Sun, A. Ruzsinszky, and J. P. Perdew, Phys. Rev. Lett.
+115
+, 036402 (2015).
+↑
+A. D. Becke, J. Chem. Phys.
+98
+, 5648 (1993).
+↑
+A. V. Krukau , O. A. Vydrov, A. F. Izmaylov, and G. E. Scuseria, J. Chem. Phys.
+125
+, 224106 (2006).
+↑
+R. T. Sharp and G. K. Horton,
+A Variational Approach to the Unipotential Many-Electron Problem
+, Phys. Rev.
+90
+, 317 (1953).
+↑
+F. Della Sala and A. Görling,
+Efficient localized Hartree–Fock methods as effective exact-exchange Kohn–Sham methods for molecules
+, J. Chem. Phys.
+115
+, 5718 (2001).
+↑
+J. B. Krieger, Y. Li, and G. J. Iafrate,
+Construction and application of an accurate local spin-polarized Kohn-Sham potential with integer discontinuity: Exchange-only theory
+, Phys. Rev. A
+45
+, 101 (1992).
+↑
+V. I. Anisimov, J. Zaanen, and O. K. Andersen, Phys. Rev. B
+44
+, 943 (1991).
+↑
+S. Grimme, A. hansen, J. G. Brandenburg, and C. Bannwarth,
+Dispersion-Corrected Mean-Field Electronic Structure Methods
+, Chem. Rev.
+116
+, 5105 (2016).
+↑
+J. Hermann, R. A. DiStasio Jr., and A. Tkatchenko,
+First-Principles Models for van der Waals Interactions in Molecules and Materials: Concepts, Theory, and Applications
+, Chem. Rev.
+117
+, 4714 (2017).
+↑
+K. Capelle,
+A Bird’s-Eye View of Density-Functional Theory
+, Braz. J. Phys.
+36
+, 1318 (2006).
+↑
+S. Kümmel and L. Kronik,
+Orbital-dependent density functionals: Theory and applications
+, Rev. Mod. Phys.
+80
+, 3 (2008).
+↑
+G. Kotliar, S. Y. Savrasov, K. Haule, V. S. Oudovenko, O. Parcollet, and C. A. Marianetti,
+Electronic structure calculations with dynamical mean-field theory
+, Rev. Mod. Phys.
+78
+, 865 (2006)
+Subcategories
+This category has the following 3 subcategories, out of 3 total. D
+DFT+U H
+Hybrid functionals V
+Van der Waals functionals
+Pages in category "Exchange-correlation functionals"
+The following 130 pages are in this category, out of 130 total. A
+AEXX
+ALPHA VDW
+AMGGAC B
+Band-structure calculation using meta-GGA functionals
+BEXX C
+CMBJ
+Coulomb singularity
+CPARAM D
+DDsC dispersion correction
+DFT-D2
+DFT-D3
+DFT-D4
+DFT-ulg
+DFTD4 MODEL
+DFTD4 XC
+Downsampling of the Hartree-Fock operator E
+ENCUTFOCK G
+GAMMA VDW
+GGA
+GGA COMPAT H
+Harris-Foulkes functional
+HFALPHA
+Hybrid functionals: formalism I
+IVDW
+IVDW NL L
+LASPH
+LIBMBD ALPHA
+LIBMBD C6AU
+LIBMBD K GRID
+LIBMBD K GRID SHIFT
+LIBMBD MBD A
+LIBMBD MBD BETA
+LIBMBD METHOD
+LIBMBD N OMEGA GRID
+LIBMBD PARALLEL MODE
+LIBMBD R0AU
+LIBMBD TS D
+LIBMBD TS SR
+LIBMBD VDW PARAMS KIND
+LIBMBD XC
+LIBXC1
+LIBXC1 Pn
+LIBXC2
+LIBXC2 Pn
+List of hybrid functionals
+LMAXFOCK
+LSPIN VDW
+LTBOUNDLIBXC
+LUSE VDW
+LVDW EWALD
+LVDWEXPANSION M
+Many-body dispersion energy
+Many-body dispersion energy with fractionally ionic model for polarizability
+METAGGA N
+NKRED
+NMAXFOCKAE and LMAXFOCKAE
+Nonlocal vdW-DF functionals O
+ODDONLY P
+PARAM1 R
+RSMBJ S
+SCSRAD
+SDFTD3 DAMPING
+SDFTD3 XC
+Self-consistent screening in Tkatchenko-Scheffler method
+Simple-DFT-D3
+SMBJ T
+TITEL
+Tkatchenko-Scheffler method
+Tkatchenko-Scheffler method with iterative Hirshfeld partitioning V
+VDW A1
+VDW A2
+VDW ALPHA
+VDW BETA
+VDW C6
+VDW C6AU
+VDW CNRADIUS
+VDW D
+VDW R0
+VDW R0AU
+VDW RADIUS
+VDW S6
+VDW S8
+VDW S9
+VDW SR
+VDW SR8
+VOSKOWN X XC
+XC C
+XCm Pn Z
+ZAB VDW

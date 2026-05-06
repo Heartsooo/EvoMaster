@@ -1,0 +1,55 @@
+Title: Cd Si relaxation
+URL: https://vasp.at/wiki/Cd_Si_relaxation
+============================================================
+Overview
+>
+fcc Si
+>
+fcc Si DOS
+>
+fcc Si bandstructure
+>
+cd Si
+>
+cd Si volume relaxation
+>
+cd Si relaxation
+>
+beta-tin Si
+>
+fcc Ni
+>
+graphite TS binding energy
+>
+graphite MBD binding energy
+>
+graphite interlayer distance
+>
+List of tutorials
+Task
+Relaxation of the internal coordinates of a perturbed cd Si structure.
+Input
+POSCAR cubic diamond
+5.5
+0.0 0.5 0.5
+0.5 0.0 0.5
+0.5 0.5 0.0
+2
+Direct
+-0.125 -0.125 -0.125
+0.125 0.125 0.130
+Break of symmetry in standard diamond structure: change z position from 0.125 to 0.130.
+INCAR
+System = diamond Si
+ISTART = 0 ;
+ICHARG =2
+ENCUT = 240
+ISMEAR = 0;
+SIGMA = 0.1;
+NSW = 10;
+IBRION = 2
+ISIF = 2
+EDIFFG = -0.0001 10 relaxation steps (
+NSW =10). Conjugate-gradient algorithm (
+IBRION =2). Relaxation only of internal parameters (
+ISIF =2). KPOINTS k-points 0 Monkhorst Pack 11 11 11 0 0 0 Calculation Example output after 10 relaxation steps: POSITION TOTAL-FORCE (eV/Angst) ----------------------------------------------------------------------------------- 4.81253 4.81253 4.81250 -0.000724 -0.000724 -0.000031 0.68747 0.68747 0.68750 0.000724 0.000724 0.000031 ----------------------------------------------------------------------------------- total drift: 0.000000 0.000000 0.000000 Files to watch during relaxations: stdout (terminal): each electronic step is written to the terminal: OSZICAR : a copy of the terminal output. OUTCAR : more detailed information on every electronic and ionic step. Other important files: CONTCAR : holds the structure of the last ionic step and at the end the structural result (also very important for restarting a relaxation). STOPCAR : stops a relaxation. Download diamondSirel.tgz Overview > fcc Si > fcc Si DOS > fcc Si bandstructure > cd Si > cd Si volume relaxation > cd Si relaxation > beta-tin Si > fcc Ni > graphite TS binding energy > graphite MBD binding energy > graphite interlayer distance > List of tutorials Back to the main page .

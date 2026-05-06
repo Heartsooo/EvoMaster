@@ -1,0 +1,7 @@
+Title: TIME
+URL: https://vasp.at/wiki/TIME
+============================================================
+TIME = [real] Default:
+TIME = 0.4 Description: TIME controls the time step for
+IALGO =5X and for the initial (steepest descent) phase of
+IALGO =4X. Related tags and articles IALGO

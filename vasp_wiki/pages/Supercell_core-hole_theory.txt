@@ -1,0 +1,107 @@
+Title: Supercell core-hole theory
+URL: https://vasp.at/wiki/Supercell_core-hole_theory
+============================================================
+In the Supercell core-hole method
+
+(SCH) a chosen core electron is removed from the core leaving behind a positive charge, cf.
+ICORELEVEL
+. Since one wants to simulate the excitation of this electron into energetically higher-lying states, one electron is added to valence/conduction bands resembling the final state of the excitation process (this is also referred to as the final state approximation). With this setup a fully self-consistent electronic minimization is carried out. The core hole is perfectly screened by the other electrons in metals so there should be no difference between core-hole calculations and regular calculations. In semiconductors and insulators, this screening is very weak and a very strong attraction between the electrons and hole occurs, which results in not only a lowering of the excited states compared to the valence states, but also a very strong change of the valence/conduction band structure. Hence the relaxation of the valence/conduction electrons is the main effect in core-hole calculations. Fortunately the relaxation of the core states in core-hole calculations is negligible. This makes the implementation into a PAW framework smooth, since no on-the fly recalculation of PAW potentials is needed in every step of the electronic self-consistent cycle.
+
+Mind:
+It is important to use a sufficiently large supercell to minimize the interaction of neighboring core holes within periodic boundary conditions. Hence the computational expense within these methods comes mainly from the use of large super cells. Nevertheless this method is usually still computationally cheaper than the BSE method for core electrons.
+Excited electron treatment
+Schematic representation of the self-interaction effects in the XCH spectra.
+Two different approaches can be used to treat the excited electron in SCH. The excited electron can be placed into the lowest conduction band in the
+excited electron and core-hole (XCH)
+
+approach, alternatively the excited electron can be accounted for by a negative background charge to ensure that the cell remains neutral in the
+full core-hole (FCH)
+
+method. These two approaches are discussed and compared in great detail in Ref.
+
+. The main shortcoming of the XCH approach comes from the self-interaction effects of the electron exchange and correlation functional caused when the excited electron is placed in the conduction band, which is more pronounced for strongly localized conduction bands. The effects of the self-interaction error are depicted in the figure on the right, which schematically represents the excitations from the core s
+-orbital to the lowest unoccupied p
+-orbital, i.e., the K
+-edge. The self-interaction error in turn causes two effects: First, it shifts up the energy level of the conduction band occupied by the excited electron from the initial energy C
+to the new energy
+C'
+. Second, it delocalizes the orbital. Furthermore, the conduction band electron additionally contributes to the screening of the core hole, which in turn shifts the higher-lying unoccupied states, as shown in the figure for a
+and b
+bands. In FCH, by placing the negative charge in the homogeneous background we avoid such self-interaction effects. For systems, where the lowest conduction bands are strongly delocalized, both XCH and FCH produce very similar results. However, for systems with localized conduction states, e.g. Li-halides, the FCH has been shown to yield better agreement with the results of the
+BSE+GW calculations
+as well as the experimental spectra
+
+.
+Dielectric function used in the SCH method
+Since the wavelength of the electromagnetic waves in absorption spectroscopy is usually much larger than the characteristic momentum in solids, we start from the transversal expression for the imaginary part of the dielectric function in the long wavelength limit (
+{q}=0
+) which is directly proportional to the absorption spectrum
+ε_{α β}^{(2)} (ω,{q}=0) = {4 π^{2} e^{2} ^{4}}{ ω^{2} m_{e}^{2}} Σ_{c,v,{k}} 2w_{{k}} δ(_{c{k}}-_{v{k}}-ω) × M_{α}^{varrow c} {M_{β}^{varrow c}}^{*}
+where M
+and
+
+denote momentum matrix elements and orbital energies.
+Here we consider excitations only between valence ( v
+) and conduction ( c
+) bands. The components of the dielectric tensor are indexed by the Cartesian indices α
+and β
+.
+
+, e
+and
+m_{e}
+denote the unit cell volume, electron charge and mass of the electron, respectively. In the PAW method the all-electron orbitals
+|_{n{k}}
+are given by a linear transformation of the pseudo orbitals
+|_{n{k}}
+:
+|_{n{k}} = |_{n{k}} + Σ_{i} (|φ_{i} - |φ_{i}) p_{i} |_{n{k}}.
+The pseudo orbitals depend on the band index n
+and crystal momentum
+{k}
+.
+|φ_{i}
+,
+|φ_{i}
+and
+|p_{i}
+are all-electron partial waves, pseudo partial waves
+and the projectors, respectively.
+The index i
+is a shorthand for the atomic site and other indices enumerating these quantities
+at each site (such as angular and magnetic quantum numbers). In the PAW formalism, the matrix elements are given by
+M_{α}^{varrow c} = _{c {k}} |i _{α} - {k}_{α}| _{v{k}} = _{c{k}}| i _{α}-{k}_{α}|_{v{k}} + Σ_{ij} _{c{k}} | p_{i} p_{j} | _{v{k}} i ( φ_{i}| _{α}| φ_{j} - φ_{i}| _{α}| φ_{j} ).
+where the one-center terms are calculated within the PAW sphere for each atom.
+Since in X-ray absorption spectroscopy, one only considers one core hole at a single site,
+we can from now on restrict the equations to a single site. The index i
+then
+only enumerates the main quantum number, the angular and the magnetic quantum numbers.
+As usual in the PAW method, using the completeness relation,
+Σ_{i} |p_{i} φ_{i}| = 1
+, the first and third term in the previous equation cancel each other leading to the following simplified matrix elements
+M^{{core}arrow c{k}}_{α}=Σ_{i} _{c{k}} | p_{i} φ_{i}| _{α}| φ_{{core}}.
+Also the summation over bands can be limited to the conduction bands c
+ε_{α β}^{(2)} (ω) = {4 π^{2} e^{2} ^{4}}{ ω^{2} m_{e}^{2}} Σ_{c,{k}} 2w_{{k}}δ(_{c{k}}-_{{core}}-ω) × M^{{core}arrow c{k}}_α {M^{{core}arrow c{k}}_β}^*.
+References
+↑
+F. Karsai, M. Humer, E. Flage-Larsen, P. Blaha, and G. Kresse, Phys. Rev. B
+98
+, 235205 (2018).
+↑
+B. Hetényi, F. De Angelis, P. Giannozzi, and R. Car,
+Calculation of near-edge x-ray-absorption fine structure at finite temperatures: spectral signatures of hydrogen bond breaking in liquid water
+, J. Chem. Phys.
+120
+, 8632 (2004).
+↑
+D. Prendergasst and G. Galli,
+X-Ray Absorption Spectra of Water from First Principles Calculations
+, Phys. Rev. Lett.
+96
+, 215502 (2006).
+↑ a b
+M. Unzog, A. Tal, G. Kresse,
+X-ray absorption using the projector augmented-wave method and the Bethe-Salpeter equation
+, Phys. Rev. B
+106
+, 155133 (2022).

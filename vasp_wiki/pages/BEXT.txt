@@ -1,0 +1,14 @@
+Title: BEXT
+URL: https://vasp.at/wiki/BEXT
+============================================================
+BEXT = [real] ( [real] [real] ) Default:
+BEXT = 0.0 if
+ISPIN =2 = 3*0.0 if
+LNONCOLLINEAR =.TRUE. = N/A else Description: Specifies an external magnetic field in eV. BEXT tag sets an external magnetic field that acts on the electrons in a Zeeman-like manner. An additional potential of the following form carries this interaction: For spin-polarized calculations (
+ISPIN = 2): V^{} = V^{} + B_{ ext} V^{} = V^{} - B_{ ext} and B_{ ext} = BEXT (in eV). For noncollinear calculations (
+LNONCOLLINEAR = .TRUE.): V_{αβ} = V_{αβ} + {B}_{ ext} · {σ}_{α β} where {B}_{ ext}=({B}^1_{ ext}, {B}^2_{ ext}, {B}^3_{ ext})^T is given by
+BEXT = B1 B2 B3 ! in eV and {σ} is the vector of Pauli matrices ( SAXIS , default: σ_1= x , σ_2 = y , σ_3 = z ). The effect of the above is most easily understood for the collinear case (
+ISPIN =2): The eigenenergies of spin-up states are raised by B_{ ext} eV, whereas the eigenenergies of spin-down states are lowered by the same amount. The total energy changes by: Δ E = (n^{} - n^{}) B_{ ext} eV where n^{} and n^{} are the number of up- and down-spin electrons in the system. BEXT is applied during the self-consistent electronic minimization and effectively shifts the eigenenergies of the spin-up and spin-down states w.r.t. each other at each step. Consequently, the electrons redistribute (changing the occupancies) and the density changes. The change in the density (,e.g., charge density and magnetization) also affects the scf potential and KS orbitals. For a rigid-band Zeeman splitting, converge the charge density with
+BEXT =0 and restart with BEXT ≠ 0 and fixed charge density (
+ICHARG =11). Units For an applied magnetic field B_0 , the energy difference between two Zeeman-splitted electronic states is given by: ω = g_e μ_B B_0, where μ_B is the Bohr magneton and g_e is the electron spin g -factor. For
+ISPIN =2, rigid-band Zeeman-splitted states imply: V^{} - V^{} = 2 B_{ ext} This leads to the following relationship between our definition of B_{ ext} (in eV) and the magnetic field B_0 (in T): B_0 = {2 B_{ ext}}{g_e μ_B} where μ_B = 5.788 381 8060 x 10 -5 eV T -1 , and g_e = 2.002 319 304 362 56. Related tags and articles ISPIN , LNONCOLLINEAR , SAXIS

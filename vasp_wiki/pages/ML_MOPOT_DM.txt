@@ -1,0 +1,5 @@
+Title: ML_MOPOT_DM
+URL: https://vasp.at/wiki/ML_MOPOT_DM
+============================================================
+ML_MOPOT_DM = [real] Default:
+ML_MOPOT_DM = 1.0 Description: Specifies the well depth of the Morse potentials used as auxiliary potentials in thermodynamic integration ( VCAIMAGES ). This parameter sets the well depth D_e of the following Morse potential V(r) = D_e [(1-e^{-β(r-r_{e})})^2 - 1]. Related tags and articles ML_LMLFF , ML_LCOUPLE , ML_ICOUPLE , ML_RCOUPLE , ML_NATOM_COUPLED , ML_LEMPPOT , ML_EMPPOT_RCUT , ML_SRPOT_B0 , ML_SRPOT_N0 , ML_SRPOT_S0 , ML_MOPOT_NM , ML_MOPOT_RM , ML_MOPOT_RKM , ML_MOPOT_IJM

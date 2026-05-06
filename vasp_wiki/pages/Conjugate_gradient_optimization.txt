@@ -1,0 +1,31 @@
+Title: Conjugate gradient optimization
+URL: https://vasp.at/wiki/Conjugate_gradient_optimization
+============================================================
+Instead of the previous iteration scheme, which is just
+some kind of Quasi-Newton scheme, it also possible to optimize the
+expectation value of the Hamiltonian using a successive number of
+conjugate gradient steps.
+The first step is equal to the steepest descent step in section
+Single band steepest descent scheme
+.
+In all following steps the preconditioned gradient
+g^N_{n}
+is conjugated to the previous search direction.
+The resulting conjugate gradient algorithm is almost as efficient as the algorithm
+given in
+Efficient single band eigenvalue-minimization
+.
+For further reading see
+
+.
+References
+↑
+M. P. Teter, M. C. Payne, and D. C. Allan, Phys. Rev. B
+40
+, 12255 (1989).
+↑
+D. M. Bylander, L. Kleinman, and S. Lee, Phys Rev. B
+42
+, 1394 (1990).
+↑
+W. H. Press, B. P. Flannery, S. A. Teukolsky, and W. T. Vetterling, em Numerical Recipes (Cambridge University Press, New York, 1986).

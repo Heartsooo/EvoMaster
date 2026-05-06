@@ -1,0 +1,5 @@
+Title: TEEND
+URL: https://vasp.at/wiki/TEEND
+============================================================
+TEEND = [real] Default:
+TEEND = TEBEG Description: TEEND sets the final temperature (in K) for an ab-initio molecular-dynamics run. Related tags and articles TEBEG , IBRION , SMASS

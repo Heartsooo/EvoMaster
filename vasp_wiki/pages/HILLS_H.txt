@@ -1,0 +1,6 @@
+Title: HILLS_H
+URL: https://vasp.at/wiki/HILLS_H
+============================================================
+HILLS_H = [Real] Default:
+HILLS_H = 10^{-3} Description: HILLS_H specifies the height of the Gaussian hill (in eV) used in metadynamics (in case VASP was compiled with -Dtbdyn ). In metadynamics (
+MDALGO =11 | 21), the bias potential is given as V(t,) = h Σ_{i=1}^{ t/t_G } \{ -{|^{(t)-^{(i · t_G)}|^2}{2 w^2} \}}. Thre parameters ( HILLS_H , HILLS_W , and HILLS_BIN ) must be provided by the user. The height of the Gaussian hills h (in eV) is set by HILLS_H . Related tags and articles Metadynamics , HILLS_W , HILLS_BIN , HILLSPOT , MDALGO

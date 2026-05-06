@@ -1,0 +1,114 @@
+Title: Category:Crystal momentum
+URL: https://vasp.at/wiki/Category:Crystal_momentum
+============================================================
+A crystal is characterized by the fact that it obeys translational
+symmetry
+. The concept of
+crystal momentum
+is crucial in order to take into account interactions that go beyond the primitive unit cell during a simulation. It arises as a direct consequence of translational invariance and allows one to work with a finite unit cell while capturing the physics of the infinite periodic solid.
+Theoretical background
+Formally, translational invariance can be written as a translation operator that commutes with the Hamiltonian:
+[T_{ R},H]=0
+For the
+KS orbitals
+this implies that each translation can only add a phase factor:
+T_{R} _{n{k}}({r}) = {e}^{{i}{k}·{R}}_{n{k}}({r}),
+where n
+is the band index. Performing two consecutive translations should yield the sum of the individual translations:
+T_{{R}_1}T_{{R}_2} _{n k}({r})=T_{{R}_1+{R}_2}_{n k}({r}).
+For a system with translational invariance, we obtain a periodic potential and, hence, it is most convenient to use periodic boundary conditions.
+By virtue of the
+Bloch theorem
+, we can separate each KS orbital into
+_{n{k}}({r})=u_{n{k}}({r}){e}^{{i}{k}·{r}}
+a cell-periodic part u
+and a phase factor
+φ = {k}·{r}
+. The phase φ
+is called Bloch factor and
+{k}
+is the
+crystal momentum
+which lives in reciprocal space. Note that
+u_{n{k}}
+depends on
+{k}
+.
+The reciprocal space is spanned by reciprocal lattice vectors
+{b}_i
+:
+{b}_1 = {2π}{} {a}_2 × {a}_3, {b}_2 = {2π}{} {a}_3 × {a}_1, {b}_3 = {2π}{} {a}_1 × {a}_2
+These are defined in terms of the real-space lattice vectors
+{a}_i
+(
+POSCAR
+), where = {a}_1 · {a}_2 × {a}_3
+is the volume of the unit cell. Note that a short real-space direction yields a long direction in reciprocal space:
+{a}_i· {b}_j = 2π δ_{ij}
+Based on the reciprocal lattice vectors
+{b}_i
+, we can identify a
+primitive cell in reciprocal space
+; this is the so-called first Brillouin zone (first BZ). The connection between real space and reciprocal space is a Fourier transformation, so the integral over all of real space (as is frequently required to compute properties) can be expressed as an integral over the first BZ:
+∫_{-∞}^{∞} {d}^3 r\, f({r}) ={1}{_{BZ}}∫_{{1st BZ}} {d}^3 k\, f({k})
+In principle one has to include an infinite number of
+{k}
+points to converge this integral. In practice, the integral is approximated by a sum on a finite regular
+{k}
+mesh. Beyond a certain
+{k}
+-point density the result converges because crystal momentum vectors that are close together are almost identical:
+∫_{-∞}^{∞} {d}^3 r\, f({r}) ≈ Σ_{ k {1st BZ}} f({k})\, Δ^3k
+The first BZ itself has a certain symmetry, so some
+{k}
+points on the regular mesh are equivalent. VASP automatically reduces the mesh to the irreducible
+{k}
+points and applies appropriate weights
+w_{k}
+:
+∫_{-∞}^{∞} {d}^3 r\, f({r}) ≈ Σ_{{k} {irred. BZ}} w_{k}\, f({k})
+To see which
+symmetry
+VASP identified and which irreducible
+{k}
+points are used, look at the
+OUTCAR and
+IBZKPT files.
+For an introduction to crystal momentum and PAW formalism, see . For a detailed discussion of
+{k}
+-point sampling, see .
+k-point mesh setup
+The
+{k}
+-point mesh for the
+SCF calculation
+can be specified either via the
+KPOINTS file or via the
+KSPACING and
+KGAMMA tags in the
+INCAR file. To compute band structures or densities of states on a finer mesh non-self-consistently, use the
+KPOINTS_OPT driver controlled by
+KSPACING_OPT or a
+KPOINTS_OPT file. Reading of the
+KPOINTS_OPT file can be disabled with
+LKPOINTS_OPT
+.
+References
+Subcategories
+This category has only the following subcategory. B
+Band structure
+Pages in category "Crystal momentum"
+The following 14 pages are in this category, out of 14 total. B
+Band-structure calculation using density-functional theory
+Band-structure calculation using hybrid functionals
+Band-structure calculation using meta-GGA functionals I
+Integrating over all orbitals K
+KGAMMA
+KPOINTS WAN
+KSPACING
+KSPACING OPT L
+LKPOINTS OPT
+LKPOINTS WAN
+LKPROJ N
+NLSPLINE P
+PRJCAR

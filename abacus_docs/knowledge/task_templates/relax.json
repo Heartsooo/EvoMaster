@@ -1,0 +1,36 @@
+{
+  "task_type": "relax",
+  "description": "Geometry optimization (cell-relax for full cell, relax for ions only)",
+  "input": {
+    "required": {
+      "calculation": {"rule": "relax (ions only) or cell-relax (ions + cell)"},
+      "basis_type": "lcao or pw",
+      "ecutwfc": {"rule": "well converged, same as SCF，100 for lcao, 50 for pw"},
+      "relax_method": {"value": "cg", "note": "CG is robust default. BFGS for large systems near minimum."},
+      "relax_nmax": {"value": 200, "note": "max ionic steps"},
+      "force_thr": {"value": 0.01, "note": "force convergence in eV/Angstrom"},
+      "scf_thr": {"value": 1e-7},
+      "scf_nmax": {"value": 100}
+    },
+    "recommended": {
+      "cal_force": 1,
+      "cal_stress": {"rule": "1 if cell-relax, 0 if relax"},
+      "stress_thr": {"value": 0.5, "note": "kbar, for cell-relax"},
+      "fixed_axes": {"rule": "None for full relaxation, or 'a'/'b'/'c'/'ab'/'ac'/'bc'/'abc' to constrain"},
+      "symmetry": 1,
+      "smearing_method": {"rule": "gauss for metals, fixed for insulators"},
+      "mixing_type": "broyden",
+      "mixing_beta": 0.4,
+      "out_stru": 1
+    }
+  },
+  "kpt": {
+    "rule": "Same as SCF, well-converged MP grid"
+  },
+  "workflow_notes": [
+    "Use cell-relax for full cell optimization",
+    "Check OUTCAR for force/stress convergence",
+    "May need multiple runs for cell-relax",
+    "Use STRU_READIN_ADJUST.cif or OUT.suffix/STRU_ION_D for continuation"
+  ]
+}

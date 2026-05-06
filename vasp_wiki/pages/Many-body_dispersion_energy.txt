@@ -1,0 +1,73 @@
+Title: Many-body dispersion energy
+URL: https://vasp.at/wiki/Many-body_dispersion_energy
+============================================================
+The many-body dispersion energy method (MBD@rsSCS) of Tkatchenko et al.,
+
+invoked by setting
+IVDW =202, is based on the random-phase expression for the correlation energy E_c = ∫_{0}^{∞} {dω}{2π} {Tr}\{{ln} (1-vχ_0(iω))+vχ_0(iω) \} whereby the response function χ_0 is approximated by a sum of atomic contributions represented by quantum harmonic oscillators. The expression for the dispersion energy used in the VASP k-space implementation of the MBD@rsSCS method (see reference
+
+for details) is as follows:
+E_{{disp}} = -∫_{{FBZ}}{d{{k}}}{v_{{FBZ}}} ∫_0^{∞} {{dω}{2π}} \, {{Tr}} \{ {ln} ({{1}}-{{A}}^{(0)}_{LR}(ω) {{T}}_{LR}({{k}}) ) \}
+where
+{{A}}_{LR}
+is the frequency-dependent polarizability matrix and
+{T}_{LR}
+is the long-range interaction tensor, which describes the interaction of the screened polarizabilities
+embedded in the system in a given geometrical arrangement. The components of
+{A}_{LR}
+are obtained using an atoms-in-molecule approach as employed in the pairwise
+Tkatchenko-Scheffler method
+(see
+references
+
+for details).
+Details of the implementation of the MBD@rsSCS method in VASP are presented in reference
+
+.
+Usage
+The input reference data for non-interacting atoms can be optionally defined via the parameters
+VDW_ALPHA
+,
+VDW_C6
+, and
+VDW_R0
+(described by the
+Tkatchenko-Scheffler method
+). This method has one free parameter ( β
+) that must be adjusted for each exchange-correlation functional. The default value of β
+=0.83 corresponds to the PBE functional (
+GGA =PE). If another functional is used, the value of β must be specified via VDW_SR in the INCAR file. The following optional parameters can be user-defined (the given values are the default ones):
+VDW_SR =0.83 : scaling parameter β
+LVDWEXPANSION =.FALSE. : writes the two- to six-body contributions to the MBD dispersion energy in the OUTCAR (
+LVDWEXPANSION = .TRUE. )
+LSCSGRAD =.TRUE. : compute gradients (or not) VDW_ALPHA , VDW_C6 , VDW_R0 : atomic reference (see also Tkatchenko-Scheffler method )
+ITIM =-1: if set to +1, apply eigenvalue remapping to avoid unphysical cases where the eigenvalues of the matrix (1-{A}^{(0)}_{LR}(ω) {{T}}_{LR}({{k}})) are non-positive, see reference
+
+for details
+
+Mind:
+This method requires the use of
+POTCAR files from the PAW dataset version 52 or later.
+The input reference data for non-interacting atoms are available only for elements of the first six rows of the periodic table except of the lanthanides. If the system contains other elements, the user has to provide the free-atomic parameters for all atoms in the system via
+VDW_ALPHA
+,
+VDW_C6 and
+VDW_R0
+(described by the
+Tkatchenko-Scheffler method
+) defined in the
+INCAR file.
+The charge-density dependence of gradients is neglected.
+This method is incompatible with the setting
+ADDGRID = .TRUE. . It is essential that a sufficiently dense FFT grid (controlled via NGXF , NGYF and NGZF ) is used in the Tkatchenko-Scheffler method calculation. We strongly recommend to use
+PREC = Accurate for this type of calculations (in any case, avoid using
+PREC = Low ). The method sometimes has numerical problems if highly polarizable atoms are located at short distances. In such a case the calculation terminates with an error message Error(vdw\_tsscs\_range\_separated\_k): d\_lr(pp)<=0 . Note that this problem is not caused by a bug, but rather it is due to a limitation of the underlying physical model. Analytical gradients of the energy are implemented (fore details see reference
+
+) and hence the atomic and lattice relaxations can be performed.
+Due to the long-range nature of dispersion interactions, the convergence of energy with respect to the number of k-points should be carefully examined.
+A default value for the free-parameter of this method is available only for the PBE (
+VDW_SR =0.83), PBE0 (
+VDW_SR =0.85), HSE06 (
+VDW_SR =0.85), B3LYP (
+VDW_SR =0.64), and SCAN (
+VDW_SR =1.12) functionals. If any other functional is used, the value of VDW_SR must be specified in the INCAR file. Related tags and articles VDW_ALPHA , VDW_C6 , VDW_R0 , VDW_SR , LVDWEXPANSION , LSCSGRAD , IVDW , Tkatchenko-Scheffler method , Self-consistent screening in Tkatchenko-Scheffler method , Tkatchenko-Scheffler method with iterative Hirshfeld partitioning , Many-body dispersion energy with fractionally ionic model for polarizability References ↑ A. Tkatchenko, R. A. DiStasio, Jr., R. Car, and M. Scheffler, Phys. Rev. Lett. 108 , 236402 (2012). ↑ a b A. Ambrosetti, A. M. Reilly, and R. A. DiStasio Jr., J. Chem. Phys. 140 , 018A508 (2014). ↑ a b c d T. Bučko, S. Lebègue, T. Gould, and J. G. Ángyán, J. Phys.: Condens. Matter 28 , 045201 (2016). ↑ T. Gould, S. Lebègue, J. G. Ángyán, and T. Bučko, J. Chem. Theory Comput. 12, 5920 (2016).

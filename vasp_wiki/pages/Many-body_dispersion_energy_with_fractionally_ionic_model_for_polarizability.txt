@@ -1,0 +1,65 @@
+Title: Many-body dispersion energy with fractionally ionic model for polarizability
+URL: https://vasp.at/wiki/Many-body_dispersion_energy_with_fractionally_ionic_model_for_polarizability
+============================================================
+A variant of
+Many-body dispersion energy
+method based on fractionally ionic model for polarizability of Gould
+
+, hereafter dubbed MBD@rsSCS/FI, has been introduced in Ref.
+
+Just like in the original MBD@rsSCS, dispersion energy in MBD@rsSCS/FI is computed using
+E_{{disp}} = -∫_{{FBZ}}{d{{k}}}{v_{{FBZ}}} ∫_0^{∞} {{dω}{2π}} \, {{Tr}} \{ {ln} ({{1}}-{{A}}^{(0)}_{LR}(ω) {{T}}_{LR}({{k}}) ) \}
+.
+However, the two methods differ in the model used to approximate the atomic polarizabilities (
+α_p^{{AIM}}
+) needed to define tensor
+{A}^{(0)}(ω)({{k}})
+. The MBD@rsSCS makes use of the pre-computed static polarizabilities of neutral atoms (
+α_p^{{atom}}
+)
+α_p^{{AIM}} = α_p^{{atom}}
+{V^{{eff}}_p}{V^{{atom}}_p}
+,
+whereby the volume ratios between interacting and non-interacting atoms (
+{V^{{eff}}_p}{V^{{atom}}_p}
+) is obtained using conventional Hirshfeld partitioning
+
+. Although the MBD@rsSCS/FI employs a similar scaling relation:
+α_p^{{AIM}}(ω) = α_p^{{FI}}(ω)
+{V^{{eff}}_p}{V^{{FI}}_p}
+,
+it relies on Gould's model
+
+of frequency-dependent polarizabilities (
+α_p^{{FI}}(ω)
+) and charge densities of non-interacting fractional ions combined with iterative Hirshfeld partitioning
+
+. Obviously, the MBD@rsSCS and the MBD@rsSCS/FI are equivalent for non-polar systems, such as graphite, but typically yield distinctly different results for polar and ionic materials
+
+.
+Usage
+The MBD@rsSCS/FI method is invoked by setting
+IVDW =263. Optionally, the following parameters can be user-defined (the given values are the default ones):
+VDW_SR =0.83 : scaling parameter β
+LVDWEXPANSION =.FALSE. : writes the two- to six- body contributions to the MBD dispersion energy in the OUTCAR (
+LVDWEXPANSION = .TRUE. )
+LSCSGRAD =.TRUE. : compute gradients (or not) VDW_R0 : radii for atomic reference (see also Tkatchenko-Scheffler method )
+ITIM =1: if set to +1, apply eigenvalue remapping to avoid unphysical cases where the eigenvalues of the matrix (1-{A}^{(0)}_{LR}(ω) {{T}}_{LR}({{k}})) are non-positive, see reference
+
+for details
+
+Mind:
+This method requires the use of
+POTCAR files from the PAW dataset version 52 or later.
+The parametrization of reference data is available only for elements of the first six rows of the periodic table except of the lanthanides.
+The charge-density dependence of gradients is neglected.
+This method is incompatible with the setting
+ADDGRID = .TRUE. . It is essential that a sufficiently dense FFT grid (controlled via NGXF , NGYF and NGZF ) is used. We strongly recommend to use
+PREC = Accurate for this type of calculations (in any case, avoid using
+PREC = Low }). The method has sometimes numerical problems if highly polarizable atoms are located at short distances. In such a case the calculation terminates with an error message Error(vdw\_tsscs\_range\_separated\_k): d\_lr(pp)<=0 . Note that this problem is not caused by a bug, but rather it is due to a limitation of the underlying physical model. Analytical gradients of the energy are implemented (fore details see reference
+
+) and hence the atomic and lattice relaxations can be performed.
+Due to the long-range nature of dispersion interactions, the convergence of energy with respect to the number of k-points should be carefully examined.
+A default value for the free-parameter of this method is available only for the PBE (
+VDW_SR =0.83) and SCAN (
+VDW_SR =1.12) functionals. If any other functional is used, the value of VDW_SR must be specified in the INCAR file. Related tags and articles VDW_ALPHA , VDW_C6 , VDW_R0 , VDW_SR , LVDWEXPANSION , LSCSGRAD , IVDW , Tkatchenko-Scheffler method , Self-consistent screening in Tkatchenko-Scheffler method , Tkatchenko-Scheffler method with iterative Hirshfeld partitioning , Many-body dispersion energy References ↑ a b T. Gould and T. Bučko, C6 Coefficients and Dipole Polarizabilities for All Atoms and Many Ions in Rows 1–6 of the Periodic Table , J. Chem. Theory Comput. 12 , 3603 (2016). ↑ a b c T. Gould, S. Lebègue, J. G. Ángyán, and T. Bučko, A Fractionally Ionic Approach to Polarizability and van der Waals Many-Body Dispersion Calculations , J. Chem. Theory Comput. 12 , 5920 (2016). ↑ F. Hirshfeld, Bonded-atom fragments for describing molecular charge densities , Theor. Chim. Acta 44 , 129 (1977). ↑ P. Bultinck, C. Van Alsenoy, P. W. Ayers, and R. Carbó Dorca, J. Chem. Phys. 126 , 144111 (2007). ↑ T. Bučko, S. Lebègue, T. Gould, and J. G. Ángyán, J. Phys.: Condens. Matter 28 , 045201 (2016).

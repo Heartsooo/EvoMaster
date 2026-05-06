@@ -1,0 +1,34 @@
+Title: LFXC
+URL: https://vasp.at/wiki/LFXC
+============================================================
+LFXC = .TRUE. | .FALSE. Default:
+LFXC = .FALSE. Description: LFXC enables the local exchange-correlation kernel in TD-DFT and TDHF calculations. The local exchange-correlation kernel is determined via
+
+f^{ loc}_{{xc}}({r}, {r}') =
+{δ^{2}\{E_{{c}}^{{DFT}}+(1-c_{ x})
+E_{{x}}^{{DFT}}\}}{δ ({r}) δ
+({r}')}
+,
+where
+c_{ x}
+is the fraction of the exchange interaction set by
+AEXX
+.
+
+Related tags and articles
+LADDER
+,
+LHARTREE
+,
+AEXX
+BSE calculations
+,
+Time-evolution_algorithm
+Workflows that use this tag
+References
+↑
+T. Sander, E. Maggio, and G. Kresse,
+Beyond the Tamm-Dancoff approximation for extended systems using exact diagonalization
+, Phys. Rev. B
+92
+, 045209 (2015).

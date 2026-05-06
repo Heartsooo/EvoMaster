@@ -1,0 +1,126 @@
+Title: Category:VASP
+URL: https://vasp.at/wiki/Category:VASP
+============================================================
+This is the top-level category
+Contents
+Subcategories
+This category has the following 59 subcategories, out of 59 total.
+Electronic ground-state properties
+Ensemble properties A
+ACFDT
+Constrained-random-phase approximation
+Low-scaling GW and RPA
+Advanced molecular-dynamics sampling B
+Band structure
+Berry phases
+Bethe-Salpeter equations C
+Calculation setup
+Common Pitfalls
+Constrained molecular dynamics D
+Defects
+Density mixing
+Density of states
+Dielectric properties E
+Electronic minimization
+Examples
+Exchange-correlation functionals F
+Files
+Forces G
+GPU H
+HDF5 support
+Howto
+Hybrid functionals I
+INCAR tag
+Input files
+Installation
+Ionic minimization L
+DFT+U
+Linear response M
+Development version
+Machine-learned force fields
+Magnetism
+Many-body perturbation theory
+Memory
+Molecular Dynamics
+Molecular dynamics
+Atoms and Molecules
+Monopole Dipole and Quadrupole Corrections
+MP2 N
+Noncollinear magnetism O
+Output files P
+Parallelization
+Phonons
+Programming S
+Slow-growth approach
+Spin spirals
+Spin-orbit coupling T
+Performance
+Thermodynamic integration
+Thermostats
+Transition states
+Tutorials V
+Van der Waals functionals W
+Wannier functions
+Workshops X
+XAS
+Pages in category "VASP"
+The following 59 pages are in this category, out of 59 total. C
+Combining MPI and OpenMP
+Compiler options
+CUDA-C GPU port of VASP D
+Electron-energy-loss spectrum I
+ICAMM Rennes 2016
+Installing VASP.5.X.X
+Installing VASP.6.X.X K
+Known issues
+Talk:Known issues
+KPOINTS
+KPOINTS OPT
+KPOINTS OPT NKBATCH
+KPOINTS WAN L
+Lectures and presentations
+Linking to libraries
+LKPOINTS OPT
+Low-scaling GW: The space-time formalism M
+Makefile.include
+Makefile.include.aocc ompi aocl
+Makefile.include.aocc ompi aocl omp
+Makefile.include.cray
+Makefile.include.cray omp
+Makefile.include.cray omp off
+Makefile.include.fujitsu a64fx
+Makefile.include.fujitsu a64fx omp
+Makefile.include.gnu
+Makefile.include.gnu omp
+Makefile.include.gnu ompi aocl
+Makefile.include.gnu ompi aocl omp
+Makefile.include.gnu ompi mkl omp
+Makefile.include.intel
+Makefile.include.intel omp
+Makefile.include.intel ompi mkl omp
+Makefile.include.intel serial
+Makefile.include.linux intel
+Makefile.include.nec aurora
+Makefile.include.nvhpc
+Makefile.include.nvhpc acc
+Makefile.include.nvhpc omp
+Makefile.include.nvhpc omp acc
+Makefile.include.nvhpc ompi mkl omp
+Makefile.include.nvhpc ompi mkl omp acc
+Makefile.include.oneapi
+Makefile.include.oneapi omp
+Makefile.include.oneapi omp off N
+NERSC Berkeley 2016 P
+Personal computer installation
+Construction:Category:Phonons
+Plot BSE fatbands
+Plotting exciton wavefunction
+Precompiler options
+Profiling
+PROJCAR Q
+QPOINTS S
+Shared memory T
+Toolchains V
+Validation tests
+VASP workshop
+VASP workshop 2003

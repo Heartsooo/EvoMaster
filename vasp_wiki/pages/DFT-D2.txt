@@ -1,0 +1,124 @@
+Title: DFT-D2
+URL: https://vasp.at/wiki/DFT-D2
+============================================================
+In the DFT-D2 method of Grimme
+
+the correction term takes the form:
+E_{{disp}} = -{1}{2} Σ_{i=1}^{N_{at}} Σ_{j=1}^{N_{at}} Σ_{{L}} {}^{} {C_{6ij}}{r_{ij,L}^{6}} f_{d,6}({r}_{ij,{L}})
+where the first two summations are over all
+N_{at}
+atoms in the unit cell and the third summation is over all translations of the unit cell
+{{L}}=(l_1,l_2,l_3)
+where the prime indicates that
+i=j
+for
+{{L}}=0
+.
+C_{6ij}
+denotes the dispersion coefficient for the atom pair ij
+,
+{r}_{ij,{L}}
+is the distance between atom i
+located in the reference cell
+{L}=0
+and atom j
+in the cell L
+and the term
+f(r_{ij})
+is a damping function whose role is to scale the force field such as to minimize the contributions from interactions within typical bonding distances. In practice, the terms in the equation for
+E_{{disp}}
+corresponding to interactions over distances longer than a certain suitably chosen cutoff radius (
+VDW_RADIUS
+, see below) contribute only negligibly to
+E_{{disp}}
+and can be ignored. Parameters
+C_{6ij}
+and
+R_{0ij}
+are computed using the following combination rules:
+C_{6ij} = C_{6ii C_{6jj}}
+and
+R_{0ij} = R_{0i}+ R_{0j}.
+The values for
+C_{6ii}
+and
+R_{0i}
+are tabulated for each element and are insensitive to the particular chemical situation (for instance,
+C_6 for carbon in methane takes exactly the same value as that for C in benzene within this approximation). In the DFT-D2 method, a Fermi-type damping function is used:
+f_{d,6}(r_{ij}) = {s_6}{1+e^{-d(r_{ij}/(s_R\,R_{0ij})-1)}}
+whereby the global scaling parameter
+s_6
+has been optimized for several different DFT functionals such as PBE (
+s_6=0.75
+), BLYP (
+s_6=1.2
+) or B3LYP (
+s_6=1.05
+). The parameter
+s_R
+is usually fixed at 1.00.
+The performance of PBE-D2 method in optimization of various crystalline systems has been tested systematically in reference
+
+.
+Important:
+It is recommended to use the more advanced and more accurate method
+DFT-D3
+.
+
+Usage
+The DFT-D2 method is activated by setting
+IVDW =1 or 10 (or the obsolete
+LVDW = .TRUE. ). Optionally, the damping function and the vdW parameters can be controlled using the following flags (the given values are the default ones):
+VDW_RADIUS =50.0 : cutoff radius (in Å) for pair interactions
+VDW_S6 =0.75 : global scaling factor s_6 (available in VASP.5.3.4 and later)
+VDW_SR =1.00 : scaling factor s_R (available in VASP.5.3.4 and later)
+VDW_SCALING =0.75 : the same as VDW_S6 (obsolete as of VASP.5.3.4)
+VDW_D =20.0 : damping parameter d
+VDW_C6 =[real array] : C_6 parameters ( {Jnm}^{6}{mol}^{-1} ) for each species defined in the POSCAR file
+VDW_R0 =[real array] : R_0 parameters (Å) for each species defined in the POSCAR file
+LVDW_EWALD = .FALSE. : the lattice summation in E_{{disp}} expression is computed by means of Ewald's summation ( .TRUE. ) or via a real space summation over all atomic pairs within cutoff radius VDW_RADIUS ( .FALSE. ). (available in VASP.5.3.4 and later) Mind: The defaults for VDW_C6 and VDW_R0 are defined only for elements in the first five rows of the periodic table (i.e. H-Xe). If the system contains other elements the user has to define these parameters in INCAR . The defaults for parameters controlling the damping function ( VDW_S6 , VDW_SR , VDW_D ) are available for the PBE (
+GGA =PE), BP, revPBE, PBE0, TPSS, and B3LYP functionals. If any other functional is used in a DFT-D2 calculation, the value of VDW_S6 (or VDW_SCALING in versions before VASP.5.3.4) has to be defined in INCAR . As of VASP.5.3.4, the default value for VDW_RADIUS has been increased from 30 to 50 Å. Ewald's summation in the calculation of E_{{disp}} calculation (controlled via LVDW_EWALD ) is implemented according to reference
+
+and is available as of VASP.5.3.4.
+
+Related tags and articles
+VDW_RADIUS
+,
+VDW_S6
+,
+VDW_SR
+,
+VDW_SCALING
+,
+VDW_D
+,
+VDW_C6
+,
+VDW_R0
+,
+LVDW_EWALD
+,
+IVDW
+,
+DFT-ulg
+,
+DFT-D3
+,
+DFT-D4
+References
+↑
+S. Grimme, J. Comput. Chem.
+27
+, 1787 (2006).
+↑
+T. Bučko, J. Hafner, S. Lebègue, and J. G. Ángyán, J. Phys. Chem. A
+114
+, 11814 (2010).
+↑
+S. Grimme, J. Antony, S. Ehrlich, and S. Krieg, J. Chem. Phys.
+132
+, 154104 (2010).
+↑
+T. Kerber, M. Sierka, and J. Sauer, J. Comput. Chem.
+29
+, 2088 (2008).

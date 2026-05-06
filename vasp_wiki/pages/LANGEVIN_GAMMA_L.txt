@@ -1,0 +1,36 @@
+Title: LANGEVIN_GAMMA_L
+URL: https://vasp.at/wiki/LANGEVIN_GAMMA_L
+============================================================
+LANGEVIN_GAMMA_L = [Real] Default:
+LANGEVIN_GAMMA_L = 0 Description: LANGEVIN_GAMMA_L specifies the friction coefficient (in ps -1 ) for lattice degrees-of-freedom in case of Parrinello-Rahman dynamics (in case VASP was compiled with -Dtbdyn ). When running NpT simulations with a Langevin thermostat
+
+(
+MDALGO =3), using the method of Parrinello and Rahman ,
+
+the friction coefficient for lattice degrees-of-freedom have to be specified (in ps
+-1
+) by means of the
+LANGEVIN_GAMMA_L
+-tag.
+A fictitious mass for the lattice degrees-of-freedom has to be assigned using the
+PMASS tag.
+The friction coefficients γ for the atomic degrees-of-freedom are specified using the
+LANGEVIN_GAMMA
+-tag.
+
+Related tags and articles
+LANGEVIN_GAMMA
+,
+PMASS
+,
+MDALGO
+Examples that use this tag
+References
+↑
+M. P. Allen and D. J. Tildesley,
+Computer simulation of liquids
+, Oxford university press: New York, 1991.
+↑
+M. Parrinello and A. Rahman, Phys. Rev. Lett. 45, 1196 (1980).
+↑
+M. Parrinello and A. Rahman, J. Appl. Phys. 52, 7182 (1981).

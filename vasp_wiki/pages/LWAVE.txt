@@ -1,0 +1,6 @@
+Title: LWAVE
+URL: https://vasp.at/wiki/LWAVE
+============================================================
+LWAVE = [logical] Default:
+LWAVE = .TRUE. Description: Determines whether the wavefunctions are written at the end of a run. The wavefunctions are written to the WAVECAR file by default. If
+LH5 = T , the wavefunctions are written to the vaspwave.h5 instead. Related tags and articles WAVECAR , LH5 , vaspwave.h5 , LCHARG Workflows that use this tag

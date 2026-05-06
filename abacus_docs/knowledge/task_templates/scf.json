@@ -1,0 +1,24 @@
+{
+  "task_type": "scf",
+  "description": "Self-consistent field calculation for electronic ground state",
+  "input": {
+    "required": {
+      "calculation": "scf",
+      "basis_type": "lcao or pw",
+      "ecutwfc": {"rule": "depends on pseudopotential, typically 60-100 Ry for PW, set appropriately for LCAO"},
+      "scf_thr": {"value": 1e-7, "note": "electron density convergence threshold"},
+      "scf_nmax": {"value": 100, "note": "max SCF iterations"}
+    },
+    "recommended": {
+      "symmetry": 1,
+      "smearing_method": {"rule": "gauss for metals, fixed for insulators"},
+      "smearing_sigma": {"rule": "0.01-0.02 Ry for metals"},
+      "mixing_type": "broyden",
+      "mixing_beta": {"value": 0.4, "note": "reduce to 0.1-0.2 for difficult convergence"},
+      "ks_solver": {"rule": "genelpa for LCAO, cg or dav for PW"}
+    }
+  },
+  "kpt": {
+    "rule": "Monkhorst-Pack grid, density inversely proportional to lattice parameter"
+  }
+}
