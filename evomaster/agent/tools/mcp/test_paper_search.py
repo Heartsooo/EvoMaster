@@ -32,7 +32,10 @@ class DummyConn:
 
 
 def _tool():
-    return create_registry(builtin_names=['paper_search']).get_tool('paper_search')
+    from evomaster.agent.tools.mcp import PaperSearchTool
+    registry = create_registry(builtin_names=[])
+    registry.register(PaperSearchTool())
+    return registry.get_tool('paper_search')
 
 
 def test_paper_search_requires_mcp_manager():

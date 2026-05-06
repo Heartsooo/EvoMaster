@@ -255,22 +255,20 @@ def create_default_registry(skill_registry: SkillRegistry | None = None) -> Tool
     return create_registry(builtin_names=["*"], skill_registry=skill_registry)
 
 
-# Mapping of all builtin tool names to factory functions
+# Mapping of pure builtin tool names to factory functions
 _BUILTIN_TOOL_FACTORIES: dict[str, Any] = None  # type: ignore[assignment]
 
 
 def _get_builtin_factories() -> dict[str, Any]:
-    """Lazily load the builtin tool factory mapping (name -> no-arg constructor)."""
+    """Lazily load the pure builtin tool factory mapping (name -> no-arg constructor)."""
     global _BUILTIN_TOOL_FACTORIES
     if _BUILTIN_TOOL_FACTORIES is None:
-        from .builtin import BashTool, EditorTool, ThinkTool, FinishTool, WebSearchTool, PaperSearchTool
+        from .builtin import BashTool, EditorTool, ThinkTool, FinishTool
         _BUILTIN_TOOL_FACTORIES = {
             "execute_bash": BashTool,
             "str_replace_editor": EditorTool,
             "think": ThinkTool,
             "finish": FinishTool,
-            "web_search": WebSearchTool,
-            "paper_search": PaperSearchTool,
         }
     return _BUILTIN_TOOL_FACTORIES
 
@@ -334,4 +332,3 @@ def create_registry(
 
     registry.register_many(tools)
     return registry
-

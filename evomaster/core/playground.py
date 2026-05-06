@@ -961,6 +961,11 @@ class BasePlayground:
             enabled_skills=enabled_skills,
         )
 
+        if mcp_config_file:
+            from evomaster.agent.tools.mcp import PaperSearchTool, WebSearchTool
+            self.tools.register(WebSearchTool())
+            self.tools.register(PaperSearchTool())
+
         # MCP: load MCP tools when mcp_config_file is non-empty
         if mcp_config_file:
             mcp_key = self._resolve_mcp_config_key(mcp_config_file)
@@ -1224,6 +1229,7 @@ class BasePlayground:
             enabled_tool_names.extend(builtin)
 
         if mcp_config_file != "":
+            enabled_tool_names.extend(["web_search", "paper_search"])
             mcp_key = self._resolve_mcp_config_key(mcp_config_file)
             manager = self._mcp_managers.get(mcp_key)
             if manager is not None:

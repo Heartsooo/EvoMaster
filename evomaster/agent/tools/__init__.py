@@ -20,6 +20,12 @@ from .builtin import (
     ThinkToolParams,
     FinishTool,
     FinishToolParams,
+)
+from .mcp import (
+    MCPTool,
+    MCPToolManager,
+    MCPConnection,
+    create_connection,
     WebSearchTool,
     WebSearchToolParams,
     PaperSearchTool,
@@ -27,12 +33,7 @@ from .builtin import (
 )
 
 # MCP tools
-from .mcp import (
-    MCPTool,
-    MCPToolManager,
-    MCPConnection,
-    create_connection,
-)
+
 
 from .skill import SkillTool, SkillToolParams
 
